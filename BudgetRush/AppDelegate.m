@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "DSServerManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
+        NSLog(@"ок");
+    } onFailure:^(NSError *error, NSInteger statusCode) {
+        NSLog(@"failure");
+    }];
     return YES;
 }
 
