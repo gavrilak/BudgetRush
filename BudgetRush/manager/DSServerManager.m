@@ -74,10 +74,10 @@
     
 }
 
-- (void) getAccount:(NSString*) ac_id onSuccess:(void(^)(DSAccount* account)) success
+- (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/accounts/" stringByAppendingString:ac_id]
+     GET:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -101,18 +101,18 @@
      }];
 }
 
-- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNumber numberWithInteger:account.ac_id],@"id",
-                                                            account.name,@"name",
-                            [NSNumber numberWithInteger:account.user_id],@"user_id",
-                        [NSNumber numberWithInteger:account.currency_id],@"currency_id",nil];
+    NSDictionary* params = @{@"id"          :[NSNumber numberWithInteger:account.ac_id] ,
+                             @"name"        : account.name,
+                             @"user_id"     :[NSNumber numberWithInteger:account.user_id],
+                             @"currency_id" : [NSNumber numberWithInteger:account.currency_id]};
     
     
     [self.requestOperationManager
-     POST:@"/v1/accounts"
+     POST:@"/v1/accounts/"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -136,10 +136,47 @@
     
 }
 
-- (void) deleteAccount:(NSString*) ac_id onSuccess:(void(^)(id)) success
+
+- (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+          onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{@"id"          :[NSNumber numberWithInteger:account.ac_id] ,
+                             @"name"        : account.name,
+                             @"user_id"     :[NSNumber numberWithInteger:account.user_id],
+                             @"currency_id" : [NSNumber numberWithInteger:account.currency_id]};
+    
+    
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/accounts/%ld" ,(long)account.ac_id]
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSAccount* account;
+         
+         for (NSDictionary* dict in responseObject) {
+             account = [[DSAccount alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(account);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+
+- (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/accounts" stringByAppendingString:ac_id]
+     DELETE:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -190,10 +227,10 @@
     
 }
 
-- (void) getCategory:(NSString*) cat_id onSuccess:(void(^)(DSCategory* category)) success
+- (void) getCategory:(NSInteger) cat_id onSuccess:(void(^)(DSCategory* category)) success
           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/categories/" stringByAppendingString:cat_id]
+     GET:[NSString stringWithFormat:@"/v1/categories/%ld",cat_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -217,15 +254,14 @@
      }];
 }
 
-- (void) postCategory:(DSCategory*) category onSuccess:(void(^)(DSCategory* category)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postCategory:(DSCategory*) category onSuccess:(void(^)(DSCategory* category)) success
+                            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
-     [NSNumber numberWithInteger:category.cat_id],@"id",
-                                    category.name,@"name",
-     [NSNumber numberWithInteger:category.parent],@"parent", nil];
-    
-    
+    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.cat_id],
+                              @"name"   :category.name,
+                              @"parent" :[NSNumber numberWithInteger:category.parent]};
+
     [self.requestOperationManager
      POST:@"/v1/categories"
      parameters:params
@@ -251,11 +287,44 @@
     
 }
 
+- (void) putCategory:(DSCategory*) category onSuccess:(void(^)(DSCategory* category)) success
+                            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.cat_id],
+                              @"name"   :category.name,
+                              @"parent" :[NSNumber numberWithInteger:category.parent]};
+    
+    
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat: @"/v1/categories/%ld",category.cat_id]
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSCategory* category;
+         
+         for (NSDictionary* dict in responseObject) {
+             category = [[DSCategory alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(category);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
 
-- (void) deleteCategory:(NSString*) cat_id onSuccess:(void(^)(id)) success
+- (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/categories" stringByAppendingString:cat_id]
+     DELETE:[NSString stringWithFormat: @"/v1/categories/%ld",cat_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -305,10 +374,10 @@
     
 }
 
-- (void) getContractor:(NSString*) con_id onSuccess:(void(^)(DSContractor* category)) success
+- (void) getContractor:(NSInteger) con_id onSuccess:(void(^)(DSContractor* category)) success
            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/contrsctors/" stringByAppendingString:con_id]
+     GET:[NSString stringWithFormat:@"/v1/contrsctors/%ld" ,con_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -335,11 +404,9 @@
 - (void) postContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNumber numberWithInteger:contractor.con_id],@"id",
-                                                        contractor.name,@"name",
-                                                        contractor.descr,@"description",nil];
-    
+    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.con_id],
+                              @"name"         : contractor.name,
+                              @"description"  : contractor.descr};
     
     [self.requestOperationManager
      POST:@"/v1/contractors"
@@ -366,10 +433,45 @@
     
 }
 
-- (void) deleteContractor:(NSString*) con_id onSuccess:(void(^)(id)) success
+- (void) putContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success
+                                                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.con_id],
+                              @"name"         : contractor.name,
+                              @"description"  : contractor.descr};
+    
+    
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat :@"/v1/contractors/%ld",contractor.con_id]
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSContractor* contractor;
+         
+         for (NSDictionary* dict in responseObject) {
+             contractor = [[DSContractor alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(contractor);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+
+- (void) deleteContractor:(NSInteger) con_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/contractors" stringByAppendingString:con_id]
+     DELETE:[NSString stringWithFormat:@"/v1/contractors/%ld",con_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -420,10 +522,10 @@
     
 }
 
-- (void) getCurrency:(NSString*) cur_id onSuccess:(void(^)(DSCurrency* currency)) success
+- (void) getCurrency:(NSInteger) cur_id onSuccess:(void(^)(DSCurrency* currency)) success
              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/currencies/" stringByAppendingString:cur_id]
+     GET:[NSString stringWithFormat:@"/v1/currencies/%ld", cur_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -447,7 +549,8 @@
      }];
 }
 
-- (void) postCurrency:(DSCurrency*) currency onSuccess:(void(^)(DSCurrency* currency)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postCurrency:(DSCurrency*) currency onSuccess:(void(^)(DSCurrency* currency)) success
+            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
     NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -482,10 +585,46 @@
     
 }
 
-- (void) deleteCurrency:(NSString*) cur_id onSuccess:(void(^)(id)) success
+
+- (void) putCurrency:(DSCurrency*) currency onSuccess:(void(^)(DSCurrency* currency)) success
+           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{@"name"        : currency.name,
+                             @"shortName"   : currency.shortName,
+                             @"code"        : [NSNumber numberWithInteger:currency.code],
+                             @"symbol"      : [NSNumber numberWithChar:currency.code]};
+    
+    
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/currencies/%ld",currency.cur_id]
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSCurrency* currency;
+         
+         for (NSDictionary* dict in responseObject) {
+             currency = [[DSCurrency alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(currency);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+- (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id)) success
            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/currencies" stringByAppendingString:cur_id]
+     DELETE:[NSString stringWithFormat:@"/v1/currencies/%ld" ,cur_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -535,10 +674,10 @@
     
 }
 
-- (void) getOrder:(NSString*) ord_id onSuccess:(void(^)(DSOrder* order)) success
+- (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/orders/" stringByAppendingString:ord_id]
+     GET:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -562,10 +701,10 @@
      }];
 }
 
-- (void) deleteOrder:(NSString*) ord_id onSuccess:(void(^)(id)) success
+- (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id)) success
           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/orders/" stringByAppendingString:ord_id]
+     DELETE:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -617,10 +756,10 @@
     
 }
 
-- (void) getUser:(NSString*) usr_id onSuccess:(void(^)(DSUser* user)) success
+- (void) getUser:(NSInteger) usr_id onSuccess:(void(^)(DSUser* user)) success
         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     GET:[@"/v1/users/" stringByAppendingString:usr_id]
+     GET:[NSString stringWithFormat:@"/v1/users/%ld", usr_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -671,12 +810,12 @@
      }];
 }
 
-- (void) postUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
+        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            user.name,@"name",
-                            user.password,@"password",nil];
+    NSDictionary* params = @{@"name"     :user.name ,
+                             @"password" :user.password };
     
     
     [self.requestOperationManager
@@ -704,10 +843,75 @@
     
 }
 
-- (void) deleteUser:(NSString*) usr_id onSuccess:(void(^)(id)) success
+- (void) putUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
+       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{@"name"     :user.name ,
+                             @"password" :user.password };
+    
+    
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/users/%ld" , user.usr_id]
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSUser* user;
+         
+         for (NSDictionary* dict in responseObject) {
+             user = [[DSUser alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(user);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+- (void) putUserRole:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
+           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSString *role  = user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN";
+
+    [self.requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/users/role/%@&%@" , user.name , role]
+     parameters:nil
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSUser* user;
+         
+         for (NSDictionary* dict in responseObject) {
+             user = [[DSUser alloc] initWithDictionary:dict];
+         }
+         
+         if (success) {
+             success(user);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+
+- (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id)) success
        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
-     DELETE:[@"/v1/users/" stringByAppendingString:usr_id]
+     DELETE:[NSString  stringWithFormat:@"/v1/users/%ld" , usr_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);

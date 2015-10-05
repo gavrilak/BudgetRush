@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 enum userRole : NSUInteger {
-    user , admin
+    userRole , adminRole
 };
 
 @interface DSUser : NSObject
