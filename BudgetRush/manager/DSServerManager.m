@@ -39,7 +39,10 @@ const NSString* rest_key = @"ios_key";
     self = [super init];
     if (self) {
         self.requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
-        
+        AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
+        policy.allowInvalidCertificates = YES;
+        policy.validatesDomainName = NO;
+        self.requestOperationManager.securityPolicy = policy;
     }
     
     return self;
@@ -52,7 +55,7 @@ const NSString* rest_key = @"ios_key";
     
     [self.requestOperationManager
      GET:@"/v1/accounts"
-     parameters:nil
+     parameters:@{@"access_token":self.accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -81,7 +84,7 @@ const NSString* rest_key = @"ios_key";
                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
-     parameters:nil
+     parameters:@{@"access_token":self.accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -111,8 +114,8 @@ const NSString* rest_key = @"ios_key";
     NSDictionary* params = @{@"id"          :[NSNumber numberWithInteger:account.ac_id] ,
                              @"name"        : account.name,
                              @"user_id"     :[NSNumber numberWithInteger:account.user_id],
-                             @"currency_id" : [NSNumber numberWithInteger:account.currency_id]};
-    
+                             @"currency_id" :[NSNumber numberWithInteger:account.currency_id],
+                             @"access_token":self.accessToken.token };
     
     [self.requestOperationManager
      POST:@"/v1/accounts/"
@@ -121,8 +124,8 @@ const NSString* rest_key = @"ios_key";
          NSLog(@"JSON: %@", responseObject);
          DSAccount* account;
          
-         for (NSDictionary* dict in responseObject) {
-             account = [[DSAccount alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             account = [[DSAccount alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
@@ -180,7 +183,7 @@ const NSString* rest_key = @"ios_key";
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     [self.requestOperationManager
      DELETE:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
-     parameters:nil
+     parameters:@{@"access_token":self.accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -205,7 +208,7 @@ const NSString* rest_key = @"ios_key";
     
     [self.requestOperationManager
      GET:@"/v1/categories"
-     parameters:nil
+     parameters:@{@"access_token":self.accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -950,8 +953,9 @@ const NSString* rest_key = @"ios_key";
          NSLog(@"JSON: %@", responseObject);
          DSAccessToken* token;
          
-         for (NSDictionary* dict in responseObject) {
-             token = [[DSAccessToken alloc] initWithServerResponse:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             token = [[DSAccessToken alloc] initWithServerResponse:responseObject];
+             self.accessToken = token;
          }
          
          if (success) {
@@ -984,8 +988,9 @@ const NSString* rest_key = @"ios_key";
          NSLog(@"JSON: %@", responseObject);
          DSAccessToken* token;
          
-         for (NSDictionary* dict in responseObject) {
-             token = [[DSAccessToken alloc] initWithServerResponse:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             token = [[DSAccessToken alloc] initWithServerResponse:responseObject];
+            self.accessToken = token;
          }
          
          if (success) {

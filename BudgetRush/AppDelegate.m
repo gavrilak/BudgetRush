@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "DSServerManager.h"
-
+#import "AFNetworkActivityLogger.h"
+#import "AFHTTPRequestOperationLogger.h"
 @interface AppDelegate ()
 
 @end
@@ -18,11 +19,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
-        NSLog(@"ок");
+   // [[AFNetworkActivityLogger sharedLogger] startLogging];
+    [[AFHTTPRequestOperationLogger sharedLogger] startLogging];
+    [AFHTTPRequestOperationLogger sharedLogger].level =  AFLoggerLevelDebug;
+       [[DSServerManager sharedManager] getTokenForUser:@"admin" andPassword:@"1" onSuccess:^(DSAccessToken *token) {
+           [[DSServerManager sharedManager] getCategoriesOnSuccess:^(NSArray *accounts) {
+               NSLog(@"ок");
+           } onFailure:^(NSError *error, NSInteger statusCode) {
+               NSLog(@"failure");
+           }];
+
     } onFailure:^(NSError *error, NSInteger statusCode) {
         NSLog(@"failure");
     }];
+    
     return YES;
 }
 

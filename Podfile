@@ -5,6 +5,7 @@ target 'BudgetRush' do
 
 pod 'AFNetworking', '~> 2.5'
 
+
 end
 
 target 'BudgetRushTests' do
