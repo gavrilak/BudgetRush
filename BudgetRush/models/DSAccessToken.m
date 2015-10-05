@@ -16,6 +16,7 @@
     if (self) {
         
         self.token = [responseObject objectForKey:@"access_token"];
+        self.refreshToken = [responseObject objectForKey:@"refresh_token"];
         NSTimeInterval interval = [[responseObject objectForKey:@"expires_in"]doubleValue];
         self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:interval];
     }

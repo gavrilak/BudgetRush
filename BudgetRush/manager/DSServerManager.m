@@ -9,6 +9,9 @@
 #import "DSServerManager.h"
 #import <AFNetworking.h>
 
+const NSString* rest_id = @"ios_id";
+const NSString* rest_key = @"ios_key";
+
 @interface  DSServerManager ()
 
 @property (strong,nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
@@ -930,6 +933,75 @@
 }
 
 #pragma mark - token
+- (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{@"client_id"     : rest_id,
+                             @"client_secret" : rest_key,
+                             @"grant_type"    : @"password",
+                             @"username"      : userName ,
+                             @"password"      : password };
+    
+    
+    [self.requestOperationManager
+     POST:@"/oauth/token"
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSAccessToken* token;
+         
+         for (NSDictionary* dict in responseObject) {
+             token = [[DSAccessToken alloc] initWithServerResponse:dict];
+         }
+         
+         if (success) {
+             success(token);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+     }];
+    
+}
+
+- (void) refreshToken:(NSString*) token onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+    
+    
+    NSDictionary* params = @{@"client_id"     : rest_id,
+                             @"client_secret" : rest_key,
+                             @"grant_type"    : @"refresh_token",
+                             @"refresh_token" : token };
+    
+    
+    [self.requestOperationManager
+     POST:@"/oauth/token"
+     parameters:params
+     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         DSAccessToken* token;
+         
+         for (NSDictionary* dict in responseObject) {
+             token = [[DSAccessToken alloc] initWithServerResponse:dict];
+         }
+         
+         if (success) {
+             success(token);
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error, operation.response.statusCode);
+         }
+    
+     }];
+    
+}
 
 
 @end

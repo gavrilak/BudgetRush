@@ -11,6 +11,7 @@
 @interface DSAccessToken : NSObject
 
 @property (strong, nonatomic) NSString* token;
+@property (strong, nonatomic) NSString* refreshToken;
 @property (strong, nonatomic) NSDate* expirationDate;
 
 
