@@ -15,10 +15,10 @@
     self = [super init];
     if (self) {
         self.cur_id = [[responseObject objectForKey:@"id"]integerValue] ;
-        self.name = [[responseObject objectForKey:@"name"]stringValue];
-        self.shortName = [[responseObject objectForKey:@"shortName"]stringValue];
+        self.name = [responseObject objectForKey:@"name"];
+        self.shortName = [responseObject objectForKey:@"shortName"];
         self.code = [[responseObject objectForKey:@"code"]integerValue];
-        self.symbol = [[responseObject objectForKey:@"symbol"]charValue];
+        self.symbol = [responseObject objectForKey:@"symbol"] ;
         
     }
     return self;

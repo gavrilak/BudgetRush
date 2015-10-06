@@ -15,8 +15,10 @@
     self = [super init];
     if (self) {
         self.cat_id = [[responseObject objectForKey:@"id"]integerValue] ;
-        self.name = [[responseObject objectForKey:@"name"]stringValue];
-        self.parent = [[responseObject objectForKey:@"parent"]integerValue];
+        self.name = [responseObject objectForKey:@"name"];
+        if ([responseObject objectForKey:@"parent"] != [NSNull null]) {
+            self.parent = [[[responseObject objectForKey:@"parent"] objectForKey:@"id"]integerValue];
+        }
 
     }
     return self;

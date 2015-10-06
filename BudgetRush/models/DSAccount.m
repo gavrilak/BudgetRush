@@ -15,9 +15,9 @@
     self = [super init];
     if (self) {
         self.ac_id = [[responseObject objectForKey:@"id"]integerValue] ;
-        self.name = [[responseObject objectForKey:@"product"]stringValue];
-        self.user_id = [[responseObject objectForKey:@"name"]integerValue];
-        self.currency_id = [[responseObject objectForKey:@"currency_id"]integerValue];
+        self.name = [responseObject objectForKey:@"name"];
+      //  self.user_id = [[responseObject objectForKey:@"name"]integerValue];
+      //  self.currency_id = [[responseObject objectForKey:@"currency_id"]integerValue];
     }
     return self;
 }

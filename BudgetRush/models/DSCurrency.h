@@ -14,7 +14,7 @@
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *shortName;
 @property (assign,nonatomic) NSInteger code;
-@property (assign,nonatomic) char symbol;
+@property (strong,nonatomic) NSString *symbol;
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 

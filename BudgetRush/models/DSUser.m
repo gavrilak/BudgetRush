@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         self.usr_id = [[responseObject objectForKey:@"id"]integerValue] ;
-        self.name = [[responseObject objectForKey:@"name"]stringValue];
-        self.password = [[responseObject objectForKey:@"password"] stringValue];
+        self.name = [responseObject objectForKey:@"name"];
+        self.password = [responseObject objectForKey:@"password"];
         
     }
     return self;

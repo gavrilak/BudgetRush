@@ -23,12 +23,19 @@
     [[AFHTTPRequestOperationLogger sharedLogger] startLogging];
     [AFHTTPRequestOperationLogger sharedLogger].level =  AFLoggerLevelDebug;
        [[DSServerManager sharedManager] getTokenForUser:@"admin" andPassword:@"1" onSuccess:^(DSAccessToken *token) {
-           [[DSServerManager sharedManager] getCategoriesOnSuccess:^(NSArray *accounts) {
-               NSLog(@"ок");
+           NSInteger ident = 1;
+           
+           
+           [[DSServerManager sharedManager] getOrder:ident onSuccess:^(DSOrder *account) {
+               NSLog(@"ok");
            } onFailure:^(NSError *error, NSInteger statusCode) {
-               NSLog(@"failure");
+               NSLog(@"No_ok");
            }];
-
+          /* [[DSServerManager sharedManager] getContractorsOnSuccess:^(NSArray *accounts) {
+               NSLog(@"ok");
+           } onFailure:^(NSError *error, NSInteger statusCode) {
+                NSLog(@"No_ok");
+           }];*/
     } onFailure:^(NSError *error, NSInteger statusCode) {
         NSLog(@"failure");
     }];

@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         self.con_id = [[responseObject objectForKey:@"id"]integerValue] ;
-        self.name = [[responseObject objectForKey:@"name"]stringValue];
-        self.descr = [[responseObject objectForKey:@"description"]stringValue];
+        self.name = [responseObject objectForKey:@"name"];
+        self.descr = [responseObject objectForKey:@"description"];
         
     }
     return self;

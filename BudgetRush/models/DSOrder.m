@@ -16,10 +16,10 @@
     if (self) {
         self.ord_id = [[responseObject objectForKey:@"id"]integerValue] ;
         self.amount = [[responseObject objectForKey:@"amount"]decimalValue];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd-"];
-        self.date= [dateFormat dateFromString:[responseObject objectForKey:@"date"]];
-        if ([[[responseObject objectForKey:@"type"]stringValue] isEqualToString:@"ORDER"]) {
+      //  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+     //   [dateFormat setDateFormat:@"yyyy-MM-dd-"];
+     //   self.date= [dateFormat dateFromString:[responseObject objectForKey:@"date"]];
+        if ([[responseObject objectForKey:@"type"] isEqualToString:@"ORDER"]) {
             self.type = order;
         } else {
             self.type = transfer_order;
