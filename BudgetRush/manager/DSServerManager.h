@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#warning //FIX: Не стоит эти импорты размещать здесь. Как следствие, все эти модели будут доступны всем, кто заимпортит данный хедер
 #import "DSAccount.h"
 #import "DSCategory.h"
 #import "DSContractor.h"

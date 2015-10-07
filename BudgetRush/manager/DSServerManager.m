@@ -11,6 +11,8 @@
 
 @interface  DSServerManager ()
 
+#warning FIX: Почему бы просто не использовать ivars? Зачем здесь именно свойства?
+#warning TODO: Попробуй поработать с AFHTTPSessionManager
 @property (strong,nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
 @property (strong, nonatomic) DSAccessToken *accessToken;
 
@@ -35,6 +37,7 @@
 {
     self = [super init];
     if (self) {
+#warning FIX: Рекомендую создать файл настроек и вынести API URL туда
         self.requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"http://"]];
         
     }

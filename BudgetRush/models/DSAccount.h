@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#warning TODO: Рекомендую создать базовый класс для всех моделей, определить там метод initWithDictionary: где можно также реализовать парсинг id, так как данное поле присутствует в каждой dto
 @interface DSAccount : NSObject
 
 @property (assign,nonatomic) NSInteger ac_id;
