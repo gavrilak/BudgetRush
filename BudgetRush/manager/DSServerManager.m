@@ -39,8 +39,8 @@ const NSString* rest_key = @"ios_key";
     self = [super init];
     if (self) {
         self.requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
-       // [self.requestOperationManager.requestSerializer
-       //  setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+       // self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+
         AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
         policy.allowInvalidCertificates = YES;
         policy.validatesDomainName = NO;
@@ -117,50 +117,11 @@ const NSString* rest_key = @"ios_key";
                              @"user"        :@{@"id"     :[NSNumber numberWithInteger:account.user_id]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]}};
 
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://46.101.220.157:9443/v1/accounts"]];
-    // Set post method
-    [request setHTTPMethod:@"POST"];
-    // Set header to accept JSON request
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
-    
-    self.requestOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSString *jsonString = [self getJSONStringWithDictionary:params];
-    
-    // And finally, add it to HTTP body and job done.
-    [request setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-   [self.requestOperationManager
-    POST:@"/v1/accounts"
-    parameters:@{   @"access_token":self.accessToken.token }
-    constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFormData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] name:@"1111"];
-    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        DSAccount* account;
-        
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            account = [[DSAccount alloc] initWithDictionary:responseObject];
-        }
-        
-        if (success) {
-            success(account);
-        }
-
-    } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
-        NSLog(@"Error: %@", error);
-        
-        if (failure) {
-            failure(error, operation.response.statusCode);
-        }
-
-    }];
-    
-    
-    
-   /* [self.requestOperationManager
-     P0ST:@"/v1/accounts"
-     parameters:@{   @"access_token":self.accessToken.token }
+    self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+     [self.requestOperationManager
+     POST:[NSString stringWithFormat: @"/v1/accounts?access_token=%@",self.accessToken.token ]
+     parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSAccount* account;
@@ -180,24 +141,8 @@ const NSString* rest_key = @"ios_key";
              failure(error, operation.response.statusCode);
          }
      }];
-    */
 }
 
-
--(NSString*) getJSONStringWithDictionary:(NSDictionary*) dict {
-    NSError *error;
-    NSString *jsonString;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
-                                                   options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                     error:&error];
-
-    if (! jsonData) {
-        NSLog(@"Got an error: %@", error);
-    } else {
-        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    }
-    return jsonString;
-}
 - (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     

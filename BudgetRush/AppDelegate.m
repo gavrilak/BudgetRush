@@ -32,7 +32,7 @@
                NSLog(@"No_ok");
            }];*/
            
-           DSAccount* acc = [DSAccount new];
+           /*  DSAccount* acc = [DSAccount new];
            acc.name = @"ios account";
            acc.currency_id = 1;
            acc.user_id = 1;
@@ -40,12 +40,12 @@
                 NSLog(@"ok");
            } onFailure:^(NSError *error, NSInteger statusCode) {
                 NSLog(@"no_ok");
-           }];
-         /*  [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
+           }]; */
+           [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
                NSLog(@"ok");
            } onFailure:^(NSError *error, NSInteger statusCode) {
                 NSLog(@"No_ok");
-           }];*/
+           }];
     } onFailure:^(NSError *error, NSInteger statusCode) {
         NSLog(@"failure");
     }];

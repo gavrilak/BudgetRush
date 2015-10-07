@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BudgetRush/manager/DSServerManager.m"
-            timestampString = "465812914.385956"
+            timestampString = "465908417.189734"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "623"
-            endingLineNumber = "623"
-            landmarkName = "-putCurrency:onSuccess:onFailure:"
+            startingLineNumber = "568"
+            endingLineNumber = "568"
+            landmarkName = "-postCurrency:onSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BudgetRush/manager/DSServerManager.m"
-            timestampString = "465738676.558791"
+            timestampString = "465908417.189734"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "404"
-            endingLineNumber = "404"
-            landmarkName = "-getContractor:onSuccess:onFailure:"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "-deleteCategory:onSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
