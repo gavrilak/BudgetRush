@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.cat_id = [[responseObject objectForKey:@"id"]integerValue] ;
+        self.usr_id = [[[responseObject objectForKey:@"user"]objectForKey:@"id"]integerValue] ;
         self.name = [responseObject objectForKey:@"name"];
         if ([responseObject objectForKey:@"parent"] != [NSNull null]) {
             self.parent = [[[responseObject objectForKey:@"parent"] objectForKey:@"id"]integerValue];
