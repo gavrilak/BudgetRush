@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSObjectBudget.h"
 
 enum orderType : NSUInteger {
     order ,transfer_order
 };
 
-@interface DSOrder : NSObject
+@interface DSOrder : DSObjectBudget
 
-@property (assign,nonatomic) NSInteger ord_id;
 @property (assign,nonatomic) NSDecimal amount;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;

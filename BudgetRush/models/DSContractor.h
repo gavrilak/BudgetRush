@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSObjectBudget.h"
 
-@interface DSContractor : NSObject
+@interface DSContractor : DSObjectBudget
 
-@property (assign,nonatomic) NSInteger con_id;
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *descr;
 

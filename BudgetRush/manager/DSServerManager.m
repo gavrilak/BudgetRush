@@ -9,14 +9,16 @@
 #import "DSServerManager.h"
 #import <AFNetworking.h>
 
-const NSString* rest_id = @"ios_id";
-const NSString* rest_key = @"ios_key";
+NSString *const rest_id = @"ios_id";
+NSString *const rest_key = @"ios_key";
+NSString *const baseUrl = @"https://46.101.220.157:9443";
 
-@interface  DSServerManager ()
+@interface  DSServerManager () {
 
-@property (strong,nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
-@property (strong, nonatomic) DSAccessToken *accessToken;
-
+    AFHTTPRequestOperationManager *_requestOperationManager;
+    DSAccessToken *_accessToken;
+    AFHTTPSessionManager *_sessionManager;
+}
 @end
 
 
@@ -38,13 +40,16 @@ const NSString* rest_key = @"ios_key";
 {
     self = [super init];
     if (self) {
-        self.requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
+       _requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
        // self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
 
         AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
         policy.allowInvalidCertificates = YES;
         policy.validatesDomainName = NO;
-        self.requestOperationManager.securityPolicy = policy;
+        _requestOperationManager.securityPolicy = policy;
+        
+        _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        _sessionManager.securityPolicy = policy;
     }
     
     return self;
@@ -52,13 +57,13 @@ const NSString* rest_key = @"ios_key";
 #pragma mark - accounts
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [self.requestOperationManager
+    [_sessionManager
      GET:@"/v1/accounts"
-     parameters:@{@"access_token":self.accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -72,11 +77,11 @@ const NSString* rest_key = @"ios_key";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
@@ -84,9 +89,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -118,9 +123,9 @@ const NSString* rest_key = @"ios_key";
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]}};
 
     
-    self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
-     [self.requestOperationManager
-     POST:[NSString stringWithFormat: @"/v1/accounts?access_token=%@",self.accessToken.token ]
+  _requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+     [_requestOperationManager
+     POST:[NSString stringWithFormat: @"/v1/accounts?access_token=%@",_accessToken.token ]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -150,11 +155,11 @@ const NSString* rest_key = @"ios_key";
     NSDictionary* params = @{@"name"        : account.name,
                              @"user"        :@{@"id"     :[NSNumber numberWithInteger:account.user_id]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]},
-                             @"access_token":self.accessToken.token };
+                             @"access_token":_accessToken.token };
     
     
-    [self.requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/accounts/%ld" ,(long)account.ac_id]
+    [_requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/accounts/%ld" ,(long)account.obj_id]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -181,9 +186,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -206,9 +211,9 @@ const NSString* rest_key = @"ios_key";
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:@"/v1/categories"
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -235,9 +240,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getCategory:(NSInteger) cat_id onSuccess:(void(^)(DSCategory* category)) success
           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/categories/%ld",cat_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -264,11 +269,11 @@ const NSString* rest_key = @"ios_key";
                             onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.cat_id],
+    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.obj_id],
                               @"name"   :category.name,
                               @"parent" :[NSNumber numberWithInteger:category.parent]};
 
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/v1/categories"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -297,13 +302,13 @@ const NSString* rest_key = @"ios_key";
                             onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.cat_id],
+    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.obj_id],
                               @"name"   :category.name,
                               @"parent" :[NSNumber numberWithInteger:category.parent]};
     
     
-    [self.requestOperationManager
-     PUT:[NSString stringWithFormat: @"/v1/categories/%ld",category.cat_id]
+    [_requestOperationManager
+     PUT:[NSString stringWithFormat: @"/v1/categories/%ld",category.obj_id]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -329,7 +334,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString stringWithFormat: @"/v1/categories/%ld",cat_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -353,9 +358,9 @@ const NSString* rest_key = @"ios_key";
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:@"/v1/contractors"
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -382,9 +387,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getContractor:(NSInteger) con_id onSuccess:(void(^)(DSContractor* category)) success
            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/contractors/%ld" ,con_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -410,11 +415,11 @@ const NSString* rest_key = @"ios_key";
 - (void) postContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.con_id],
+    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.obj_id],
                               @"name"         : contractor.name,
                               @"description"  : contractor.descr};
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/v1/contractors"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -443,13 +448,13 @@ const NSString* rest_key = @"ios_key";
                                                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.con_id],
+    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.obj_id],
                               @"name"         : contractor.name,
                               @"description"  : contractor.descr};
     
     
-    [self.requestOperationManager
-     PUT:[NSString stringWithFormat :@"/v1/contractors/%ld",contractor.con_id]
+    [_requestOperationManager
+     PUT:[NSString stringWithFormat :@"/v1/contractors/%ld",contractor.obj_id]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -476,7 +481,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteContractor:(NSInteger) con_id onSuccess:(void(^)(id)) success
               onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString stringWithFormat:@"/v1/contractors/%ld",con_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -501,9 +506,9 @@ const NSString* rest_key = @"ios_key";
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:@"/v1/currencies"
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -530,9 +535,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getCurrency:(NSInteger) cur_id onSuccess:(void(^)(DSCurrency* currency)) success
              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/currencies/%ld", cur_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -565,7 +570,7 @@ const NSString* rest_key = @"ios_key";
                              @"symbol"      : currency.symbol};
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/v1/currencies"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -601,8 +606,8 @@ const NSString* rest_key = @"ios_key";
                              @"symbol"      : currency.symbol };
     
     
-    [self.requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/currencies/%ld",currency.cur_id]
+    [_requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/currencies/%ld",currency.obj_id]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -628,7 +633,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id)) success
            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString stringWithFormat:@"/v1/currencies/%ld" ,cur_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -652,9 +657,9 @@ const NSString* rest_key = @"ios_key";
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:@"/v1/orders"
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -681,9 +686,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -715,7 +720,7 @@ const NSString* rest_key = @"ios_key";
                              @"symbol"      : @""};
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/v1/currencies"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -742,7 +747,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) putOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -772,7 +777,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id)) success
           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -798,9 +803,9 @@ const NSString* rest_key = @"ios_key";
                     onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:@"/v1/users"
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -827,9 +832,9 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getUser:(NSInteger) usr_id onSuccess:(void(^)(DSUser* user)) success
         onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[NSString stringWithFormat:@"/v1/users/%ld", usr_id]
-     parameters:@{@"access_token":self.accessToken.token}
+     parameters:@{@"access_token":_accessToken.token}
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
@@ -854,7 +859,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) getUserRoleForName:(NSString*) name onSuccess:(void(^)(NSString* role)) success
        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      GET:[@"/v1/users/role/" stringByAppendingString:name]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -887,7 +892,7 @@ const NSString* rest_key = @"ios_key";
                              @"password" :user.password };
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/v1/users"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -920,8 +925,8 @@ const NSString* rest_key = @"ios_key";
                              @"password" :user.password };
     
     
-    [self.requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/users/%ld" , user.usr_id]
+    [_requestOperationManager
+     PUT:[NSString stringWithFormat:@"/v1/users/%ld" , user.obj_id]
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -951,7 +956,7 @@ const NSString* rest_key = @"ios_key";
     
     NSString *role  = user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN";
 
-    [self.requestOperationManager
+    [_requestOperationManager
      PUT:[NSString stringWithFormat:@"/v1/users/role/%@&%@" , user.name , role]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -979,7 +984,7 @@ const NSString* rest_key = @"ios_key";
 
 - (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id)) success
        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [self.requestOperationManager
+    [_requestOperationManager
      DELETE:[NSString  stringWithFormat:@"/v1/users/%ld" , usr_id]
      parameters:nil
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -1009,7 +1014,7 @@ const NSString* rest_key = @"ios_key";
                              @"password"      : password };
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/oauth/token"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -1018,7 +1023,7 @@ const NSString* rest_key = @"ios_key";
          
          if ([responseObject isKindOfClass:[NSDictionary class]]) {
              token = [[DSAccessToken alloc] initWithServerResponse:responseObject];
-             self.accessToken = token;
+             _accessToken = token;
          }
          
          if (success) {
@@ -1044,7 +1049,7 @@ const NSString* rest_key = @"ios_key";
                              @"refresh_token" : token };
     
     
-    [self.requestOperationManager
+    [_requestOperationManager
      POST:@"/oauth/token"
      parameters:params
      success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
@@ -1053,7 +1058,7 @@ const NSString* rest_key = @"ios_key";
          
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
              token = [[DSAccessToken alloc] initWithServerResponse:responseObject];
-            self.accessToken = token;
+            _accessToken = token;
          }
          
          if (success) {

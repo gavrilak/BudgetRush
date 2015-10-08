@@ -12,9 +12,8 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject {
     
-    self = [super init];
+    self = [super initWithDictionary:responseObject];
     if (self) {
-        self.ord_id = [[responseObject objectForKey:@"id"]integerValue] ;
         self.amount = [[responseObject objectForKey:@"amount"]decimalValue];
       //  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
      //   [dateFormat setDateFormat:@"yyyy-MM-dd-"];

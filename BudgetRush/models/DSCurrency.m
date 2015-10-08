@@ -12,9 +12,8 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject {
     
-    self = [super init];
+    self = [super initWithDictionary:responseObject];
     if (self) {
-        self.cur_id = [[responseObject objectForKey:@"id"]integerValue] ;
         self.name = [responseObject objectForKey:@"name"];
         self.shortName = [responseObject objectForKey:@"shortName"];
         self.code = [[responseObject objectForKey:@"code"]integerValue];

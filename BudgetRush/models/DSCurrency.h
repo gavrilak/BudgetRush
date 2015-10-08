@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSObjectBudget.h"
 
-@interface DSCurrency : NSObject
+@interface DSCurrency : DSObjectBudget
 
-@property (assign,nonatomic) NSInteger cur_id;
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *shortName;
 @property (assign,nonatomic) NSInteger code;

@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSObjectBudget.h"
 
-@interface DSCategory : NSObject
+@interface DSCategory : DSObjectBudget
 
-@property (assign,nonatomic) NSInteger cat_id;
 @property (strong,nonatomic) NSString *name;
 @property (assign,nonatomic) NSInteger parent;
 @property (assign,nonatomic) NSInteger usr_id;

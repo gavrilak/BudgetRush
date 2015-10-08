@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSObjectBudget.h"
 
-@interface DSAccount : NSObject
+@interface DSAccount : DSObjectBudget
 
-@property (assign,nonatomic) NSInteger ac_id;
 @property (strong,nonatomic) NSString *name;
 @property (assign,nonatomic) NSInteger user_id;
 @property (assign,nonatomic) NSInteger currency_id;
