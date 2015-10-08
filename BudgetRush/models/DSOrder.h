@@ -10,7 +10,7 @@
 #import "DSObjectBudget.h"
 
 enum orderType : NSUInteger {
-    order ,transfer_order
+    typeOrder ,typeTransfer
 };
 
 @interface DSOrder : DSObjectBudget
@@ -18,7 +18,8 @@ enum orderType : NSUInteger {
 @property (assign,nonatomic) NSDecimal amount;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;
-@property (assign,nonatomic) NSInteger ac_id;
+@property (assign,nonatomic) NSInteger acc_id;
+@property (assign,nonatomic) NSInteger cur_id;
 @property (assign,nonatomic) NSInteger cat_id;
 @property (assign,nonatomic) NSInteger con_id;
 @property (assign,nonatomic) NSInteger exp_id;

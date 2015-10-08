@@ -16,7 +16,12 @@
     if (self) {
         self.name = [responseObject objectForKey:@"name"];
         self.password = [responseObject objectForKey:@"password"];
-        
+        if ([[responseObject objectForKey:@"role"] isEqualToString:@"ROLE_USER"]) {
+            self.role = userRole;
+        } else {
+            self.role = adminRole;
+        }
+
     }
     return self;
 }

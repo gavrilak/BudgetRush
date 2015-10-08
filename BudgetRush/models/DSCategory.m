@@ -14,10 +14,10 @@
     
     self = [super initWithDictionary:responseObject];
     if (self) {
-        self.usr_id = [[[responseObject objectForKey:@"user"]objectForKey:@"id"]integerValue] ;
         self.name = [responseObject objectForKey:@"name"];
+        self.user_id = [[[responseObject objectForKey:@"user"]objectForKey:@"id"]integerValue] ;
         if ([responseObject objectForKey:@"parent"] != [NSNull null]) {
-            self.parent = [[[responseObject objectForKey:@"parent"] objectForKey:@"id"]integerValue];
+            self.parent_id = [[[responseObject objectForKey:@"parent"] objectForKey:@"id"]integerValue];
         }
 
     }

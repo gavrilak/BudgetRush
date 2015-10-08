@@ -19,14 +19,15 @@
      //   [dateFormat setDateFormat:@"yyyy-MM-dd-"];
      //   self.date= [dateFormat dateFromString:[responseObject objectForKey:@"date"]];
         if ([[responseObject objectForKey:@"type"] isEqualToString:@"ORDER"]) {
-            self.type = order;
+            self.type = typeOrder;
         } else {
-            self.type = transfer_order;
+            self.type = typeTransfer;
         }
-        self.ac_id = [[[responseObject objectForKey:@"account"] objectForKey:@"id"]integerValue];
+        self.acc_id = [[[responseObject objectForKey:@"account"] objectForKey:@"id"]integerValue];
+        self.cur_id = [[[[responseObject objectForKey:@"account"] objectForKey:@"currency"] objectForKey:@"id"]integerValue];
         self.con_id = [[[responseObject objectForKey:@"contractor"] objectForKey:@"id"]integerValue];
         self.cat_id = [[[responseObject objectForKey:@"category"] objectForKey:@"id"]integerValue];
-       
+        
     }
     return self;
 }

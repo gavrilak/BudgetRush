@@ -15,7 +15,7 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 
 @interface  DSServerManager () {
 
-    AFHTTPRequestOperationManager *_requestOperationManager;
+   // AFHTTPRequestOperationManager *_requestOperationManager;
     DSAccessToken *_accessToken;
     AFHTTPSessionManager *_sessionManager;
 }
@@ -40,15 +40,16 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 {
     self = [super init];
     if (self) {
-       _requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
+      // _requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
        // self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
 
         AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
         policy.allowInvalidCertificates = YES;
         policy.validatesDomainName = NO;
-        _requestOperationManager.securityPolicy = policy;
+      //  _requestOperationManager.securityPolicy = policy;
         
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        _sessionManager.responseSerializer =  [AFJSONResponseSerializer serializer];
         _sessionManager.securityPolicy = policy;
     }
     
@@ -88,11 +89,11 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 }
 
 - (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
-                   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+                   onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSAccount* account;
@@ -105,29 +106,28 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(account);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
 - (void) postAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
-           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+           onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"name"        : account.name,
-                             @"user"        :@{@"id"     :[NSNumber numberWithInteger:account.user_id]},
+                             @"user"        :@{@"id" :[NSNumber numberWithInteger:account.user_id]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]}};
 
-    
-  _requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
-     [_requestOperationManager
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+     [_sessionManager
      POST:[NSString stringWithFormat: @"/v1/accounts?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSAccount* account;
          
@@ -139,68 +139,67 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(account);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
 - (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
-          onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+          onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"name"        : account.name,
-                             @"user"        :@{@"id"     :[NSNumber numberWithInteger:account.user_id]},
-                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]},
-                             @"access_token":_accessToken.token };
+                             @"user"        :@{@"id"  :[NSNumber numberWithInteger:account.user_id]},
+                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]}};
     
-    
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/accounts/%ld" ,(long)account.obj_id]
+     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/accounts/%ld?access_token=%@",account.obj_id,_accessToken.token]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSAccount* account;
          
-         for (NSDictionary* dict in responseObject) {
-             account = [[DSAccount alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             account = [[DSAccount alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(account);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 
-- (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id)) success
-              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id success)) success
+              onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString stringWithFormat:@"/v1/accounts/%ld" ,ac_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
@@ -208,13 +207,13 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 #pragma mark - categories
 
 - (void) getCategoriesOnSuccess:(void(^)(NSArray* categories)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [_requestOperationManager
+    [_sessionManager
      GET:@"/v1/categories"
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -228,22 +227,22 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) getCategory:(NSInteger) cat_id onSuccess:(void(^)(DSCategory* category)) success
-          onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+          onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/categories/%ld",cat_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSCategory* category;
@@ -256,112 +255,113 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(category);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
 - (void) postCategory:(DSCategory*) category onSuccess:(void(^)(DSCategory* category)) success
-                            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                            onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.obj_id],
-                              @"name"   :category.name,
-                              @"parent" :[NSNumber numberWithInteger:category.parent]};
+    NSDictionary* params = @{ @"name"   :category.name,
+                              @"user"   :@{@"id"  :[NSNumber numberWithInteger:category.user_id]},
+                              @"parent" :category.parent_id == 0 ? [NSNull null] : [NSNumber numberWithInteger:category.parent_id]};
+    
 
-    [_requestOperationManager
-     POST:@"/v1/categories"
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     POST: [NSString stringWithFormat:@"/v1/categories?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSCategory* category;
          
-         for (NSDictionary* dict in responseObject) {
-             category = [[DSCategory alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             category = [[DSCategory alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(category);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) putCategory:(DSCategory*) category onSuccess:(void(^)(DSCategory* category)) success
-                            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                            onFailure:(void(^)(NSError* error)) failure {
     
+    NSDictionary* params = @{ @"name"   :category.name,
+                              @"user"   :@{@"id"  :[NSNumber numberWithInteger:category.user_id]},
+                              @"parent" :category.parent_id == 0 ? [NSNull null] : [NSNumber numberWithInteger:category.parent_id]};
     
-    NSDictionary* params = @{ @"id"     :[NSNumber numberWithInteger:category.obj_id],
-                              @"name"   :category.name,
-                              @"parent" :[NSNumber numberWithInteger:category.parent]};
-    
-    
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat: @"/v1/categories/%ld",category.obj_id]
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/categories/%ld?access_token=%@",category.obj_id,_accessToken.token]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSCategory* category;
          
-         for (NSDictionary* dict in responseObject) {
-             category = [[DSCategory alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             category = [[DSCategory alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(category);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
-- (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id)) success
-              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id success)) success
+              onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString stringWithFormat: @"/v1/categories/%ld",cat_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 #pragma mark - contractors
 
 - (void) getContractorsOnSuccess:(void(^)(NSArray* contractors)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [_requestOperationManager
+    [_sessionManager
      GET:@"/v1/contractors"
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -375,22 +375,22 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) getContractor:(NSInteger) con_id onSuccess:(void(^)(DSContractor* category)) success
-           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+           onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/contractors/%ld" ,con_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSContractor* contractor;
@@ -403,99 +403,100 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(contractor);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
-- (void) postContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success   onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.obj_id],
-                              @"name"         : contractor.name,
-                              @"description"  : contractor.descr};
+    NSDictionary* params = @{ @"name"         : contractor.name,
+                              @"description"  : contractor.descr,
+                              @"user"         :@{@"id"  :[NSNumber numberWithInteger:contractor.user_id]}};
     
-    [_requestOperationManager
-     POST:@"/v1/contractors"
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     POST: [NSString stringWithFormat:@"/v1/contractors?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSContractor* contractor;
          
-         for (NSDictionary* dict in responseObject) {
-             contractor = [[DSContractor alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             contractor = [[DSContractor alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(contractor);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) putContractor:(DSContractor*) contractor onSuccess:(void(^)(DSContractor* contractor)) success
-                                                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                                                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{ @"id"           :[NSNumber numberWithInteger:contractor.obj_id],
-                              @"name"         : contractor.name,
-                              @"description"  : contractor.descr};
+    NSDictionary* params =@{ @"name"         : contractor.name,
+                             @"description"  : contractor.descr,
+                             @"user"         :@{@"id"  :[NSNumber numberWithInteger:contractor.user_id]}};
     
-    
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat :@"/v1/contractors/%ld",contractor.obj_id]
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/contractors/%ld?access_token=%@",contractor.obj_id,_accessToken.token]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSContractor* contractor;
          
-         for (NSDictionary* dict in responseObject) {
-             contractor = [[DSContractor alloc] initWithDictionary:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             contractor = [[DSContractor alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(contractor);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 
-- (void) deleteContractor:(NSInteger) con_id onSuccess:(void(^)(id)) success
-              onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteContractor:(NSInteger) con_id onSuccess:(void(^)(id success)) success
+              onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString stringWithFormat:@"/v1/contractors/%ld",con_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
@@ -503,13 +504,13 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 #pragma mark - currencies
 
 - (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [_requestOperationManager
+    [_sessionManager
      GET:@"/v1/currencies"
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -523,22 +524,22 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) getCurrency:(NSInteger) cur_id onSuccess:(void(^)(DSCurrency* currency)) success
-             onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+             onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/currencies/%ld", cur_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSCurrency* currency;
@@ -551,17 +552,17 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(currency);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
 - (void) postCurrency:(DSCurrency*) currency onSuccess:(void(^)(DSCurrency* currency)) success
-            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+            onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"name"        : currency.name,
@@ -569,27 +570,27 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                              @"code"        : [NSNumber numberWithInteger:currency.code],
                              @"symbol"      : currency.symbol};
     
-    
-    [_requestOperationManager
-     POST:@"/v1/currencies"
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     POST:[NSString stringWithFormat:@"/v1/currencies?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSCurrency* currency;
          
-         for (NSDictionary* dict in responseObject) {
-             currency = [[DSCurrency alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             currency = [[DSCurrency alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(currency);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
@@ -597,70 +598,70 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 
 
 - (void) putCurrency:(DSCurrency*) currency onSuccess:(void(^)(DSCurrency* currency)) success
-           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+           onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{@"name"        : currency.name,
-                             @"shortName"   : currency.shortName,
-                             @"code"        : [NSNumber numberWithInteger:currency.code],
-                             @"symbol"      : currency.symbol };
+    NSDictionary* params =@{@"name"        : currency.name,
+                            @"shortName"   : currency.shortName,
+                            @"code"        : [NSNumber numberWithInteger:currency.code],
+                            @"symbol"      : currency.symbol};
     
-    
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/currencies/%ld",currency.obj_id]
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/currencies/%ld?access_token=%@",currency.obj_id,_accessToken.token]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSCurrency* currency;
          
-         for (NSDictionary* dict in responseObject) {
-             currency = [[DSCurrency alloc] initWithDictionary:dict];
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             currency = [[DSCurrency alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(currency);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
-- (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id)) success
-           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id success)) success
+           onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString stringWithFormat:@"/v1/currencies/%ld" ,cur_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 #pragma mark - orders
 
 - (void) getOrdersOnSuccess:(void(^)(NSArray* orders)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [_requestOperationManager
+    [_sessionManager
      GET:@"/v1/orders"
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -674,22 +675,22 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
-        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+        onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSOrder* order;
@@ -702,72 +703,90 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(order);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
-- (void) postOrder:(DSOrder*) order onSuccess:(void(^)(DSCurrency* currency)) success
-            onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) postOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+            onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : order.date,
-                             @"symbol"      : @""};
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id],
+                                               @"currency" :
+                                                @{@"id" : [NSNumber numberWithInteger:order.cur_id]}},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};
     
-    
-    [_requestOperationManager
-     POST:@"/v1/currencies"
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     POST:[NSString stringWithFormat:@"/v1/orders?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
-         DSCurrency* currency;
-         
-         for (NSDictionary* dict in responseObject) {
-             currency = [[DSCurrency alloc] initWithDictionary:dict];
-         }
-         
-         if (success) {
-             success(currency);
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"Error: %@", error);
-         
-         if (failure) {
-             failure(error, operation.response.statusCode);
-         }
-     }];
-    
-}
-
-- (void) putOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
-        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
-     GET:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         
          DSOrder* order;
          
-         for (NSDictionary* dict in responseObject) {
-             order = [[DSOrder alloc] initWithDictionary:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             order = [[DSOrder alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(order);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
+         }
+     }];
+    
+}
+
+- (void) putOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+                                    onFailure:(void(^)(NSError* error)) failure {
+    
+    
+    NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
+                             @"date"        : order.date,
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id],
+                                               @"currency" :
+                                                   @{@"id" : [NSNumber numberWithInteger:order.cur_id]}},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};
+
+    
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/orders/%ld?access_token=%@",order.obj_id,_accessToken.token]
+     parameters:params
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         DSOrder* order;
+         
+         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             order = [[DSOrder alloc] initWithDictionary:responseObject];
+         }
+         
+         if (success) {
+             success(order);
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
          }
      }];
 }
@@ -775,23 +794,23 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 
 
 
-- (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id)) success
-          onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id success)) success
+          onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString stringWithFormat:@"/v1/orders/%ld", ord_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
@@ -800,13 +819,13 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 #pragma mark - users
 
 - (void) getUsersOnSuccess:(void(^)(NSArray* users)) success
-                    onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                    onFailure:(void(^)(NSError* error)) failure {
     
     
-    [_requestOperationManager
+    [_sessionManager
      GET:@"/v1/users"
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
@@ -820,191 +839,135 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(objectsArray);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) getUser:(NSInteger) usr_id onSuccess:(void(^)(DSUser* user)) success
-        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+                                onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      GET:[NSString stringWithFormat:@"/v1/users/%ld", usr_id]
      parameters:@{@"access_token":_accessToken.token}
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          DSUser* user;
          
-         for (NSDictionary* dict in responseObject) {
-             user = [[DSUser alloc] initWithDictionary:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             user = [[DSUser alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(user);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
-- (void) getUserRoleForName:(NSString*) name onSuccess:(void(^)(NSString* role)) success
-       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
-     GET:[@"/v1/users/role/" stringByAppendingString:name]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         
-         NSString* role;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]){
-             role = [responseObject objectForKey:@"role"];
-         }
-         
-         if (success) {
-             success(role);
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"Error: %@", error);
-         
-         if (failure) {
-             failure(error, operation.response.statusCode);
-         }
-     }];
-}
+
 
 - (void) postUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
-        onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+        onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"name"     :user.name ,
-                             @"password" :user.password };
-    
-    
-    [_requestOperationManager
-     POST:@"/v1/users"
+                             @"role"     :user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN",
+                             @"password" :user.password};
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     POST:[NSString stringWithFormat:@"/v1/users?access_token=%@",_accessToken.token ]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSUser* user;
          
-         for (NSDictionary* dict in responseObject) {
-             user = [[DSUser alloc] initWithDictionary:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             user = [[DSUser alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(user);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
 - (void) putUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
-       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+                                onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"name"     :user.name ,
-                             @"password" :user.password };
+                             @"password" :user.password ,
+                             @"role"     :user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN"};
     
-    
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/users/%ld" , user.obj_id]
+    _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    [_sessionManager
+     PUT:[NSString stringWithFormat:@"/v1/users/%ld?access_token=%@",user.obj_id,_accessToken.token]
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSUser* user;
          
-         for (NSDictionary* dict in responseObject) {
-             user = [[DSUser alloc] initWithDictionary:dict];
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+             user = [[DSUser alloc] initWithDictionary:responseObject];
          }
          
          if (success) {
              success(user);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
-- (void) putUserRole:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
-           onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    
-    
-    NSString *role  = user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN";
-
-    [_requestOperationManager
-     PUT:[NSString stringWithFormat:@"/v1/users/role/%@&%@" , user.name , role]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         DSUser* user;
-         
-         for (NSDictionary* dict in responseObject) {
-             user = [[DSUser alloc] initWithDictionary:dict];
-         }
-         
-         if (success) {
-             success(user);
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"Error: %@", error);
-         
-         if (failure) {
-             failure(error, operation.response.statusCode);
-         }
-     }];
-    
-}
-
-
-- (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id)) success
-       onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
-    [_requestOperationManager
+- (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id success)) success
+                        onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
      DELETE:[NSString  stringWithFormat:@"/v1/users/%ld" , usr_id]
-     parameters:nil
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
 }
 
 #pragma mark - token
-- (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success     onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"client_id"     : rest_id,
@@ -1013,11 +976,11 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                              @"username"      : userName ,
                              @"password"      : password };
     
-    
-    [_requestOperationManager
+     _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer];
+    [_sessionManager
      POST:@"/oauth/token"
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSAccessToken* token;
          
@@ -1030,17 +993,18 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(token);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
      }];
     
 }
 
-- (void) refreshToken:(NSString*) token onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error, NSInteger statusCode)) failure {
+- (void) refreshToken:(NSString*) token onSuccess:(void(^)(DSAccessToken* token)) success
+                                        onFailure:(void(^)(NSError* error)) failure {
     
     
     NSDictionary* params = @{@"client_id"     : rest_id,
@@ -1048,11 +1012,11 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                              @"grant_type"    : @"refresh_token",
                              @"refresh_token" : token };
     
-    
-    [_requestOperationManager
+     _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer];
+    [_sessionManager
      POST:@"/oauth/token"
      parameters:params
-     success:^(AFHTTPRequestOperation *operation, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          DSAccessToken* token;
          
@@ -1065,11 +1029,11 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
              success(token);
          }
          
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
          NSLog(@"Error: %@", error);
          
          if (failure) {
-             failure(error, operation.response.statusCode);
+             failure(error);
          }
     
      }];

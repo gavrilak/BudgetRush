@@ -12,8 +12,8 @@
 @interface DSCategory : DSObjectBudget
 
 @property (strong,nonatomic) NSString *name;
-@property (assign,nonatomic) NSInteger parent;
-@property (assign,nonatomic) NSInteger usr_id;
+@property (assign,nonatomic) NSInteger parent_id;
+@property (assign,nonatomic) NSInteger user_id;
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 

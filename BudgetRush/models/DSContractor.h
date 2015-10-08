@@ -13,6 +13,7 @@
 
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *descr;
+@property (assign,nonatomic) NSInteger user_id;
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 
