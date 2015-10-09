@@ -15,9 +15,7 @@
     self = [super initWithDictionary:responseObject];
     if (self) {
         self.amount = [[responseObject objectForKey:@"amount"]decimalValue];
-      //  NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-     //   [dateFormat setDateFormat:@"yyyy-MM-dd-"];
-     //   self.date= [dateFormat dateFromString:[responseObject objectForKey:@"date"]];
+        self.date= [NSDate dateWithTimeIntervalSince1970:[[responseObject objectForKey:@"date"] integerValue ]];
         if ([[responseObject objectForKey:@"type"] isEqualToString:@"ORDER"]) {
             self.type = typeOrder;
         } else {

@@ -23,19 +23,19 @@
     [[AFHTTPRequestOperationLogger sharedLogger] startLogging];
     [AFHTTPRequestOperationLogger sharedLogger].level =  AFLoggerLevelDebug;
        [[DSServerManager sharedManager] getTokenForUser:@"admin" andPassword:@"1" onSuccess:^(DSAccessToken *token) {
-           NSInteger ident = 6;
+         //  NSInteger ident = 6;
            
-           
-           [[DSServerManager sharedManager] getUser:ident onSuccess:^(DSUser *account) {
+         
+        /*   [[DSServerManager sharedManager] getUser:ident onSuccess:^(DSUser *account) {
                NSLog(@"ok");
            } onFailure:^(NSError *error) {
                NSLog(@"No_ok");
            }];
            
            DSUser* usr = [DSUser new];
-           usr.obj_id = 7;
+           usr.obj_id = 6;
            usr.name = @"ios user";
-           usr.password = @"pass";
+           usr.password = @"storng(passwoR0d";
            usr.role = userRole;
            [[DSServerManager sharedManager] postUser:usr onSuccess:^(DSUser *account) {
                 NSLog(@"ok");
@@ -47,12 +47,12 @@
            } onFailure:^(NSError *error) {
                 NSLog(@"No_ok");
            }];
-        /*   [[DSServerManager sharedManager] deleteUser:ident onSuccess:^(id success) {
+           [[DSServerManager sharedManager] deleteUser:ident onSuccess:^(id success) {
                NSLog(@"ok");
            } onFailure:^(NSError *error) {
                 NSLog(@"No_ok");
            }];*/
-       /*    NSInteger ident = 7;
+       /*    NSInteger ident = 6;
            
            
            [[DSServerManager sharedManager] getCurrency:ident onSuccess:^(DSCurrency *account) {
@@ -62,7 +62,7 @@
            }];
            
            DSCurrency* cur = [DSCurrency new];
-           cur.obj_id = 4;
+           cur.obj_id = 5;
            cur.name = @"ios currency after put";
            cur.shortName = @"ios";
            cur.symbol =@"i";
@@ -82,7 +82,43 @@
             NSLog(@"ok");
             } onFailure:^(NSError *error) {
             NSLog(@"No_ok");
-            }]; */
+            }];*/
+           NSInteger ident = 6;
+           
+           
+           [[DSServerManager sharedManager] getOrder:ident onSuccess:^(DSOrder *account) {
+               NSLog(@"ok");
+           } onFailure:^(NSError *error) {
+               NSLog(@"No_ok");
+           }];
+           
+           DSOrder* ord = [DSOrder new];
+           ord.obj_id = 5;
+           ord.type = typeOrder;
+           
+           ord.amount = [[NSDecimalNumber numberWithInt:1] decimalValue];
+           ord.date = [NSDate dateWithTimeIntervalSince1970:978307200 ];
+           ord.acc_id = 1;
+           ord.cur_id = 1;
+           ord.con_id = 1;
+           ord.cat_id = 1;
+            //cat.currency_id = 1;
+    
+           [[DSServerManager sharedManager] postOrder:ord onSuccess:^(DSOrder *account) {
+               NSLog(@"ok");
+           } onFailure:^(NSError *error) {
+               NSLog(@"no_ok");
+           }];
+           [[DSServerManager sharedManager] getOrdersOnSuccess:^(NSArray *accounts) {
+               NSLog(@"ok");
+           } onFailure:^(NSError *error) {
+               NSLog(@"No_ok");
+           }];
+         /*  [[DSServerManager sharedManager] deleteOrder:ident onSuccess:^(id success) {
+               NSLog(@"ok");
+           } onFailure:^(NSError *error) {
+               NSLog(@"No_ok");
+           }];*/
     } onFailure:^(NSError *error) {
         NSLog(@"failure");
     }];

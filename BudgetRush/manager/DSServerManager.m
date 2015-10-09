@@ -718,7 +718,7 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
     
     NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : order.date,
+                             @"date"        : [NSNumber numberWithDouble:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id],
                                                @"currency" :
