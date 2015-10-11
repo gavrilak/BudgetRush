@@ -717,15 +717,14 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
     
     
     NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
-                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithDouble:[order.date timeIntervalSince1970]],
+                             @"type"        : @"TRANSFER_ORDER",//order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id],
-                                               @"currency" :
-                                                @{@"id" : [NSNumber numberWithInteger:order.cur_id]}},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
+    //_sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [_sessionManager
      POST:[NSString stringWithFormat:@"/v1/orders?access_token=%@",_accessToken.token ]
      parameters:params
@@ -759,9 +758,7 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : order.date,
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id],
-                                               @"currency" :
-                                                   @{@"id" : [NSNumber numberWithInteger:order.cur_id]}},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};
 
     
@@ -887,7 +884,7 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                              @"password" :user.password};
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     POST:[NSString stringWithFormat:@"/v1/users?access_token=%@",_accessToken.token ]
+     POST:@"/v1/users"
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);

@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BudgetRush/manager/DSServerManager.m"
-            timestampString = "466035931.924913"
+            timestampString = "466103255.045995"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "956"
-            endingLineNumber = "956"
-            landmarkName = "-getTokenForUser:andPassword:onSuccess:onFailure:"
+            startingLineNumber = "953"
+            endingLineNumber = "953"
+            landmarkName = "-deleteUser:onSuccess:onFailure:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BudgetRush/manager/DSServerManager.m"
-            timestampString = "466035931.924913"
+            timestampString = "466103255.045995"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "932"
-            endingLineNumber = "932"
-            landmarkName = "-deleteUser:onSuccess:onFailure:"
+            startingLineNumber = "929"
+            endingLineNumber = "929"
+            landmarkName = "-putUser:onSuccess:onFailure:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BudgetRush/AppDelegate.m"
-            timestampString = "466036131.596945"
+            timestampString = "466092772.80677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
@@ -241,6 +241,54 @@
             endingLineNumber = "29"
             landmarkName = "-initWithDictionary:"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetRush/AppDelegate.m"
+            timestampString = "466092772.80677"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__57-[AppDelegate application:didFinishLaunchingWithOptions:]_block_invoke"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dima/Desktop/BudgetRush/BudgetRush/AppDelegate.m"
+                  timestampString = "466091054.691422"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "217">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__57-[AppDelegate application:didFinishLaunchingWithOptions:]_block_invoke_2"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dima/Desktop/BudgetRush/BudgetRush/AppDelegate.m"
+                  timestampString = "466091054.691725"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "43">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
