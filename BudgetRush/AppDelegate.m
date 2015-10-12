@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "DSServerManager.h"
 #import "AFNetworkActivityLogger.h"
-#import "AFHTTPRequestOperationLogger.h"
 @interface AppDelegate ()
 
 @end
@@ -19,110 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-   //// [[AFHTTPRequestOperationLogger sharedLogger] startLogging];
-   // [AFHTTPRequestOperationLogger sharedLogger].level =  AFLoggerLevelDebug;
-       [[DSServerManager sharedManager] getTokenForUser:@"admin" andPassword:@"1" onSuccess:^(DSAccessToken *token) {
-           NSInteger ident = 6;
-           
-         
-        /*   [[DSServerManager sharedManager] getUser:ident onSuccess:^(DSUser *account) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }];*/
-           
-        /*   DSUser* usr = [DSUser new];
-           usr.obj_id = 6;
-           usr.name = @"ios user";
-           usr.password = @"storng(passwoR0d";
-           usr.role = userRole;
-           [[DSServerManager sharedManager] postUser:usr onSuccess:^(DSUser *account) {
-                NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-                NSLog(@"no_ok");
-           }]; */
-         /*  [[DSServerManager sharedManager] getUsersOnSuccess:^(NSArray *accounts) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-                NSLog(@"No_ok");
-           }];*/
-       /*    [[DSServerManager sharedManager] deleteUser:ident onSuccess:^(id success) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-                NSLog(@"No_ok");
-           }];*/
-      /*    NSInteger ident = 6;
-           
-           
-           [[DSServerManager sharedManager] getCurrency:ident onSuccess:^(DSCurrency *account) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }]; */
-           
-           DSCurrency* cur = [DSCurrency new];
-           cur.obj_id = 5;
-           cur.name = @"ios currency after put";
-           cur.shortName = @"ios";
-           cur.symbol =@"!";
-           //cat.currency_id = 1;
-           cur.code = 10;
-           [[DSServerManager sharedManager] putCurrency:cur onSuccess:^(DSCurrency *account) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"no_ok");
-           }];
-        /*   [[DSServerManager sharedManager] getCurrenciesOnSuccess:^(NSArray *accounts) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }];
-            [[DSServerManager sharedManager] deleteCurrency:ident onSuccess:^(id success) {
-            NSLog(@"ok");
-            } onFailure:^(NSError *error) {
-            NSLog(@"No_ok");
-            }]; */
-        /*   NSInteger ident = 6;
-           
-           
-           [[DSServerManager sharedManager] getOrder:ident onSuccess:^(DSOrder *account) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }];
-           */
-           DSOrder* ord = [DSOrder new];
-           ord.obj_id = 5;
-           ord.type = typeOrder;
-           
-           ord.amount = [[NSDecimalNumber numberWithInt:1] decimalValue];
-           ord.date = [NSDate date ];
-           ord.acc_id = 1;
-           ord.cur_id = 1;
-           ord.con_id = 1;
-           ord.cat_id = 1;
-            //cat.currency_id = 1;
-    
-           [[DSServerManager sharedManager] postOrder:ord onSuccess:^(DSOrder *account) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"no_ok");
-           }];/*
-           [[DSServerManager sharedManager] getOrdersOnSuccess:^(NSArray *accounts) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }];*/
-         /*  [[DSServerManager sharedManager] deleteOrder:ident onSuccess:^(id success) {
-               NSLog(@"ok");
-           } onFailure:^(NSError *error) {
-               NSLog(@"No_ok");
-           }];*/
-    } onFailure:^(NSError *error) {
-        NSLog(@"failure");
-    }];
+   // [[AFNetworkActivityLogger sharedLogger] startLogging];
+   // [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+
     
     return YES;
 }

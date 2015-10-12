@@ -8,6 +8,13 @@
 
 #import "DSServerManager.h"
 #import <AFNetworking.h>
+#import "DSAccount.h"
+#import "DSCategory.h"
+#import "DSContractor.h"
+#import "DSCurrency.h"
+#import "DSOrder.h"
+#import "DSUser.h"
+#import "DSAccessToken.h"
 
 NSString *const rest_id = @"ios_id";
 NSString *const rest_key = @"ios_key";
@@ -15,7 +22,6 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 
 @interface  DSServerManager () {
 
-   // AFHTTPRequestOperationManager *_requestOperationManager;
     DSAccessToken *_accessToken;
     AFHTTPSessionManager *_sessionManager;
 }
@@ -40,16 +46,13 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
 {
     self = [super init];
     if (self) {
-      // _requestOperationManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:@"https://46.101.220.157:9443"]];
-       // self.requestOperationManager.requestSerializer =  [AFJSONRequestSerializer serializer];
-
+        
+        _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        
+        _sessionManager.responseSerializer =  [AFJSONResponseSerializer serializer];
         AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
         policy.allowInvalidCertificates = YES;
         policy.validatesDomainName = NO;
-      //  _requestOperationManager.securityPolicy = policy;
-        
-        _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
-        _sessionManager.responseSerializer =  [AFJSONResponseSerializer serializer];
         _sessionManager.securityPolicy = policy;
     }
     
@@ -716,15 +719,14 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
             onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
-                             @"type"        : @"TRANSFER_ORDER",//order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
-    //_sessionManager.responseSerializer = [AFJSONResponseSerializer serializer];
     [_sessionManager
      POST:[NSString stringWithFormat:@"/v1/orders?access_token=%@",_accessToken.token ]
      parameters:params
@@ -754,9 +756,9 @@ NSString *const baseUrl = @"https://46.101.220.157:9443";
                                     onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{@"ammount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : order.date,
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.con_id]},
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.acc_id]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.cat_id]}};

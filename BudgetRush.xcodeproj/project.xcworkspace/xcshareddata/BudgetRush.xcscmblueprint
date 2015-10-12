@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F8F0ECA73C65BC77CBD1D8A182FF9A430FFD5F46",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4155EB27E924293C270F0A40350D8CC5DC205638" : 0,
+    "F8F0ECA73C65BC77CBD1D8A182FF9A430FFD5F46" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5B1C1268-26C2-43C5-B772-DD0A14B83FCC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4155EB27E924293C270F0A40350D8CC5DC205638" : "",
+    "F8F0ECA73C65BC77CBD1D8A182FF9A430FFD5F46" : "BudgetRush\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BudgetRush",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BudgetRush.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/christophedellac\/CDSideBarController.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4155EB27E924293C270F0A40350D8CC5DC205638"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gavrilak\/BudgetRush.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F8F0ECA73C65BC77CBD1D8A182FF9A430FFD5F46"
+    }
+  ]
+}

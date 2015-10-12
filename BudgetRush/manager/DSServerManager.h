@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DSAccount.h"
-#import "DSCategory.h"
-#import "DSContractor.h"
-#import "DSCurrency.h"
-#import "DSOrder.h"
-#import "DSUser.h"
-#import "DSAccessToken.h"
+@class DSAccount;
+@class DSCategory;
+@class DSContractor;
+@class DSCurrency;
+@class DSOrder;
+@class DSUser;
+@class DSAccessToken;
 
 @interface DSServerManager : NSObject
 
