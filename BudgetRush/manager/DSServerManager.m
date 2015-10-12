@@ -12,7 +12,7 @@
 @interface  DSServerManager ()
 
 #warning FIX: Почему бы просто не использовать ivars? Зачем здесь именно свойства?
-#warning TODO: Попробуй поработать с AFHTTPSessionManager
+#warning TODO: Попробуй поработать с AFHTTPSessionManager 
 @property (strong,nonatomic) AFHTTPRequestOperationManager *requestOperationManager;
 @property (strong, nonatomic) DSAccessToken *accessToken;
 
