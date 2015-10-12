@@ -64,6 +64,7 @@
 		3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
 		32AEFEBE1BC5F00C009B46CE /* DSObjectBudget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSObjectBudget.h; path = models/DSObjectBudget.h; sourceTree = "<group>"; };
 		32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSObjectBudget.m; path = models/DSObjectBudget.m; sourceTree = "<group>"; };
+		32B464F61BCB4C27005705D2 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		4B41B08121D9ED967924F665 /* Pods-BudgetRush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.debug.xcconfig"; sourceTree = "<group>"; };
 		4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BudgetRush.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9FC88088F091ED097136AC /* Pods-BudgetRush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.release.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +150,7 @@
 				320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */,
 				320580D71BBC9247001DDEF6 /* Info.plist */,
 				320580C61BBC9247001DDEF6 /* Supporting Files */,
+				32B464F61BCB4C27005705D2 /* Settings.h */,
 			);
 			path = BudgetRush;
 			sourceTree = "<group>";

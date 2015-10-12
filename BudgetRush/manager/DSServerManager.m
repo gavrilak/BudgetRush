@@ -5,7 +5,7 @@
 //  Created by Dima on 01.10.15.
 //  Copyright © 2015 Dima Soldatenko. All rights reserved.
 //
-
+#import "Settings.h"
 #import "DSServerManager.h"
 #import <AFNetworking.h>
 #import "DSAccount.h"
@@ -16,9 +16,7 @@
 #import "DSUser.h"
 #import "DSAccessToken.h"
 
-NSString *const rest_id = @"ios_id";
-NSString *const rest_key = @"ios_key";
-NSString *const baseUrl = @"https://46.101.220.157:9443";
+
 
 @interface  DSServerManager () {
 
