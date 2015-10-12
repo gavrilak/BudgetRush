@@ -139,6 +139,7 @@
 		320580C51BBC9247001DDEF6 /* BudgetRush */ = {
 			isa = PBXGroup;
 			children = (
+				32B464F61BCB4C27005705D2 /* Settings.h */,
 				3228445D1BC3188B00541A05 /* AFNetworkActivityLogger */,
 				BFF1358D1BBD73240047AD90 /* manager */,
 				BFF1358C1BBD731C0047AD90 /* models */,
@@ -150,7 +151,6 @@
 				320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */,
 				320580D71BBC9247001DDEF6 /* Info.plist */,
 				320580C61BBC9247001DDEF6 /* Supporting Files */,
-				32B464F61BCB4C27005705D2 /* Settings.h */,
 			);
 			path = BudgetRush;
 			sourceTree = "<group>";
