@@ -10,4 +10,4 @@
 
 NSString *const rest_id = @"ios_id";
 NSString *const rest_key = @"ios_key";
-NSString *const baseUrl = @"https://46.101.220.157:9443
+NSString *const baseUrl = @"https://46.101.220.157:9443";
