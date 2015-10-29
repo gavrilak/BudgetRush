@@ -18,6 +18,7 @@ enum orderType : NSUInteger {
 @property (assign,nonatomic) NSDecimal amount;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;
+#warning TODO: Сложно разобрать за что отвечает каждое из этих свойств. Не нужно так сильно сокращать.
 @property (assign,nonatomic) NSInteger acc_id;
 @property (assign,nonatomic) NSInteger cur_id;
 @property (assign,nonatomic) NSInteger cat_id;

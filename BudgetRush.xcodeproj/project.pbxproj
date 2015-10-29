@@ -14,18 +14,18 @@
 		320580D61BBC9247001DDEF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */; };
 		320580E11BBC9248001DDEF6 /* BudgetRushTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580E01BBC9248001DDEF6 /* BudgetRushTests.m */; };
 		320580EC1BBC9248001DDEF6 /* BudgetRushUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580EB1BBC9248001DDEF6 /* BudgetRushUITests.m */; };
-		322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */; settings = {ASSET_TAGS = (); }; };
-		32AEFEC01BC5F00C009B46CE /* DSObjectBudget.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */; settings = {ASSET_TAGS = (); }; };
+		322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */; };
+		32AEFEC01BC5F00C009B46CE /* DSObjectBudget.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */; };
 		634B1B87BBB1E22B095A046D /* libPods-BudgetRush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */; };
-		BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358A1BBD73100047AD90 /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358F1BBD75BE0047AD90 /* DSAccount.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135931BBD77960047AD90 /* DSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135921BBD77960047AD90 /* DSCategory.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135961BBD78390047AD90 /* DSContractor.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135951BBD78390047AD90 /* DSContractor.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135991BBD78F60047AD90 /* DSCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135981BBD78F60047AD90 /* DSCurrency.m */; settings = {ASSET_TAGS = (); }; };
-		BFF1359C1BBD7CE90047AD90 /* DSOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359B1BBD7CE90047AD90 /* DSOrder.m */; settings = {ASSET_TAGS = (); }; };
-		BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359E1BBD81D10047AD90 /* DSUser.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A11BBD83270047AD90 /* DSAccessToken.m */; settings = {ASSET_TAGS = (); }; };
-		BFF135A51BBD843B0047AD90 /* DSServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A41BBD843B0047AD90 /* DSServerManager.m */; settings = {ASSET_TAGS = (); }; };
+		BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358A1BBD73100047AD90 /* ViewController.m */; };
+		BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358F1BBD75BE0047AD90 /* DSAccount.m */; };
+		BFF135931BBD77960047AD90 /* DSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135921BBD77960047AD90 /* DSCategory.m */; };
+		BFF135961BBD78390047AD90 /* DSContractor.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135951BBD78390047AD90 /* DSContractor.m */; };
+		BFF135991BBD78F60047AD90 /* DSCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135981BBD78F60047AD90 /* DSCurrency.m */; };
+		BFF1359C1BBD7CE90047AD90 /* DSOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359B1BBD7CE90047AD90 /* DSOrder.m */; };
+		BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359E1BBD81D10047AD90 /* DSUser.m */; };
+		BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A11BBD83270047AD90 /* DSAccessToken.m */; };
+		BFF135A51BBD843B0047AD90 /* DSServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A41BBD843B0047AD90 /* DSServerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -568,9 +568,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BudgetRush/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectus.BudgetRush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -580,9 +582,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BudgetRush/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.provectus.BudgetRush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -16,6 +16,9 @@
 #import "DSUser.h"
 #import "DSAccessToken.h"
 
+#warning TODO: Раз уж мы перешли на NSURLSession, думаю стоит удалить из подов AFNetworking компонент NSURLConnection. В подах есть такая возможность, можно ставить только те компоненты, которые будут использоваться в проекте
+#warning TODO: "/v1/" повторяется в каждом запросе. Лучше вынести это в отдельную константу и включить в baseURL. Зачем его повторять? К тому же, в следующем релизе этот путь может поменяться на v2, будешь править все запросы?
+#warning TODO: Данный менеджер должен отвечать только за работу с АПИ, т.е. выполнение запросов. Парсинг данных должен осуществляться в другом месте. Советую создать что-то типа DSDataManager, который будет работать с API менеджером и будет парсить данные.
 
 @interface  DSServerManager () {
 
@@ -123,6 +126,7 @@
                              @"user"        :@{@"id" :[NSNumber numberWithInteger:account.user_id]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency_id]}};
 
+#warning ???: Зачем это делать в каждом запросе? Достаточно один раз при инициализации менеджера
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
      [_sessionManager
      POST:[NSString stringWithFormat: @"/v1/accounts?access_token=%@",_accessToken.token ]

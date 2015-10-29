@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#warning TODO: Почему данный класс не может быть наследован от DSObjectBudget? 
+
 @interface DSAccessToken : NSObject
 
 @property (strong, nonatomic) NSString* token;
