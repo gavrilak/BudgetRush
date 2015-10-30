@@ -12,7 +12,7 @@
 
 - (id) initWithServerResponse:(NSDictionary*) responseObject
 {
-    self = [super init];
+     self = [super initWithDictionary:responseObject];
     if (self) {
         
         self.token = [responseObject objectForKey:@"access_token"];

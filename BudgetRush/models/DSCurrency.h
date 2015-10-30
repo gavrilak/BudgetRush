@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DSObjectBudget.h"
+#import "DSBaseModel.h"
 
-@interface DSCurrency : DSObjectBudget
+@interface DSCurrency : DSBaseModel
 
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *shortName;
@@ -19,3 +19,4 @@
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 
 @end
+

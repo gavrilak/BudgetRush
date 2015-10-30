@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSBaseModel.h"
 
-#warning TODO: Почему данный класс не может быть наследован от DSObjectBudget? 
 
-@interface DSAccessToken : NSObject
+@interface DSAccessToken : DSBaseModel
 
 @property (strong, nonatomic) NSString* token;
 @property (strong, nonatomic) NSString* refreshToken;
@@ -20,3 +20,4 @@
 - (id) initWithServerResponse:(NSDictionary*) responseObject;
 
 @end
+

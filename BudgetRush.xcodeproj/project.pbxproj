@@ -15,7 +15,7 @@
 		320580E11BBC9248001DDEF6 /* BudgetRushTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580E01BBC9248001DDEF6 /* BudgetRushTests.m */; };
 		320580EC1BBC9248001DDEF6 /* BudgetRushUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580EB1BBC9248001DDEF6 /* BudgetRushUITests.m */; };
 		322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */; };
-		32AEFEC01BC5F00C009B46CE /* DSObjectBudget.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */; };
+		32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSBaseModel.m */; };
 		634B1B87BBB1E22B095A046D /* libPods-BudgetRush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */; };
 		BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358A1BBD73100047AD90 /* ViewController.m */; };
 		BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358F1BBD75BE0047AD90 /* DSAccount.m */; };
@@ -62,8 +62,8 @@
 		320580ED1BBC9248001DDEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3228445E1BC3188B00541A05 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
 		3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
-		32AEFEBE1BC5F00C009B46CE /* DSObjectBudget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSObjectBudget.h; path = models/DSObjectBudget.h; sourceTree = "<group>"; };
-		32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSObjectBudget.m; path = models/DSObjectBudget.m; sourceTree = "<group>"; };
+		32AEFEBE1BC5F00C009B46CE /* DSBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSBaseModel.h; path = models/DSBaseModel.h; sourceTree = "<group>"; };
+		32AEFEBF1BC5F00C009B46CE /* DSBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSBaseModel.m; path = models/DSBaseModel.m; sourceTree = "<group>"; };
 		32B464F61BCB4C27005705D2 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		4B41B08121D9ED967924F665 /* Pods-BudgetRush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.debug.xcconfig"; sourceTree = "<group>"; };
 		4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BudgetRush.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,8 +219,8 @@
 		BFF1358C1BBD731C0047AD90 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				32AEFEBE1BC5F00C009B46CE /* DSObjectBudget.h */,
-				32AEFEBF1BC5F00C009B46CE /* DSObjectBudget.m */,
+				32AEFEBE1BC5F00C009B46CE /* DSBaseModel.h */,
+				32AEFEBF1BC5F00C009B46CE /* DSBaseModel.m */,
 				BFF1358E1BBD75BE0047AD90 /* DSAccount.h */,
 				BFF1358F1BBD75BE0047AD90 /* DSAccount.m */,
 				BFF135911BBD77960047AD90 /* DSCategory.h */,
@@ -413,7 +413,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32AEFEC01BC5F00C009B46CE /* DSObjectBudget.m in Sources */,
+				32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */,
 				BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */,
 				BFF135961BBD78390047AD90 /* DSContractor.m in Sources */,
 				BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */,

@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DSObjectBudget.h"
+#import "DSBaseModel.h"
 
-@interface DSCategory : DSObjectBudget
+@interface DSCategory : DSBaseModel
 
 @property (strong,nonatomic) NSString *name;
-@property (assign,nonatomic) NSInteger parent_id;
-@property (assign,nonatomic) NSInteger user_id;
+@property (assign,nonatomic) NSInteger parentIdent;
+@property (assign,nonatomic) NSInteger userIdent;
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 
