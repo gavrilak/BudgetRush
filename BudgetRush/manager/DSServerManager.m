@@ -17,7 +17,7 @@
 #import "DSUser.h"
 #import "DSAccessToken.h"
 
-#warning TODO: Раз уж мы перешли на NSURLSession, думаю стоит удалить из подов AFNetworking компонентdele. В подах есть такая возможность, можно ставить только те компоненты, которые будут использоваться в проекте
+
 
 #warning TODO: Данный менеджер должен отвечать только за работу с АПИ, т.е. выполнение запросов. Парсинг данных должен осуществляться в другом месте. Советую создать что-то типа DSDataManager, который будет работать с API менеджером и будет парсить данные.
 
@@ -49,7 +49,6 @@
     if (self) {
         
         _sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@%@",PVURLProtocol,PVServerURL,PVServerPort,PVAPIPath]]];
-        
         _sessionManager.responseSerializer =  [AFJSONResponseSerializer serializer];
         AFSecurityPolicy* policy = [AFSecurityPolicy policyWithPinningMode: AFSSLPinningModeNone];
         policy.allowInvalidCertificates = YES;
