@@ -17,7 +17,10 @@
 		322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3228445F1BC3188B00541A05 /* AFNetworkActivityLogger.m */; };
 		32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSBaseModel.m */; };
 		634B1B87BBB1E22B095A046D /* libPods-BudgetRush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */; };
-		BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358A1BBD73100047AD90 /* ViewController.m */; };
+		BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA747851BE44BF900843FC5 /* DSDataManager.m */; };
+		BFA747991BE470CF00843FC5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFA747971BE470CF00843FC5 /* 2.png */; };
+		BFA7479A1BE470CF00843FC5 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA747981BE470CF00843FC5 /* 1.jpg */; };
+		BFF1358B1BBD73100047AD90 /* DSTourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358A1BBD73100047AD90 /* DSTourViewController.m */; };
 		BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1358F1BBD75BE0047AD90 /* DSAccount.m */; };
 		BFF135931BBD77960047AD90 /* DSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135921BBD77960047AD90 /* DSCategory.m */; };
 		BFF135961BBD78390047AD90 /* DSContractor.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135951BBD78390047AD90 /* DSContractor.m */; };
@@ -68,8 +71,12 @@
 		4B41B08121D9ED967924F665 /* Pods-BudgetRush.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.debug.xcconfig"; sourceTree = "<group>"; };
 		4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BudgetRush.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B9FC88088F091ED097136AC /* Pods-BudgetRush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.release.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.release.xcconfig"; sourceTree = "<group>"; };
-		BFF135891BBD73090047AD90 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = controllers/ViewController.h; sourceTree = "<group>"; };
-		BFF1358A1BBD73100047AD90 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = controllers/ViewController.m; sourceTree = "<group>"; };
+		BFA747841BE44BF900843FC5 /* DSDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSDataManager.h; path = manager/DSDataManager.h; sourceTree = "<group>"; };
+		BFA747851BE44BF900843FC5 /* DSDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSDataManager.m; path = manager/DSDataManager.m; sourceTree = "<group>"; };
+		BFA747971BE470CF00843FC5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		BFA747981BE470CF00843FC5 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		BFF135891BBD73090047AD90 /* DSTourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSTourViewController.h; path = controllers/DSTourViewController.h; sourceTree = "<group>"; };
+		BFF1358A1BBD73100047AD90 /* DSTourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSTourViewController.m; path = controllers/DSTourViewController.m; sourceTree = "<group>"; };
 		BFF1358E1BBD75BE0047AD90 /* DSAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSAccount.h; path = models/DSAccount.h; sourceTree = "<group>"; };
 		BFF1358F1BBD75BE0047AD90 /* DSAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSAccount.m; path = models/DSAccount.m; sourceTree = "<group>"; };
 		BFF135911BBD77960047AD90 /* DSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSCategory.h; path = models/DSCategory.h; sourceTree = "<group>"; };
@@ -210,8 +217,10 @@
 		BFF135881BBD72DD0047AD90 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BFF1358A1BBD73100047AD90 /* ViewController.m */,
-				BFF135891BBD73090047AD90 /* ViewController.h */,
+				BFA747971BE470CF00843FC5 /* 2.png */,
+				BFA747981BE470CF00843FC5 /* 1.jpg */,
+				BFF135891BBD73090047AD90 /* DSTourViewController.h */,
+				BFF1358A1BBD73100047AD90 /* DSTourViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -244,6 +253,8 @@
 			children = (
 				BFF135A31BBD843B0047AD90 /* DSServerManager.h */,
 				BFF135A41BBD843B0047AD90 /* DSServerManager.m */,
+				BFA747841BE44BF900843FC5 /* DSDataManager.h */,
+				BFA747851BE44BF900843FC5 /* DSDataManager.m */,
 			);
 			name = manager;
 			sourceTree = "<group>";
@@ -260,6 +271,7 @@
 				320580C01BBC9247001DDEF6 /* Frameworks */,
 				320580C11BBC9247001DDEF6 /* Resources */,
 				1DE9D0C1A872B3299409F3AA /* Copy Pods Resources */,
+				6A5978E8C22A4C45BE360EFC /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -355,7 +367,9 @@
 			files = (
 				320580D61BBC9247001DDEF6 /* LaunchScreen.storyboard in Resources */,
 				320580D31BBC9247001DDEF6 /* Assets.xcassets in Resources */,
+				BFA747991BE470CF00843FC5 /* 2.png in Resources */,
 				320580D11BBC9247001DDEF6 /* Main.storyboard in Resources */,
+				BFA7479A1BE470CF00843FC5 /* 1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +405,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6A5978E8C22A4C45BE360EFC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FB70CB9BE0BFC60815B0C10C /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -414,7 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */,
-				BFF1358B1BBD73100047AD90 /* ViewController.m in Sources */,
+				BFF1358B1BBD73100047AD90 /* DSTourViewController.m in Sources */,
 				BFF135961BBD78390047AD90 /* DSContractor.m in Sources */,
 				BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */,
 				BFF135A51BBD843B0047AD90 /* DSServerManager.m in Sources */,
@@ -423,6 +452,7 @@
 				BFF135931BBD77960047AD90 /* DSCategory.m in Sources */,
 				320580C81BBC9247001DDEF6 /* main.m in Sources */,
 				BFF135991BBD78F60047AD90 /* DSCurrency.m in Sources */,
+				BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */,
 				BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */,
 				322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */,
 				BFF1359C1BBD7CE90047AD90 /* DSOrder.m in Sources */,

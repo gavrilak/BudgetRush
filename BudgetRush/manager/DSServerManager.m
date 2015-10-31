@@ -7,6 +7,7 @@
 //
 #import "Settings.h"
 #import "DSServerManager.h"
+#import "DSDataManager.h"
 #import <AFNetworking.h>
 #import "DSAccount.h"
 #import "DSCategory.h"
@@ -70,12 +71,7 @@
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-         NSMutableArray* objectsArray = [NSMutableArray array];
-         
-         for (NSDictionary* dict in responseObject) {
-             DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
-             [objectsArray addObject:acc];
-         }
+         NSMutableArray* objectsArray = [DSDataManager getAccountsFromDict:responseObject];
          
          if (success) {
              success(objectsArray);
@@ -133,12 +129,7 @@
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
-         DSAccount* account;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             account = [[DSAccount alloc] initWithDictionary:responseObject];
-         }
-         
+         DSAccount* account = [DSDataManager getAccountFromDict:responseObject];
          if (success) {
              success(account);
          }
