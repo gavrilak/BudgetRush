@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DSBaseModel.h"
 
-@interface DSAccessToken : NSObject
+
+@interface DSAccessToken : DSBaseModel
 
 @property (strong, nonatomic) NSString* token;
 @property (strong, nonatomic) NSString* refreshToken;
@@ -18,3 +20,4 @@
 - (id) initWithServerResponse:(NSDictionary*) responseObject;
 
 @end
+

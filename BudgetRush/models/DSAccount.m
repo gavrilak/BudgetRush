@@ -15,8 +15,8 @@
     self = [super initWithDictionary:responseObject];
     if (self) {
         self.name = [responseObject objectForKey:@"name"];
-        self.user_id = [[[responseObject objectForKey:@"user"] objectForKey:@"id"]integerValue];
-        self.currency_id = [[[responseObject objectForKey:@"currency"] objectForKey:@"id"] integerValue];
+        self.userIdent = [[[responseObject objectForKey:@"user"] objectForKey:@"id"]integerValue];
+        self.currencyIdent = [[[responseObject objectForKey:@"currency"] objectForKey:@"id"] integerValue];
     }
     return self;
 }

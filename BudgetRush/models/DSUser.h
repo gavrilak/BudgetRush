@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DSObjectBudget.h"
+#import "DSBaseModel.h"
 
 enum userRole : NSUInteger {
     userRole , adminRole
 };
 
-@interface DSUser : DSObjectBudget
+@interface DSUser : DSBaseModel
 
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *password;

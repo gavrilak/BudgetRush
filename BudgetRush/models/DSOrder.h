@@ -7,23 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DSObjectBudget.h"
+#import "DSBaseModel.h"
 
 enum orderType : NSUInteger {
     typeOrder ,typeTransfer
 };
 
-@interface DSOrder : DSObjectBudget
+@interface DSOrder : DSBaseModel
 
 @property (assign,nonatomic) NSDecimal amount;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;
-@property (assign,nonatomic) NSInteger acc_id;
-@property (assign,nonatomic) NSInteger cur_id;
-@property (assign,nonatomic) NSInteger cat_id;
-@property (assign,nonatomic) NSInteger con_id;
-@property (assign,nonatomic) NSInteger exp_id;
-@property (assign,nonatomic) NSInteger inc_id;
+@property (assign,nonatomic) NSInteger accountIdent;
+@property (assign,nonatomic) NSInteger currencyIdent;
+@property (assign,nonatomic) NSInteger categoryIdent;
+@property (assign,nonatomic) NSInteger contractorIdent;
+
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
 

@@ -16,7 +16,7 @@
     if (self) {
         self.name = [responseObject objectForKey:@"name"];
         self.descr = [responseObject objectForKey:@"description"];
-        self.user_id = [[[responseObject objectForKey:@"user"]objectForKey:@"id"]integerValue] ;
+        self.userIdent = [[[responseObject objectForKey:@"user"]objectForKey:@"id"]integerValue] ;
     }
     return self;
 }

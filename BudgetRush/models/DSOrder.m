@@ -21,10 +21,10 @@
         } else {
             self.type = typeTransfer;
         }
-        self.acc_id = [[[responseObject objectForKey:@"account"] objectForKey:@"id"]integerValue];
-        self.cur_id = [[[[responseObject objectForKey:@"account"] objectForKey:@"currency"] objectForKey:@"id"]integerValue];
-        self.con_id = [[[responseObject objectForKey:@"contractor"] objectForKey:@"id"]integerValue];
-        self.cat_id = [[[responseObject objectForKey:@"category"] objectForKey:@"id"]integerValue];
+        self.accountIdent = [[[responseObject objectForKey:@"account"] objectForKey:@"id"]integerValue];
+        self.currencyIdent = [[[[responseObject objectForKey:@"account"] objectForKey:@"currency"] objectForKey:@"id"]integerValue];
+        self.contractorIdent = [[[responseObject objectForKey:@"contractor"] objectForKey:@"id"]integerValue];
+        self.categoryIdent = [[[responseObject objectForKey:@"category"] objectForKey:@"id"]integerValue];
         
     }
     return self;
