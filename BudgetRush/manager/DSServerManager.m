@@ -122,6 +122,8 @@
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
     
 #warning ???: Зачем это делать в каждом запросе? Достаточно один раз при инициализации менеджера
+#warning  для токена    _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer]
+#warning для post запросов _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer] по другому пока не работает
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
      POST:[NSString stringWithFormat: @"accounts?access_token=%@",_accessToken.token ]
