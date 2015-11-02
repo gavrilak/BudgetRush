@@ -12,6 +12,7 @@
 #import "DSContractor.h"
 #import "DSOrder.h"
 #import "DSCurrency.h"
+#import "DSServerManager.h"
 
 @implementation DSDataManager
 
@@ -35,6 +36,27 @@
     }
     
     return account;
+}
+
+
+
+
+
+- (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
+                    onFailure:(void(^)(NSError* error)) failure
+{
+    
+    [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSDictionary *response) {
+        
+        NSArray *accounts = nil; //Parse dict to NSObjects
+        
+        if (success)
+            success(accounts);
+        
+    } onFailure:^(NSError *error) {
+        //
+    }];
+    
 }
 
 @end

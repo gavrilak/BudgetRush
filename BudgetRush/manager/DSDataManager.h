@@ -20,4 +20,11 @@
 + (NSMutableArray*) getAccountsFromDict: (NSDictionary*) dictionary;
 + (DSAccount*) getAccountFromDict: (NSDictionary*) dictionary;
 
+
+
+
+- (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
+                    onFailure:(void(^)(NSError* error)) failure;
+
+
 @end

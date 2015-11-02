@@ -60,7 +60,7 @@
 }
 #pragma mark - accounts
 
-- (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
+- (void) getAccountsOnSuccess:(void(^)(NSDictionary* response)) success
                     onFailure:(void(^)(NSError* error)) failure {
     
     
@@ -70,10 +70,10 @@
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-         NSMutableArray* objectsArray = [DSDataManager getAccountsFromDict:responseObject];
+//         NSMutableArray* objectsArray = [DSDataManager getAccountsFromDict:responseObject];
          
          if (success) {
-             success(objectsArray);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {

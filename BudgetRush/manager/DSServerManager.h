@@ -20,7 +20,7 @@
 
 + (DSServerManager *)sharedManager;
 
-- (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
+- (void) getAccountsOnSuccess:(void(^)(NSDictionary* response)) success
                     onFailure:(void(^)(NSError* error)) failure;
 
 - (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
