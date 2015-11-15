@@ -1,5 +1,5 @@
 //
-//  DSServerManager.h
+//  DSApiManager.h
 //  BudgetRush
 //
 //  Created by Dima on 01.10.15.
@@ -16,17 +16,17 @@
 @class DSAccessToken;
 
 
-@interface DSServerManager : NSObject
+@interface DSApiManager : NSObject
 
-+ (DSServerManager *)sharedManager;
++ (DSApiManager *)sharedManager;
 
 - (void) getAccountsOnSuccess:(void(^)(NSDictionary* response)) success
                     onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
+- (void) getAccount:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
           onFailure:(void(^)(NSError* error)) failure;
 
-- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(NSDictionary *response)) success
            onFailure:(void(^)(NSError* error)) failure;
 
 - (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success

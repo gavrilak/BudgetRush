@@ -17,11 +17,8 @@
 
 @interface DSDataManager : NSObject
 
-+ (NSMutableArray*) getAccountsFromDict: (NSDictionary*) dictionary;
-+ (DSAccount*) getAccountFromDict: (NSDictionary*) dictionary;
-
-
-
+- (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
+          onFailure:(void(^)(NSError* error)) failure;
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
                     onFailure:(void(^)(NSError* error)) failure;

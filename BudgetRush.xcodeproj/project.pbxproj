@@ -28,7 +28,7 @@
 		BFF1359C1BBD7CE90047AD90 /* DSOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359B1BBD7CE90047AD90 /* DSOrder.m */; };
 		BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1359E1BBD81D10047AD90 /* DSUser.m */; };
 		BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A11BBD83270047AD90 /* DSAccessToken.m */; };
-		BFF135A51BBD843B0047AD90 /* DSServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A41BBD843B0047AD90 /* DSServerManager.m */; };
+		BFF135A51BBD843B0047AD90 /* DSApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF135A41BBD843B0047AD90 /* DSApiManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,8 +91,8 @@
 		BFF1359E1BBD81D10047AD90 /* DSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSUser.m; path = models/DSUser.m; sourceTree = "<group>"; };
 		BFF135A01BBD83270047AD90 /* DSAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSAccessToken.h; path = models/DSAccessToken.h; sourceTree = "<group>"; };
 		BFF135A11BBD83270047AD90 /* DSAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSAccessToken.m; path = models/DSAccessToken.m; sourceTree = "<group>"; };
-		BFF135A31BBD843B0047AD90 /* DSServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSServerManager.h; path = manager/DSServerManager.h; sourceTree = "<group>"; };
-		BFF135A41BBD843B0047AD90 /* DSServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSServerManager.m; path = manager/DSServerManager.m; sourceTree = "<group>"; };
+		BFF135A31BBD843B0047AD90 /* DSApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSApiManager.h; path = manager/DSApiManager.h; sourceTree = "<group>"; };
+		BFF135A41BBD843B0047AD90 /* DSApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSApiManager.m; path = manager/DSApiManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,8 +251,8 @@
 		BFF1358D1BBD73240047AD90 /* manager */ = {
 			isa = PBXGroup;
 			children = (
-				BFF135A31BBD843B0047AD90 /* DSServerManager.h */,
-				BFF135A41BBD843B0047AD90 /* DSServerManager.m */,
+				BFF135A31BBD843B0047AD90 /* DSApiManager.h */,
+				BFF135A41BBD843B0047AD90 /* DSApiManager.m */,
 				BFA747841BE44BF900843FC5 /* DSDataManager.h */,
 				BFA747851BE44BF900843FC5 /* DSDataManager.m */,
 			);
@@ -446,7 +446,7 @@
 				BFF1358B1BBD73100047AD90 /* DSTourViewController.m in Sources */,
 				BFF135961BBD78390047AD90 /* DSContractor.m in Sources */,
 				BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */,
-				BFF135A51BBD843B0047AD90 /* DSServerManager.m in Sources */,
+				BFF135A51BBD843B0047AD90 /* DSApiManager.m in Sources */,
 				320580CB1BBC9247001DDEF6 /* AppDelegate.m in Sources */,
 				BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */,
 				BFF135931BBD77960047AD90 /* DSCategory.m in Sources */,

@@ -1,12 +1,12 @@
 //
-//  DSServerManager.m
+//  DSApiManager.m
 //  BudgetRush
 //
 //  Created by Dima on 01.10.15.
 //  Copyright © 2015 Dima Soldatenko. All rights reserved.
 //
 #import "Settings.h"
-#import "DSServerManager.h"
+#import "DSApiManager.h"
 #import "DSDataManager.h"
 #import <AFNetworking.h>
 #import "DSAccount.h"
@@ -21,7 +21,7 @@
 
 #warning TODO: Данный менеджер должен отвечать только за работу с АПИ, т.е. выполнение запросов. Парсинг данных должен осуществляться в другом месте. Советую создать что-то типа DSDataManager, который будет работать с API менеджером и будет парсить данные.
 
-@interface  DSServerManager () {
+@interface  DSApiManager () {
     
     DSAccessToken *_accessToken;
     AFHTTPSessionManager *_sessionManager;
@@ -29,15 +29,15 @@
 @end
 
 
-@implementation DSServerManager
+@implementation DSApiManager
 
-+ (DSServerManager *)sharedManager {
++ (DSApiManager *)sharedManager {
     
-    static DSServerManager *manager = nil;
+    static DSApiManager *manager = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        manager = [[DSServerManager alloc]init];
+        manager = [[DSApiManager alloc]init];
     });
     
     return manager;
@@ -70,7 +70,6 @@
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-//         NSMutableArray* objectsArray = [DSDataManager getAccountsFromDict:responseObject];
          
          if (success) {
              success(responseObject);
@@ -86,22 +85,17 @@
     
 }
 
-- (void) getAccount:(NSInteger) ac_id onSuccess:(void(^)(DSAccount* account)) success
+- (void) getAccount:(NSInteger) acID onSuccess:(void(^)(NSDictionary* account)) success
           onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"accounts/%ld" ,ac_id]
+     GET:[NSString stringWithFormat:@"accounts/%ld" ,acID]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-         DSAccount* account;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             account = [[DSAccount alloc] initWithDictionary:responseObject];
-         }
          
          if (success) {
-             success(account);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -113,7 +107,7 @@
      }];
 }
 
-- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(NSDictionary* response)) success
            onFailure:(void(^)(NSError* error)) failure {
     
     
@@ -130,9 +124,9 @@
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
-         DSAccount* account = [DSDataManager getAccountFromDict:responseObject];
+        
          if (success) {
-             success(account);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {

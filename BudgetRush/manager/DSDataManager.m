@@ -12,49 +12,52 @@
 #import "DSContractor.h"
 #import "DSOrder.h"
 #import "DSCurrency.h"
-#import "DSServerManager.h"
+#import "DSApiManager.h"
 
 @implementation DSDataManager
 
 
-+ (NSMutableArray*) getAccountsFromDict: (NSDictionary*) dictionary {
-    NSMutableArray* objectsArray = [NSMutableArray array];
+
+
+
+- (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
+          onFailure:(void(^)(NSError* error)) failure {
+
+     [[DSApiManager sharedManager] getAccount:acID onSuccess:^(NSDictionary *response) {
+         DSAccount* account;
+         if ([response isKindOfClass:[NSDictionary class]]) {
+             account = [[DSAccount alloc] initWithDictionary:response];
+         }
+         if (success) {
+             success(account);
+         }
+     } onFailure:^(NSError *error) {
+         if (failure) {
+             failure(error);
+         }
+     }];
     
-    for (NSDictionary* dict in dictionary ) {
-        DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
-        [objectsArray addObject:acc];
-    }
-    return objectsArray;
 }
-
-
-+ (DSAccount*) getAccountFromDict: (NSDictionary*) dictionary{
-    DSAccount* account;
-    
-    if ([dictionary isKindOfClass:[NSDictionary class]]) {
-        account = [[DSAccount alloc] initWithDictionary:dictionary];
-    }
-    
-    return account;
-}
-
-
-
 
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
                     onFailure:(void(^)(NSError* error)) failure
 {
     
-    [[DSServerManager sharedManager] getAccountsOnSuccess:^(NSDictionary *response) {
+    [[DSApiManager sharedManager] getAccountsOnSuccess:^(NSDictionary *response) {
         
-        NSArray *accounts = nil; //Parse dict to NSObjects
-        
+        NSMutableArray *accounts = [NSMutableArray new];
+        for (NSDictionary* dict in response ) {
+            DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
+            [accounts addObject:acc];
+        }
         if (success)
             success(accounts);
         
     } onFailure:^(NSError *error) {
-        //
+        if (failure) {
+            failure(error);
+        }
     }];
     
 }
