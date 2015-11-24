@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DSServerManager.h"
+#import "DSApiManager.h"
 #import "AFNetworkActivityLogger.h"
 @interface AppDelegate ()
 

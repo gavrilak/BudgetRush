@@ -7,7 +7,7 @@
 //
 
 #import "DSTourViewController.h"
-#import "TAPageControl.h"
+#import <TAPageControl.h>
 
 @interface DSTourViewController () <UIScrollViewDelegate, TAPageControlDelegate>
 
@@ -27,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
     // Do any additional setup after loading the view, typically from a nib.
     self.imagesData = @[@"1.jpg", @"2.png", @"1.jpg", @"2.png"];
     
@@ -35,7 +36,7 @@
     // TAPageControl from storyboard
     self.customStoryboardPageControl.delegate = self;
     self.customStoryboardPageControl.numberOfPages = self.imagesData.count;
-   
+    
     
    
 }
@@ -96,7 +97,9 @@
 
 - (IBAction)skipAction:(id)sender{
     
-    [self performSegueWithIdentifier:@"showTabBar" sender:self];
+  //  [self performSegueWithIdentifier:@"showTabBar" sender:self];
+    
+    [self performSegueWithIdentifier:@"showLogin" sender:self];
 }
 
 
