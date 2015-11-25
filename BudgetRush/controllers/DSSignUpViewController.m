@@ -7,8 +7,10 @@
 //
 
 #import "DSSignUpViewController.h"
+#import "DSDataManager.h"
 
-@interface DSSignUpViewController ()
+
+@interface DSSignUpViewController ()  <UIAlertViewDelegate>
 
 @end
 
@@ -16,8 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    // Do any additional setup after loading the view.
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.navigationItem.title = @"Sign Up";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,6 +27,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction) signUpTouch:(id)sender {
+    self.view.userInteractionEnabled = NO;
+    [[DSDataManager sharedManager] signUpUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+        [self performSegueWithIdentifier:@"showTabBar" sender:self];
+    } onFailure:^(NSError *error) {
+         self.view.userInteractionEnabled = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The email has been used"
+                                                        message:@"Try again or register using another email"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    self.fieldPassword.text = @"";
+    self.fieldEmail.text = @"";
+
+}
 /*
 #pragma mark - Navigation
 

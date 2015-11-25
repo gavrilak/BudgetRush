@@ -864,27 +864,17 @@
 
 
 
-- (void) postUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
+- (void) postUser:(NSDictionary*) user onSuccess:(void(^)(NSDictionary *response)) success
         onFailure:(void(^)(NSError* error)) failure {
     
-    
-    NSDictionary* params = @{@"name"     :user.name ,
-                             @"role"     :user.role == userRole ? @"ROLE_USER" : @"ROLE_ADMIN",
-                             @"password" :user.password};
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
      POST:@"users"
-     parameters:params
+     parameters:user
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         DSUser* user;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             user = [[DSUser alloc] initWithDictionary:responseObject];
-         }
          
          if (success) {
-             success(user);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {

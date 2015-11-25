@@ -10,4 +10,9 @@
 
 @interface DSLoginViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *fieldEmail;
+@property (weak, nonatomic) IBOutlet UITextField *fieldPassword;
+
+- (IBAction)loginTouch:(id)sender;
+
 @end

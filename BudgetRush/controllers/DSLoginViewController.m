@@ -7,6 +7,8 @@
 //
 
 #import "DSLoginViewController.h"
+#import "DSTOSViewController.h"
+#import "DSDataManager.h"
 
 @interface DSLoginViewController ()
 
@@ -33,14 +35,37 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([segue.identifier isEqualToString:@"showTOS"]) {
+        DSTOSViewController*  controller = [segue destinationViewController];
+        controller.showTOS = YES;
+    }
 }
-*/
+
+
+- (IBAction)loginTouch:(id)sender {
+    
+    [self.view setUserInteractionEnabled :NO];
+    [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+        [self performSegueWithIdentifier:@"showTabBar" sender:self];
+    } onFailure:^(NSError *error) {
+        self.view.userInteractionEnabled = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Invalid email or password"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    self.fieldPassword.text = @"";
+    self.fieldEmail.text = @"";
+    
+}
 
 @end

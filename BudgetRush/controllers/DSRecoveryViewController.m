@@ -15,15 +15,19 @@
 @implementation DSRecoveryViewController
 
 - (void)viewDidLoad {
-     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    self.navigationItem.title = @"Password Recovery";
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+   
 }
+
+
+
 
 /*
 #pragma mark - Navigation

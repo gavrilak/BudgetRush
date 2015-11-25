@@ -115,8 +115,8 @@
 - (void) getUser:(NSInteger) usr_id onSuccess:(void(^)(DSUser* user)) success
        onFailure:(void(^)(NSError* error)) failure;
 
-- (void) postUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
-        onFailure:(void(^)(NSError* error)) failure;
+- (void) postUser:(NSDictionary*) user onSuccess:(void(^)(NSDictionary *response)) success
+        onFailure:(void(^)(NSError* error)) failure ;
 
 - (void) putUser:(DSUser*) user onSuccess:(void(^)(DSUser* user)) success
        onFailure:(void(^)(NSError* error)) failure;

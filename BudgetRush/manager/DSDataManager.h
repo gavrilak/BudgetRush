@@ -17,11 +17,23 @@
 
 @interface DSDataManager : NSObject
 
+
+@property (strong, nonatomic) DSUser* currentUser;
+
++ (DSDataManager *)sharedManager;
+
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
           onFailure:(void(^)(NSError* error)) failure;
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
                     onFailure:(void(^)(NSError* error)) failure;
+
+- (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
+
+- (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
+
+- (void) recoveryUserEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
+               onFailure:(void(^)(NSError* error)) failure;
 
 
 @end

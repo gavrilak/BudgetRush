@@ -11,12 +11,35 @@
 #import "DSCategory.h"
 #import "DSContractor.h"
 #import "DSOrder.h"
+#import "DSUser.h"
 #import "DSCurrency.h"
 #import "DSApiManager.h"
 
 @implementation DSDataManager
 
 
++ (DSDataManager *)sharedManager {
+    
+    static DSDataManager *manager = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[DSDataManager alloc]init];
+    });
+    
+    return manager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+  
+    }
+    
+    return self;
+}
 
 
 
@@ -61,5 +84,59 @@
     }];
     
 }
+
+- (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
+               onFailure:(void(^)(NSError* error)) failure {
+
+
+    NSDictionary* params = @{@"name"     : email ,
+                             @"role"     : @"ROLE_USER",
+                             @"password" : password};
+    
+    [[DSApiManager sharedManager] postUser:params onSuccess:^(NSDictionary *response) {
+        NSLog(@"JSON: %@", response);
+        
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            _currentUser = [[DSUser alloc] initWithDictionary:response];
+        }
+        
+        if (success) {
+            success(@"");
+        }
+
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    
+}
+
+
+- (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
+               onFailure:(void(^)(NSError* error)) failure {
+    
+    
+   [[DSApiManager sharedManager] getTokenForUser:email andPassword:password onSuccess:^(DSAccessToken *token) {
+       if (success) {
+           success(@"");
+       }
+   } onFailure:^(NSError *error) {
+       if (failure) {
+           failure(error);
+       }
+   }];
+        
+    
+}
+
+
+
+- (void) recoveryUserEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
+                 onFailure:(void(^)(NSError* error)) failure {
+    
+}
+
 
 @end

@@ -18,7 +18,6 @@
 		32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AEFEBF1BC5F00C009B46CE /* DSBaseModel.m */; };
 		634B1B87BBB1E22B095A046D /* libPods-BudgetRush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */; };
 		BF55F2BC1C04E7600050CAA1 /* DSLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2BB1C04E7600050CAA1 /* DSLoginViewController.m */; };
-		BF55F2BF1C04E7740050CAA1 /* DSRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2BE1C04E7740050CAA1 /* DSRegisterViewController.m */; };
 		BF55F2C21C04E79E0050CAA1 /* DSTOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2C11C04E79E0050CAA1 /* DSTOSViewController.m */; };
 		BF55F2C51C04E7FE0050CAA1 /* DSRecoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2C41C04E7FE0050CAA1 /* DSRecoveryViewController.m */; };
 		BF55F2C81C04E8CD0050CAA1 /* DSSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2C71C04E8CD0050CAA1 /* DSSettingsViewController.m */; };
@@ -81,8 +80,6 @@
 		9B9FC88088F091ED097136AC /* Pods-BudgetRush.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetRush.release.xcconfig"; path = "Pods/Target Support Files/Pods-BudgetRush/Pods-BudgetRush.release.xcconfig"; sourceTree = "<group>"; };
 		BF55F2BA1C04E7600050CAA1 /* DSLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSLoginViewController.h; path = controllers/DSLoginViewController.h; sourceTree = "<group>"; };
 		BF55F2BB1C04E7600050CAA1 /* DSLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSLoginViewController.m; path = controllers/DSLoginViewController.m; sourceTree = "<group>"; };
-		BF55F2BD1C04E7740050CAA1 /* DSRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSRegisterViewController.h; path = controllers/DSRegisterViewController.h; sourceTree = "<group>"; };
-		BF55F2BE1C04E7740050CAA1 /* DSRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSRegisterViewController.m; path = controllers/DSRegisterViewController.m; sourceTree = "<group>"; };
 		BF55F2C01C04E79E0050CAA1 /* DSTOSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSTOSViewController.h; path = controllers/DSTOSViewController.h; sourceTree = "<group>"; };
 		BF55F2C11C04E79E0050CAA1 /* DSTOSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSTOSViewController.m; path = controllers/DSTOSViewController.m; sourceTree = "<group>"; };
 		BF55F2C31C04E7FE0050CAA1 /* DSRecoveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSRecoveryViewController.h; path = controllers/DSRecoveryViewController.h; sourceTree = "<group>"; };
@@ -249,8 +246,6 @@
 				BFF1358A1BBD73100047AD90 /* DSTourViewController.m */,
 				BF55F2BA1C04E7600050CAA1 /* DSLoginViewController.h */,
 				BF55F2BB1C04E7600050CAA1 /* DSLoginViewController.m */,
-				BF55F2BD1C04E7740050CAA1 /* DSRegisterViewController.h */,
-				BF55F2BE1C04E7740050CAA1 /* DSRegisterViewController.m */,
 				BF55F2C01C04E79E0050CAA1 /* DSTOSViewController.h */,
 				BF55F2C11C04E79E0050CAA1 /* DSTOSViewController.m */,
 				BF55F2C31C04E7FE0050CAA1 /* DSRecoveryViewController.h */,
@@ -484,7 +479,6 @@
 			files = (
 				BF55F2CE1C04EA770050CAA1 /* DSAccountViewController.m in Sources */,
 				BF55F2D11C04EAB70050CAA1 /* DSSignUpViewController.m in Sources */,
-				BF55F2BF1C04E7740050CAA1 /* DSRegisterViewController.m in Sources */,
 				32AEFEC01BC5F00C009B46CE /* DSBaseModel.m in Sources */,
 				BF55F2C21C04E79E0050CAA1 /* DSTOSViewController.m in Sources */,
 				BF55F2CB1C04E8FF0050CAA1 /* DSAccountsViewController.m in Sources */,
