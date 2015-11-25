@@ -15,10 +15,18 @@
 @implementation DSAccountsViewController
 
 - (void)viewDidLoad {
-    
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    [self navigationController].topViewController.title = @"My Accounts";
+    [self navigationController].topViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount)];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,6 +34,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void) addAccount{
+    [self performSegueWithIdentifier:@"showAccount" sender:self];
+    
+}
 /*
 #pragma mark - Navigation
 

@@ -16,6 +16,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setHidesBackButton:YES];
+    self.navigationController.navigationBar.topItem.title = @"My Accounts";
+    [[NSUserDefaults standardUserDefaults] setObject: [NSDate new] forKey:@"date"];
+    [[NSUserDefaults standardUserDefaults] setObject: @"" forKey:@"name"];
+    [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
+    [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"category"];
+    [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"currency"];
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey:@"balance"];
+
     // Do any additional setup after loading the view.
 }
 
@@ -23,6 +32,86 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)setup {
+    
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    [self addSection:[BOTableViewSection sectionWithHeaderTitle:nil handler:^(BOTableViewSection *section) {
+        
+        
+        [section addCell:[BOTextTableViewCell cellWithTitle:@"Name" key:@"name" handler:^(BOTextTableViewCell *cell) {
+            cell.textField.placeholder = @"Enter name";
+            cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
+                [weakSelf showInputErrorAlert:error];
+            };
+        }]];
+        
+        
+        [section addCell:[BOTableViewCell cellWithTitle:@"Icon" key:@"icon" handler:^(BOTableViewCell *cell) {
+             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.text = @"not selected";
+          
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }]];
+
+        [section addCell:[BOTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOTableViewCell *cell) {
+     
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.text = @"not selected";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }]];
+        
+        [section addCell:[BOTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOTableViewCell *cell) {
+            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.text = @"USD";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }]];
+
+        
+       [section addCell:[BODateTableViewCell cellWithTitle:@"Date" key:@"date" handler:nil]];
+        
+       [section addCell:[BONumberTableViewCell cellWithTitle:@"Balance" key:@"balance" handler:^(BONumberTableViewCell *cell) {
+            cell.textField.placeholder = @"$0.0";
+            cell.numberOfDecimals = 2;
+            cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
+                [weakSelf showInputErrorAlert:error];
+            };
+        }]];
+        
+     }]];
+    }
+
+- (void)presentAlertControllerWithTitle:(NSString *)title message:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showInputErrorAlert:(BOTextFieldInputError)error {
+    NSString *message;
+    
+    switch (error) {
+        case BOTextFieldInputTooShortError:
+            message = @"The text is too short";
+            break;
+            
+        case BOTextFieldInputNotNumericError:
+            message = @"Please input a valid number";
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (message) {
+        [self presentAlertControllerWithTitle:@"Error" message:message];
+    }
+}
+
 
 /*
 #pragma mark - Navigation
