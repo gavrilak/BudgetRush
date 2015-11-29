@@ -7,8 +7,13 @@
 //
 
 #import "DSAccountsViewController.h"
+#import "DSDataManager.h"
+#import "DSAccount.h"
 
-@interface DSAccountsViewController ()
+@interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate> {
+    
+    NSMutableArray* _accounts ;
+}
 
 @end
 
@@ -18,6 +23,7 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
+    [self loadData];
     
 }
 
@@ -39,6 +45,41 @@
     [self performSegueWithIdentifier:@"showAccount" sender:self];
     
 }
+
+- (void) loadData {
+    [[DSDataManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
+        _accounts = [accounts mutableCopy];
+        [self.tableView reloadData];
+    } onFailure:^(NSError *error) {
+        NSLog(@"Error");
+    }];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [_accounts count];
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString* ident = @"accountCell";
+    
+    DSAccount* account = [_accounts objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ident];
+    
+    if(!cell){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
+    }
+    cell.textLabel.text = account.name;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.balance];
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
 /*
 #pragma mark - Navigation
 

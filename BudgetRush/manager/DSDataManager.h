@@ -32,8 +32,8 @@
 
 - (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
 
-- (void) recoveryUserEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
-               onFailure:(void(^)(NSError* error)) failure;
+- (void) recoveryPassForEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
+                    onFailure:(void(^)(NSError* error)) failure ;
 
 
 @end

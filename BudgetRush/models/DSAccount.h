@@ -14,6 +14,7 @@
 @property (strong,nonatomic) NSString *name;
 @property (assign,nonatomic) NSInteger userIdent;
 @property (assign,nonatomic) NSInteger currencyIdent;
+@property (assign,nonatomic) NSInteger balance;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;

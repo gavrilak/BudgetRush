@@ -131,10 +131,18 @@
     
 }
 
-
-
-- (void) recoveryUserEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
+- (void) recoveryPassForEmail:(NSString*) email OnSuccess:(void(^)(id object)) success
                  onFailure:(void(^)(NSError* error)) failure {
+    
+    [[DSApiManager sharedManager] recoveryPasswordForEmail:email onSuccess:^(id object) {
+        if (success) {
+            success(@"");
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
     
 }
 

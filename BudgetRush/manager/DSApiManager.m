@@ -921,6 +921,9 @@
     
 }
 
+
+
+
 - (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id success)) success
           onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
@@ -941,6 +944,30 @@
          }
      }];
 }
+
+
+- (void) recoveryPasswordForEmail:(NSString*) email onSuccess:(void(^)(id object)) success
+       onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
+     GET:[NSString stringWithFormat:@"users/reset_pass"]
+     parameters:@{@"email":email}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         
+         if (success) {
+             success(@"success");
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
+         }
+     }];
+}
+
 
 #pragma mark - token
 - (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success     onFailure:(void(^)(NSError* error)) failure {
@@ -1015,6 +1042,7 @@
      }];
     
 }
+
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DSRecoveryViewController.h"
+#import "DSDataManager.h"
 
 @interface DSRecoveryViewController ()
 
@@ -26,7 +27,32 @@
    
 }
 
+- (IBAction)recoveryTouch:(id)sender {
+    
+    [self.view setUserInteractionEnabled :NO];
+    [[DSDataManager sharedManager] recoveryPassForEmail:self.fieldEmail.text OnSuccess:^(id object) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } onFailure:^(NSError *error) {
+        self.view.userInteractionEnabled = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Invalid email"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }];
+  /* [[DSDataManager sharedManager]  recoveryPassForEmail:self.fieldEmail.text  onSuccess:^(id object) {
+        [self na
+    } onFailure:^(NSError *error) {
+   
+    }];*/
+}
 
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    self.fieldEmail.text = @"";
+    
+}
 
 
 /*

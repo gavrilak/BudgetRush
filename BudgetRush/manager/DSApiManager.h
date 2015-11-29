@@ -124,6 +124,9 @@
 - (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id success)) success
           onFailure:(void(^)(NSError* error)) failure;
 
+- (void) recoveryPasswordForEmail:(NSString*) email onSuccess:(void(^)(id object)) success
+                        onFailure:(void(^)(NSError* error)) failure;
+
 - (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error)) failure;
 
 - (void) refreshToken:(NSString*) token onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error)) failure;
