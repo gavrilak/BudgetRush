@@ -29,11 +29,40 @@
     
     if(user!=nil) {
     [[DSDataManager sharedManager] loginUserEmail:user password:pass OnSuccess:^(id object) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         
-        
+       UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"tabBarVC"];
+        [navigationController setViewControllers:@[viewController] animated:YES];
+         UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+        window.rootViewController = navigationController;
+        [window makeKeyAndVisible];
+
     } onFailure:^(NSError *error) {
-        <#code#>
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        
+        UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
+        
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
+        navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
+        window.rootViewController = navigationController;
+        [window makeKeyAndVisible];
+
     }];
+    } else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        
+        UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
+          navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
+        window.rootViewController = navigationController;
+        [window makeKeyAndVisible];
+
     }
     return YES;
 }
