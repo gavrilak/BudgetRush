@@ -11,6 +11,10 @@
 static NSString *const rest_id = @"ios_id";
 static NSString *const rest_key = @"ios_key";
 
+static NSString *const kUserName = @"kUserName";
+static NSString *const kUserPass = @"kUserPass";
+
+
 static NSString *const PVURLProtocol = @"https";
 #ifdef RELEASE
 static NSString *const PVServerURL = @"";

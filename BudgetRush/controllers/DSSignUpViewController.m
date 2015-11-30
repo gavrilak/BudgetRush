@@ -8,7 +8,7 @@
 
 #import "DSSignUpViewController.h"
 #import "DSDataManager.h"
-
+#import "Settings.h"
 
 @interface DSSignUpViewController ()  <UIAlertViewDelegate>
 
@@ -30,9 +30,12 @@
 
 - (IBAction) signUpTouch:(id)sender {
     self.view.userInteractionEnabled = NO;
-    [[DSDataManager sharedManager] signUpUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+    [[DSDataManager sharedManager] signUpUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
         
-        [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+        [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserName];
+            [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserPass];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             [self performSegueWithIdentifier:@"showTabBar" sender:self];
         } onFailure:^(NSError *error) {
             [self.navigationController popViewControllerAnimated:YES];

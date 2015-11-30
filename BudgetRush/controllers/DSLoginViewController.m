@@ -9,6 +9,7 @@
 #import "DSLoginViewController.h"
 #import "DSTOSViewController.h"
 #import "DSDataManager.h"
+#import "Settings.h"
 
 @interface DSLoginViewController ()
 
@@ -48,7 +49,12 @@
 - (IBAction)loginTouch:(id)sender {
     
     [self.view setUserInteractionEnabled :NO];
-    [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+    [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserName];
+        [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserPass];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [self performSegueWithIdentifier:@"showTabBar" sender:self];
     } onFailure:^(NSError *error) {
         self.view.userInteractionEnabled = YES;

@@ -7,6 +7,7 @@
 //
 
 #import "DSSettingsViewController.h"
+#import "Settings.h"
 
 
 @interface DSSettingsViewController ()
@@ -71,6 +72,10 @@
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserName];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUserPass];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self.navigationController popToRootViewControllerAnimated:YES];
 

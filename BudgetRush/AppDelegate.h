@@ -12,6 +12,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+[[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+
 
 @end
 

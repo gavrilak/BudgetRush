@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="V3m-wm-Tgi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -8,7 +8,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9gz-dM-r23">
             <objects>
-                <navigationController id="V3m-wm-Tgi" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navigationController" id="V3m-wm-Tgi" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="W5f-yG-RFt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -16,12 +16,12 @@
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="MDg-lc-5Qr"/>
+                        <segue destination="wls-Sb-SQS" kind="relationship" relationship="rootViewController" id="Kua-v2-H9o"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FyL-QF-8LY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1423.5" y="68"/>
+            <point key="canvasLocation" x="-1390.5" y="18"/>
         </scene>
         <!--Tour View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -150,7 +150,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-661.5" y="115"/>
+            <point key="canvasLocation" x="-1305" y="699"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="FXD-LX-ELy">
@@ -801,6 +801,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="123" y="48" width="155" height="21"/>
+                                </variation>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fhF-Wk-sGt">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -818,6 +821,9 @@
                                         <animations/>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="65" width="400" height="427"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="Mnx-fx-DcL" id="xTw-OJ-T7S"/>
                                     <outlet property="delegate" destination="Mnx-fx-DcL" id="Ehz-s9-9DF"/>
@@ -832,6 +838,9 @@
                                     <segment title="Income"/>
                                 </segments>
                                 <color key="tintColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="91" y="10" width="218" height="29"/>
+                                </variation>
                                 <connections>
                                     <action selector="changeSegment:" destination="Mnx-fx-DcL" eventType="valueChanged" id="ewn-fB-3ef"/>
                                 </connections>
@@ -858,14 +867,14 @@
                                 <exclude reference="DdW-Dm-adz"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="0wB-Gl-1aw"/>
+                                <exclude reference="xtF-Kw-SxS"/>
+                                <exclude reference="EsR-N7-OPM"/>
                                 <exclude reference="FVs-LX-Zu3"/>
                                 <exclude reference="ysK-mr-IwC"/>
                                 <exclude reference="9kp-dh-tmp"/>
                                 <exclude reference="ahB-Ey-ExE"/>
                                 <exclude reference="xpY-SE-EHo"/>
-                                <exclude reference="0wB-Gl-1aw"/>
-                                <exclude reference="xtF-Kw-SxS"/>
-                                <exclude reference="EsR-N7-OPM"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -875,14 +884,14 @@
                                 <include reference="DdW-Dm-adz"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="0wB-Gl-1aw"/>
+                                <include reference="xtF-Kw-SxS"/>
+                                <include reference="EsR-N7-OPM"/>
                                 <include reference="FVs-LX-Zu3"/>
                                 <include reference="ysK-mr-IwC"/>
                                 <include reference="9kp-dh-tmp"/>
                                 <include reference="ahB-Ey-ExE"/>
                                 <include reference="xpY-SE-EHo"/>
-                                <include reference="0wB-Gl-1aw"/>
-                                <include reference="xtF-Kw-SxS"/>
-                                <include reference="EsR-N7-OPM"/>
                             </mask>
                         </variation>
                     </view>
@@ -988,6 +997,7 @@
                         <viewControllerLayoutGuide type="bottom" id="v4E-Fb-3d1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="S6b-qo-SZ6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1006,6 +1016,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6tr-qw-qTe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SmO-wH-ntM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wdi-bM-VIr">
@@ -1039,6 +1050,7 @@
         <scene sceneID="6tJ-fO-IPg">
             <objects>
                 <tabBarController id="wls-Sb-SQS" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="fU3-of-m5R"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Ho4-LY-Wtz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1056,7 +1068,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6Nh-n2-HQS"/>
+        <segue reference="Kua-v2-H9o"/>
         <segue reference="Ofe-B1-P9D"/>
     </inferredMetricsTieBreakers>
 </document>

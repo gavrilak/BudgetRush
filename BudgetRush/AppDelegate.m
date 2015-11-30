@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "DSApiManager.h"
+#import "Settings.h"
+#import "DSDataManager.h"
 #import "AFNetworkActivityLogger.h"
 @interface AppDelegate ()
 
@@ -23,7 +24,17 @@
     [[AFNetworkActivityLogger sharedLogger] startLogging];
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
 
+    NSString* user = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    NSString* pass = [[NSUserDefaults standardUserDefaults] objectForKey:kUserPass];
     
+    if(user!=nil) {
+    [[DSDataManager sharedManager] loginUserEmail:user password:pass OnSuccess:^(id object) {
+        
+        
+    } onFailure:^(NSError *error) {
+        <#code#>
+    }];
+    }
     return YES;
 }
 
