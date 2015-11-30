@@ -26,7 +26,15 @@
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
           onFailure:(void(^)(NSError* error)) failure;
 
-- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(NSDictionary *response)) success
+
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+                  onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+                 onFailure:(void(^)(NSError* error)) failure;
+
+
+- (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
            onFailure:(void(^)(NSError* error)) failure;
 
 - (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success

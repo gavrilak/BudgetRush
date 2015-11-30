@@ -31,7 +31,13 @@
 - (IBAction) signUpTouch:(id)sender {
     self.view.userInteractionEnabled = NO;
     [[DSDataManager sharedManager] signUpUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
-        [self performSegueWithIdentifier:@"showTabBar" sender:self];
+        
+        [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(DSUser *user) {
+            [self performSegueWithIdentifier:@"showTabBar" sender:self];
+        } onFailure:^(NSError *error) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+       
     } onFailure:^(NSError *error) {
          self.view.userInteractionEnabled = YES;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The email has been used"

@@ -45,22 +45,84 @@
 
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
           onFailure:(void(^)(NSError* error)) failure {
-
-     [[DSApiManager sharedManager] getAccount:acID onSuccess:^(NSDictionary *response) {
-         DSAccount* account;
-         if ([response isKindOfClass:[NSDictionary class]]) {
-             account = [[DSAccount alloc] initWithDictionary:response];
-         }
-         if (success) {
-             success(account);
-         }
-     } onFailure:^(NSError *error) {
-         if (failure) {
-             failure(error);
-         }
-     }];
+    
+ 
+    
+    
+    [[DSApiManager sharedManager] getAccount:acID onSuccess:^(NSDictionary *response) {
+        DSAccount* account;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            account = [[DSAccount alloc] initWithDictionary:response];
+        }
+        if (success) {
+            success(account);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
     
 }
+
+
+- (void) createAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+          onFailure:(void(^)(NSError* error)) failure {
+    
+    NSDictionary* params = @{@"name"        : account.name,
+                             @"group"        :@{@"id"  :[NSNumber numberWithInteger:1]},
+                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+    
+    [[DSApiManager sharedManager] postAccount:params onSuccess:^(NSDictionary *response) {
+        DSAccount* account;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            account = [[DSAccount alloc] initWithDictionary:response];
+        }
+        if (success) {
+            success(account);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+                  onFailure:(void(^)(NSError* error)) failure {
+    
+    
+    [[DSApiManager sharedManager] getExpenseForAccID:acID onSuccess:^(NSDictionary *response) {
+        if (success) {
+            success(response);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+                  onFailure:(void(^)(NSError* error)) failure {
+    
+    
+    [[DSApiManager sharedManager] getIncomeForAccID:acID onSuccess:^(NSDictionary *response) {
+        if (success) {
+            success(response);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
 
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
@@ -72,6 +134,19 @@
         NSMutableArray *accounts = [NSMutableArray new];
         for (NSDictionary* dict in response ) {
             DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
+            [[DSApiManager sharedManager] getExpenseForAccID:acc.ident onSuccess:^(NSDictionary *response) {
+                acc.expense = [[response objectForKey:@"amount"] integerValue];
+            } onFailure:^(NSError *error) {
+                NSLog(@"Error ");
+            }];
+            
+            [[DSApiManager sharedManager] getIncomeForAccID:acc.ident onSuccess:^(NSDictionary *response) {
+                acc.income = [[response objectForKey:@"amount"] integerValue];
+            } onFailure:^(NSError *error) {
+                NSLog(@"Error ");
+            }];
+
+            
             [accounts addObject:acc];
         }
         if (success)
@@ -85,11 +160,13 @@
     
 }
 
+
 - (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
                onFailure:(void(^)(NSError* error)) failure {
 
 
-    NSDictionary* params = @{@"name"     : email ,
+    NSDictionary* params = @{@"name"     : email,
+                             @"email"    : email,
                              @"role"     : @"ROLE_USER",
                              @"password" : password};
     

@@ -7,6 +7,8 @@
 //
 
 #import "DSAccountViewController.h"
+#import "DSDataManager.h"
+#import "DSAccount.h"
 
 @interface DSAccountViewController ()
 
@@ -112,6 +114,28 @@
     }
 }
 
+- (IBAction) actionSave:(id)sender {
+    
+    DSAccount *account = [DSAccount new];
+    account.name =  [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+    account.currencyIdent = 4;
+   [ [DSDataManager sharedManager] createAccount:account onSuccess:^(DSAccount *account) {
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } onFailure:^(NSError *error) {
+         [self.navigationController popViewControllerAnimated:YES];
+    } ];
+    
+   
+    
+}
+
+- (IBAction) actionCancel:(id)sender {
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 
 /*
 #pragma mark - Navigation

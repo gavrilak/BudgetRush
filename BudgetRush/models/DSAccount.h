@@ -15,6 +15,8 @@
 @property (assign,nonatomic) NSInteger userIdent;
 @property (assign,nonatomic) NSInteger currencyIdent;
 @property (assign,nonatomic) NSInteger balance;
+@property (assign,nonatomic) NSInteger income;
+@property (assign,nonatomic) NSInteger expense;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;

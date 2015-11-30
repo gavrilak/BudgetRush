@@ -24,6 +24,8 @@
 		BF55F2CB1C04E8FF0050CAA1 /* DSAccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2CA1C04E8FF0050CAA1 /* DSAccountsViewController.m */; };
 		BF55F2CE1C04EA770050CAA1 /* DSAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2CD1C04EA770050CAA1 /* DSAccountViewController.m */; };
 		BF55F2D11C04EAB70050CAA1 /* DSSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2D01C04EAB70050CAA1 /* DSSignUpViewController.m */; };
+		BF6174751C0BC82B00A52A46 /* DSViewOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6174741C0BC82B00A52A46 /* DSViewOrdersViewController.m */; };
+		BF6174781C0BC86C00A52A46 /* DSCreateOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6174771C0BC86C00A52A46 /* DSCreateOrderViewController.m */; };
 		BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA747851BE44BF900843FC5 /* DSDataManager.m */; };
 		BFA747991BE470CF00843FC5 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFA747971BE470CF00843FC5 /* 2.png */; };
 		BFA7479A1BE470CF00843FC5 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFA747981BE470CF00843FC5 /* 1.jpg */; };
@@ -92,6 +94,10 @@
 		BF55F2CD1C04EA770050CAA1 /* DSAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSAccountViewController.m; path = controllers/DSAccountViewController.m; sourceTree = "<group>"; };
 		BF55F2CF1C04EAB70050CAA1 /* DSSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSSignUpViewController.h; path = controllers/DSSignUpViewController.h; sourceTree = "<group>"; };
 		BF55F2D01C04EAB70050CAA1 /* DSSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSSignUpViewController.m; path = controllers/DSSignUpViewController.m; sourceTree = "<group>"; };
+		BF6174731C0BC82B00A52A46 /* DSViewOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSViewOrdersViewController.h; path = controllers/DSViewOrdersViewController.h; sourceTree = "<group>"; };
+		BF6174741C0BC82B00A52A46 /* DSViewOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSViewOrdersViewController.m; path = controllers/DSViewOrdersViewController.m; sourceTree = "<group>"; };
+		BF6174761C0BC86C00A52A46 /* DSCreateOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSCreateOrderViewController.h; path = controllers/DSCreateOrderViewController.h; sourceTree = "<group>"; };
+		BF6174771C0BC86C00A52A46 /* DSCreateOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSCreateOrderViewController.m; path = controllers/DSCreateOrderViewController.m; sourceTree = "<group>"; };
 		BFA747841BE44BF900843FC5 /* DSDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSDataManager.h; path = manager/DSDataManager.h; sourceTree = "<group>"; };
 		BFA747851BE44BF900843FC5 /* DSDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSDataManager.m; path = manager/DSDataManager.m; sourceTree = "<group>"; };
 		BFA747971BE470CF00843FC5 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
@@ -238,6 +244,10 @@
 		BFF135881BBD72DD0047AD90 /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BF6174761C0BC86C00A52A46 /* DSCreateOrderViewController.h */,
+				BF6174771C0BC86C00A52A46 /* DSCreateOrderViewController.m */,
+				BF6174731C0BC82B00A52A46 /* DSViewOrdersViewController.h */,
+				BF6174741C0BC82B00A52A46 /* DSViewOrdersViewController.m */,
 				BF55F2CC1C04EA770050CAA1 /* DSAccountViewController.h */,
 				BF55F2CD1C04EA770050CAA1 /* DSAccountViewController.m */,
 				BFA747971BE470CF00843FC5 /* 2.png */,
@@ -487,6 +497,7 @@
 				BFF135961BBD78390047AD90 /* DSContractor.m in Sources */,
 				BFF135A21BBD83270047AD90 /* DSAccessToken.m in Sources */,
 				BFF135A51BBD843B0047AD90 /* DSApiManager.m in Sources */,
+				BF6174781C0BC86C00A52A46 /* DSCreateOrderViewController.m in Sources */,
 				320580CB1BBC9247001DDEF6 /* AppDelegate.m in Sources */,
 				BFF135901BBD75BE0047AD90 /* DSAccount.m in Sources */,
 				BFF135931BBD77960047AD90 /* DSCategory.m in Sources */,
@@ -494,6 +505,7 @@
 				BFF135991BBD78F60047AD90 /* DSCurrency.m in Sources */,
 				BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */,
 				BF55F2BC1C04E7600050CAA1 /* DSLoginViewController.m in Sources */,
+				BF6174751C0BC82B00A52A46 /* DSViewOrdersViewController.m in Sources */,
 				BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */,
 				322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */,
 				BF55F2C51C04E7FE0050CAA1 /* DSRecoveryViewController.m in Sources */,

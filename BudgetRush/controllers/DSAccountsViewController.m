@@ -13,6 +13,7 @@
 @interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate> {
     
     NSMutableArray* _accounts ;
+    NSInteger _selectedSegment;
 }
 
 @end
@@ -24,6 +25,10 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
     [self loadData];
+    CGRect headerFrame = self.tableView.tableHeaderView.frame;
+    headerFrame.size.height =  65;
+    self.tableView.tableHeaderView.frame = headerFrame;
+  
     
 }
 
@@ -55,6 +60,10 @@
     }];
 }
 
+- (IBAction)changeSegment:(id)sender{
+    _selectedSegment = self.segmentControl.selectedSegmentIndex;
+    [self.tableView reloadData];
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -75,7 +84,17 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
     }
     cell.textLabel.text = account.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.balance];
+    switch (_selectedSegment) {
+        case 0:
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.balance];
+            break;
+        case 1:
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.expense];
+            break;
+        case 2:
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.income];
+            break;
+    }
     return cell;
 }
 

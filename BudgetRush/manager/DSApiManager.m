@@ -107,17 +107,66 @@
      }];
 }
 
-- (void) postAccount:(DSAccount*) account onSuccess:(void(^)(NSDictionary* response)) success
-           onFailure:(void(^)(NSError* error)) failure {
-    
-    
-    NSDictionary* params = @{@"name"        : account.name,
-                             @"user"        :@{@"id" :[NSNumber numberWithInteger:account.userIdent]},
-                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+                 onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
+     GET:@"orders/statistics/expense/sum"
+     parameters:@{@"access_token":_accessToken.token,
+                  @"startDate":@"0000000000000",
+                  @"endDate":@"1935964800000",
+                  @"accountId":[NSNumber numberWithInteger:acID]}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         
+         if (success) {
+             success(responseObject);
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
+         }
+     }];
+}
+
+
+
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+                 onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
+     GET:@"orders/statistics/income/sum"
+     parameters:@{@"access_token":_accessToken.token,
+                  @"startDate":@"0000000000000",
+                  @"endDate":@"1935964800000",
+                  @"accountId":[NSNumber numberWithInteger:acID]}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         
+         if (success) {
+             success(responseObject);
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
+         }
+     }];
+}
     
 #warning ???: Зачем это делать в каждом запросе? Достаточно один раз при инициализации менеджера
 #warning  для токена    _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer]
 #warning для post запросов _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer] по другому пока не работает
+
+- (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
+           onFailure:(void(^)(NSError* error)) failure {
+    
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
      POST:[NSString stringWithFormat: @"accounts?access_token=%@",_accessToken.token ]
@@ -193,6 +242,7 @@
          }
      }];
 }
+
 
 #pragma mark - categories
 
@@ -701,6 +751,9 @@
          }
      }];
 }
+
+
+
 
 - (void) postOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
          onFailure:(void(^)(NSError* error)) failure {

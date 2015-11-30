@@ -28,6 +28,17 @@
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
                     onFailure:(void(^)(NSError* error)) failure;
 
+- (void) createAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+             onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+                  onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+                  onFailure:(void(^)(NSError* error)) failure;
+
+
+
 - (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
 
 - (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
