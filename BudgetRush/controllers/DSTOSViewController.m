@@ -12,6 +12,8 @@
 
 @end
 
+#warning TODO: TOS тексты лучше вынести в отдельные файлы (txt, plist, json.....)
+
 @implementation DSTOSViewController
 
 - (void)viewDidLoad {
