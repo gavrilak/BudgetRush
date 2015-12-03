@@ -15,6 +15,9 @@
                         <animations/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="3Ej-aL-2qH" kind="relationship" relationship="rootViewController" id="2vB-io-l5u"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FyL-QF-8LY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -170,9 +173,10 @@
                                         <variation key="widthClass=compact" constant="200"/>
                                     </constraint>
                                 </constraints>
-                                <state key="normal" title="Login">
+                                <state key="normal" title="Login" backgroundImage="butt-normal-login">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="highlighted" backgroundImage="butt-pressed-login"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="3kF-aB-zgb"/>
@@ -198,7 +202,7 @@
                                     </constraint>
                                     <constraint firstAttribute="height" constant="40" id="bxr-AT-iAg"/>
                                 </constraints>
-                                <state key="normal" title="Sign Up">
+                                <state key="normal" title="Sign Up" backgroundImage="butt-signup">
                                     <color key="titleColor" red="0.1058823529" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <variation key="default">
@@ -789,7 +793,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Vo4-mp-h3B"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="anj-PE-d3J">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today 30 November" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="biu-mT-gsq">
@@ -904,13 +908,13 @@
             <objects>
                 <tableViewController id="Fk2-xU-3ai" customClass="DSAccountViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="k9h-Nn-3le">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fQO-EK-961">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fQO-EK-961" id="D81-3y-kZb">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -949,13 +953,13 @@
             <objects>
                 <tableViewController id="e9h-Dy-Wmp" customClass="DSSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="4ER-wo-txM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1di-2v-DUp">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1di-2v-DUp" id="ZPO-As-ox1">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1004,7 +1008,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6tr-qw-qTe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SmO-wH-ntM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wdi-bM-VIr">
@@ -1055,8 +1059,14 @@
             <point key="canvasLocation" x="226.5" y="186"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="butt-normal-login" width="40" height="40"/>
+        <image name="butt-pressed-login" width="40" height="40"/>
+        <image name="butt-signup" width="40" height="40"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6Nh-n2-HQS"/>
         <segue reference="Ofe-B1-P9D"/>
+        <segue reference="2vB-io-l5u"/>
+        <segue reference="6Nh-n2-HQS"/>
     </inferredMetricsTieBreakers>
 </document>
