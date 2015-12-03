@@ -12,6 +12,11 @@
 #import "Settings.h"
 
 @interface DSLoginViewController ()
+{
+#warning TODO: Пример приватных аутлетов
+    __weak IBOutlet UITextField *_fieldEmail; // Согласно конвенциям, лучше назвать поле _emailTextField (чегоЧто)
+    __weak IBOutlet UITextField *_fieldPassword;
+}
 
 @end
 
@@ -34,12 +39,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+#warning TODO: Если какой-то метод не нужен - удаляй. Пустые методы никчему. Нужно будет - добавишь
 }
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:@"showTOS"]) {
+#warning TODO: Все UI строки нужно заворачивать в локализацию NSLocalizedString. Если в будущем нужно будет добавить дополнительные языки - это сделать будет проще
+    if ([segue.identifier isEqualToString:NSLocalizedString(@"showTOS", nil)]) {
         DSTOSViewController*  controller = [segue destinationViewController];
         controller.showTOS = YES;
     }
