@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,13 +16,59 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_LogoBigallet2" translatesAutoresizingMaskIntoConstraints="NO" id="UTM-1Z-FeS">
+                                <rect key="frame" x="252" y="120" width="96" height="90"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BIG" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7x9-ci-q35">
+                                <rect key="frame" x="232" y="225" width="49.5" height="36"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wallet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-rg-9tr">
+                                <rect key="frame" x="287" y="225" width="86.5" height="36"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                <color key="textColor" red="0.031372549019607843" green="0.30588235294117649" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your financial guide" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3oe-J3-ezv">
+                                <rect key="frame" x="215" y="282.5" width="170" height="24"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.2627450980392157" green="0.78823529411764703" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="3oe-J3-ezv" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Bgh-lx-KgA"/>
+                            <constraint firstItem="3oe-J3-ezv" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="FCy-9u-HM0"/>
+                            <constraint firstItem="UTM-1Z-FeS" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="100" id="HJN-9d-Vrj"/>
+                            <constraint firstItem="7x9-ci-q35" firstAttribute="top" secondItem="UTM-1Z-FeS" secondAttribute="bottom" constant="15" id="KRA-gR-jaD"/>
+                            <constraint firstItem="3oe-J3-ezv" firstAttribute="top" secondItem="XwV-rg-9tr" secondAttribute="bottom" constant="22" id="gVp-mm-UXk"/>
+                            <constraint firstItem="XwV-rg-9tr" firstAttribute="top" secondItem="UTM-1Z-FeS" secondAttribute="bottom" constant="15" id="jjA-1H-Wqz"/>
+                            <constraint firstItem="XwV-rg-9tr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="30" id="npT-gr-08a"/>
+                            <constraint firstItem="UTM-1Z-FeS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qg2-9u-shh"/>
+                            <constraint firstItem="XwV-rg-9tr" firstAttribute="leading" secondItem="7x9-ci-q35" secondAttribute="trailing" constant="5" id="w4P-bb-Ipf"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FCy-9u-HM0"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="255" y="321"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_LogoBigallet2" width="96" height="90"/>
+    </resources>
 </document>

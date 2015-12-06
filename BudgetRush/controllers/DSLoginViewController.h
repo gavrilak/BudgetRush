@@ -10,11 +10,6 @@
 
 @interface DSLoginViewController : UIViewController
 
-#warning TODO: Это нарушение инкапсуляции. Данные объекты не должны быть публичнми.
-@property (weak, nonatomic) IBOutlet UITextField *fieldEmail; 
-@property (weak, nonatomic) IBOutlet UITextField *fieldPassword;
 
-#warning TODO: Нет никакой необходимости такие методы выностить в публичный интерфейс
-//- (IBAction)loginTouch:(id)sender;
 
 @end

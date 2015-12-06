@@ -19,6 +19,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    
+    
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000, -1000) forBarMetrics:UIBarMetricsDefault];
     // Override point for customization after application launch.
     [[AFNetworkActivityLogger sharedLogger] startLogging];

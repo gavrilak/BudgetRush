@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+
+#define colorBackgroundBlue [UIColor colorWithRed:67/255.0f green:201/255.0f blue:226/255.f alpha:1.0f]
+#define colorBackgroundWhite [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.f alpha:1.0f]
+#define colorBlue [UIColor colorWithRed:28/255.0f green:113/255.0f blue:174/255.f alpha:1.0f]
+#define colorBlueFont [UIColor colorWithRed:8/255.0f green:78/255.0f blue:127/255.f alpha:1.0f]
+
 static NSString *const rest_id = @"ios_id";
 static NSString *const rest_key = @"ios_key";
 

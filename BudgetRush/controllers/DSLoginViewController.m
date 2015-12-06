@@ -13,10 +13,13 @@
 
 @interface DSLoginViewController ()
 {
-#warning TODO: Пример приватных аутлетов
-    __weak IBOutlet UITextField *_fieldEmail; // Согласно конвенциям, лучше назвать поле _emailTextField (чегоЧто)
-    __weak IBOutlet UITextField *_fieldPassword;
+    __weak IBOutlet UITextField *_emailTextField;
+    __weak IBOutlet UITextField *_passwordTextField;
+    
+    
 }
+
+- (IBAction)loginTouch:(id)sender;
 
 @end
 
@@ -27,6 +30,14 @@
     
     [super viewDidLoad];
     
+    if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor blackColor];
+        _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
+    }
+    if ([_passwordTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor blackColor];
+        _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Password",nil) attributes:@{NSForegroundColorAttributeName: color}];
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -36,17 +47,10 @@
      [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    
-#warning TODO: Если какой-то метод не нужен - удаляй. Пустые методы никчему. Нужно будет - добавишь
-}
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-#warning TODO: Все UI строки нужно заворачивать в локализацию NSLocalizedString. Если в будущем нужно будет добавить дополнительные языки - это сделать будет проще
-    if ([segue.identifier isEqualToString:NSLocalizedString(@"showTOS", nil)]) {
+
+    if ([segue.identifier isEqualToString:@"showTOS"]) {
         DSTOSViewController*  controller = [segue destinationViewController];
         controller.showTOS = YES;
     }
@@ -56,19 +60,19 @@
 - (IBAction)loginTouch:(id)sender {
     
     [self.view setUserInteractionEnabled :NO];
-    [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
+    [[DSDataManager sharedManager] loginUserEmail: _emailTextField.text  password: _passwordTextField.text  OnSuccess:^(id object) {
         
-        [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserName];
-        [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserPass];
+        [[NSUserDefaults standardUserDefaults] setObject:_emailTextField.text forKey:kUserName];
+        [[NSUserDefaults standardUserDefaults] setObject:_passwordTextField.text  forKey:kUserPass];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         [self performSegueWithIdentifier:@"showTabBar" sender:self];
     } onFailure:^(NSError *error) {
         self.view.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Invalid email or password"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                                        message:NSLocalizedString(@"Invalid email or password",nil)
                                                        delegate:self
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                               otherButtonTitles:nil];
         [alert show];
     }];
@@ -76,8 +80,8 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
-    self.fieldPassword.text = @"";
-    self.fieldEmail.text = @"";
+    _passwordTextField.text = @"";
+    _emailTextField.text = @"";
     
 }
 
