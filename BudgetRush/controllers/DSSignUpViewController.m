@@ -10,8 +10,13 @@
 #import "DSDataManager.h"
 #import "Settings.h"
 
-@interface DSSignUpViewController ()  <UIAlertViewDelegate>
-
+@interface DSSignUpViewController ()  <UIAlertViewDelegate> {
+    __weak IBOutlet UITextField *_emailTextField;
+    __weak IBOutlet UITextField *_passwordTextField;
+    
+   
+}
+ - (IBAction) signUpTouch:(id)sender;
 @end
 
 @implementation DSSignUpViewController
@@ -19,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    self.navigationItem.title = @"Sign Up";
+    self.navigationItem.title = NSLocalizedString( @"Sign Up", nil);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,11 +35,11 @@
 
 - (IBAction) signUpTouch:(id)sender {
     self.view.userInteractionEnabled = NO;
-    [[DSDataManager sharedManager] signUpUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
+    [[DSDataManager sharedManager] signUpUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
         
-        [[DSDataManager sharedManager] loginUserEmail:self.fieldEmail.text password:self.fieldPassword.text OnSuccess:^(id object) {
-            [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserName];
-            [[NSUserDefaults standardUserDefaults] setObject:self.fieldEmail.text forKey:kUserPass];
+        [[DSDataManager sharedManager] loginUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
+            [[NSUserDefaults standardUserDefaults] setObject:_emailTextField.text forKey:kUserName];
+            [[NSUserDefaults standardUserDefaults] setObject:_passwordTextField.text forKey:kUserPass];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self performSegueWithIdentifier:@"showTabBar" sender:self];
         } onFailure:^(NSError *error) {
@@ -43,10 +48,10 @@
        
     } onFailure:^(NSError *error) {
          self.view.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"The email has been used"
-                                                        message:@"Try again or register using another email"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"The email has been used",nil)
+                                                        message:NSLocalizedString(@"Try again or register using another email",nil)
                                                        delegate:self
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                               otherButtonTitles:nil];
         [alert show];
     }];
@@ -54,18 +59,9 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
-    self.fieldPassword.text = @"";
-    self.fieldEmail.text = @"";
+    _passwordTextField.text = @"";
+   _emailTextField.text = @"";
 
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

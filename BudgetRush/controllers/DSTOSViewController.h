@@ -10,8 +10,6 @@
 
 @interface DSTOSViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *labelTitle;
-@property (weak, nonatomic) IBOutlet UITextView *textViewTOS;
 @property (nonatomic, assign) BOOL showTOS;
 
 @end
