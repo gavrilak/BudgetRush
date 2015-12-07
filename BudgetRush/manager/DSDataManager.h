@@ -22,6 +22,10 @@
 
 + (DSDataManager *)sharedManager;
 
+- (NSString*) getTOS;
+
+- (NSString*) getPP;
+
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
           onFailure:(void(^)(NSError* error)) failure;
 

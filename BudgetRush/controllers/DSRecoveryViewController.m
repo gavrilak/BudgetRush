@@ -8,6 +8,7 @@
 
 #import "DSRecoveryViewController.h"
 #import "DSDataManager.h"
+#import "DSTOSViewController.h"
 
 @interface DSRecoveryViewController () {
    __weak IBOutlet UITextField *_emailTextField;
@@ -21,6 +22,10 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = NSLocalizedString(@"Password Recovery",nil);
+    if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor blackColor];
+        _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
+    }
 
 }
 
@@ -41,6 +46,15 @@
         [alert show];
     }];
  
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"showTOS"]) {
+        DSTOSViewController*  controller = [segue destinationViewController];
+        controller.showTOS = YES;
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {

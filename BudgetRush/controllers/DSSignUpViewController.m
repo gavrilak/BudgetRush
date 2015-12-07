@@ -7,6 +7,7 @@
 //
 
 #import "DSSignUpViewController.h"
+#import "DSTOSViewController.h"
 #import "DSDataManager.h"
 #import "Settings.h"
 
@@ -25,11 +26,28 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = NSLocalizedString( @"Sign Up", nil);
+    if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor blackColor];
+        _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
+    }
+    if ([_passwordTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor blackColor];
+        _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Password",nil) attributes:@{NSForegroundColorAttributeName: color}];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"showTOS"]) {
+        DSTOSViewController*  controller = [segue destinationViewController];
+        controller.showTOS = YES;
+    }
 }
 
 

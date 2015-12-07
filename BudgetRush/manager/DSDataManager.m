@@ -41,6 +41,34 @@
     return self;
 }
 
+- (NSString*) getTOS {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource: NSLocalizedString(@"TOS&PP",nil) ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    NSError *error;
+    if (data != nil) {
+        NSMutableArray* tos = [NSMutableArray arrayWithArray:[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error]];
+        return [[tos objectAtIndex:0] objectForKey:@"TOS"];
+    } else {
+        return @"";
+    }
+    
+}
+
+- (NSString*) getPP {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource: NSLocalizedString(@"TOS&PP",nil)  ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    NSError *error;
+    if (data != nil) {
+        NSMutableArray* tos = [NSMutableArray arrayWithArray:[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error]];
+        return [[tos objectAtIndex:0] objectForKey:@"PP"];
+    } else {
+        return @"";
+    }
+
+}
+
 
 
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(DSAccount* account)) success
