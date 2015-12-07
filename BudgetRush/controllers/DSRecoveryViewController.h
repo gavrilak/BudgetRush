@@ -10,6 +10,6 @@
 
 @interface DSRecoveryViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldEmail;
+
 
 @end

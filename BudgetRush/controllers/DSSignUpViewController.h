@@ -10,10 +10,4 @@
 
 @interface DSSignUpViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldEmail;
-@property (weak, nonatomic) IBOutlet UITextField *fieldPassword;
-
-- (IBAction) signUpTouch:(id)sender;
-
-
 @end

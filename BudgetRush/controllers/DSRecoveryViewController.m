@@ -9,7 +9,9 @@
 #import "DSRecoveryViewController.h"
 #import "DSDataManager.h"
 
-@interface DSRecoveryViewController ()
+@interface DSRecoveryViewController () {
+   __weak IBOutlet UITextField *_emailTextField;
+}
 
 @end
 
@@ -18,51 +20,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    self.navigationItem.title = @"Password Recovery";
+    self.navigationItem.title = NSLocalizedString(@"Password Recovery",nil);
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-   
-}
+
 
 - (IBAction)recoveryTouch:(id)sender {
     
     [self.view setUserInteractionEnabled :NO];
-    [[DSDataManager sharedManager] recoveryPassForEmail:self.fieldEmail.text OnSuccess:^(id object) {
+    [[DSDataManager sharedManager] recoveryPassForEmail:_emailTextField.text OnSuccess:^(id object) {
         [self.navigationController popViewControllerAnimated:YES];
     } onFailure:^(NSError *error) {
         self.view.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Invalid email"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
+                                                        message:NSLocalizedString(@"Invalid email",nil)
                                                        delegate:self
-                                              cancelButtonTitle:@"OK"
+                                              cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                               otherButtonTitles:nil];
         [alert show];
     }];
-  /* [[DSDataManager sharedManager]  recoveryPassForEmail:self.fieldEmail.text  onSuccess:^(id object) {
-        [self na
-    } onFailure:^(NSError *error) {
-   
-    }];*/
+ 
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
-    self.fieldEmail.text = @"";
+    _emailTextField.text = @"";
     
 }
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
