@@ -19,7 +19,7 @@
 
 
 
-#warning TODO: Данный менеджер должен отвечать только за работу с АПИ, т.е. выполнение запросов. Парсинг данных должен осуществляться в другом месте. Советую создать что-то типа DSDataManager, который будет работать с API менеджером и будет парсить данные.
+
 
 @interface  DSApiManager () {
     
@@ -160,7 +160,6 @@
      }];
 }
     
-#warning ???: Зачем это делать в каждом запросе? Достаточно один раз при инициализации менеджера
 #warning  для токена    _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer]
 #warning для post запросов _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer] по другому пока не работает
 

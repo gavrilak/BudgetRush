@@ -7,6 +7,8 @@
 //
 
 #import "DSAccountViewController.h"
+#import "DSCategoryViewController.h"
+#import "DSCurrencyViewController.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
 
@@ -56,11 +58,12 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }]];
 
-        [section addCell:[BOTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOTableViewCell *cell) {
+        [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOChoiceTableViewCell *cell) {
      
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.detailTextLabel.text = @"not selected";
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.options = @[@"Not selected",@"Option 1", @"Option 2", @"Option 3", @"Option 4"];
+            //cell.detailTextLabel.text = @"not selected";
+            cell.destinationViewController = [DSCategoryViewController new];
         }]];
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOTableViewCell *cell) {
