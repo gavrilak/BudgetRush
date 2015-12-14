@@ -98,7 +98,7 @@
           onFailure:(void(^)(NSError* error)) failure {
     
     NSDictionary* params = @{@"name"        : account.name,
-                             @"group"        :@{@"id"  :[NSNumber numberWithInteger:1]},
+                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
     
     [[DSApiManager sharedManager] postAccount:params onSuccess:^(NSDictionary *response) {
@@ -117,13 +117,49 @@
     
 }
 
+- (void) updateAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+             onFailure:(void(^)(NSError* error)) failure {
+    NSDictionary* params = @{@"name"        : account.name,
+                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
+                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+    
+    [[DSApiManager sharedManager] putAccount:account.ident withParams:params onSuccess:^(NSDictionary *response) {
+        DSAccount* account;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            account = [[DSAccount alloc] initWithDictionary:response];
+        }
+        if (success) {
+            success(account);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 
+}
 
-- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+- (void) deleteAccount:(DSAccount*) account onSuccess:(void(^)(id object)) success
+             onFailure:(void(^)(NSError* error)) failure {
+    
+    [[DSApiManager sharedManager] deleteAccount:account.ident onSuccess:^(id object) {
+        if (success) {
+            success(object);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+
+    }];
+    
+}
+
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure {
     
     
-    [[DSApiManager sharedManager] getExpenseForAccID:acID onSuccess:^(NSDictionary *response) {
+    [[DSApiManager sharedManager] getExpenseForAccID:acID onSuccess:^(NSArray*response) {
         if (success) {
             success(response);
         }
@@ -135,11 +171,11 @@
     
 }
 
-- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure {
     
     
-    [[DSApiManager sharedManager] getIncomeForAccID:acID onSuccess:^(NSDictionary *response) {
+    [[DSApiManager sharedManager] getIncomeForAccID:acID onSuccess:^(NSArray *response) {
         if (success) {
             success(response);
         }
@@ -162,14 +198,21 @@
         NSMutableArray *accounts = [NSMutableArray new];
         for (NSDictionary* dict in response ) {
             DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
-            [[DSApiManager sharedManager] getExpenseForAccID:acc.ident onSuccess:^(NSDictionary *response) {
-                acc.expense = [[response objectForKey:@"amount"] integerValue];
+            [[DSApiManager sharedManager] getExpenseForAccID:acc.ident onSuccess:^(NSArray *response) {
+                 if ([response count] > 0 ) {
+                     NSDictionary *dict = [response  objectAtIndex:0];
+                     acc.expense  =  [[dict  objectForKey:@"amount"] integerValue];
+                 }
+                
             } onFailure:^(NSError *error) {
                 NSLog(@"Error ");
             }];
             
-            [[DSApiManager sharedManager] getIncomeForAccID:acc.ident onSuccess:^(NSDictionary *response) {
-                acc.income = [[response objectForKey:@"amount"] integerValue];
+            [[DSApiManager sharedManager] getIncomeForAccID:acc.ident onSuccess:^(NSArray *response) {
+                if ([response count] > 0 ) {
+                    NSDictionary *dict = [response  objectAtIndex:0];
+                    acc.income  =  [[dict  objectForKey:@"amount"] integerValue];
+                }
             } onFailure:^(NSError *error) {
                 NSLog(@"Error ");
             }];

@@ -15,6 +15,7 @@
 
 @interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate> {
 
+    __weak IBOutlet UIView  *infoView;
     __weak IBOutlet UILabel *_todayLabel;
     __weak IBOutlet UITableView *_tableView;
     __weak IBOutlet UISegmentedControl * _segmentControl;
@@ -34,7 +35,9 @@
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
-    [self loadData];
+    CGRect headerFrame = _tableView.tableHeaderView.frame;
+    headerFrame.size.height = 80;
+    _tableView.tableHeaderView.frame = headerFrame;
   
   
     
@@ -45,6 +48,7 @@
     [super viewWillAppear:animated];
     [self navigationController].topViewController.title = @"My Accounts";
     [self navigationController].topViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount)];
+     [self loadData];
 
 }
 
@@ -62,7 +66,14 @@
 - (void) loadData {
     [[DSDataManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
         _accounts = [accounts mutableCopy];
-        [_tableView reloadData];
+        if ([accounts count] == 0) {
+            [UIView animateWithDuration:1.0 animations:^(void) {
+                _tableView.alpha = 0;
+            }];
+        } else {
+            _tableView.alpha = 1;
+            [_tableView reloadData];
+        }
     } onFailure:^(NSError *error) {
         NSLog(@"Error");
     }];
@@ -122,14 +133,14 @@
     NSMutableArray * result = [NSMutableArray array];
     NSString* titles[2] = {@"Delete", @"Edit"};
     NSString* imageNames[2] = {@"ic_delete", @"ic_edit"};
-    UIColor * colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
+    UIColor * colors[2] = {colorBlue, colorRed};
     for (int i = 0; i < number; ++i)
     {
         MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] icon:[UIImage imageNamed:imageNames[i]] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
-            NSLog(@"Convenience callback received (right).");
             BOOL autoHide = i != 0;
             return autoHide;
         }];
+        [button setButtonWidth:100];
         [result addObject:button];
     }
     return result;
@@ -144,6 +155,7 @@
     if (direction == MGSwipeDirectionRightToLeft && index == 0) {
         //delete button
         NSIndexPath * path = [_tableView indexPathForCell:cell];
+        [[DSDataManager sharedManager] deleteAccount:[_accounts objectAtIndex:path.row] onSuccess:nil onFailure:nil];
         [_accounts removeObjectAtIndex:path.row];
         [_tableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationLeft];
         return NO; //Don't autohide to improve delete expansion animation

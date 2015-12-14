@@ -108,15 +108,16 @@
 }
 
 
-- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
                  onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:@"orders/statistics/expense/sum"
+     GET:@"accounts/statistics/expense"
      parameters:@{@"access_token":_accessToken.token,
+                  @"period":@"LAST_YEAR",
                   @"startDate":@"0000000000000",
                   @"endDate":@"1935964800000",
                   @"accountId":[NSNumber numberWithInteger:acID]}
-     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          
@@ -135,15 +136,16 @@
 
 
 
-- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
                  onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:@"orders/statistics/income/sum"
+     GET:@"accounts/statistics/income"
      parameters:@{@"access_token":_accessToken.token,
+                  @"period":@"LAST_YEAR",
                   @"startDate":@"0000000000000",
                   @"endDate":@"1935964800000",
                   @"accountId":[NSNumber numberWithInteger:acID]}
-     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+     success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
          
@@ -186,28 +188,16 @@
      }];
 }
 
-- (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
-          onFailure:(void(^)(NSError* error)) failure {
-    
-    
-    NSDictionary* params = @{@"name"        : account.name,
-                             @"user"        :@{@"id"  :[NSNumber numberWithInteger:account.userIdent]},
-                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+- (void) putAccount:(NSInteger) accountID  withParams:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success onFailure:(void(^)(NSError* error)) failure {
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"accounts/%ld?access_token=%@",account.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"accounts/%ld?access_token=%@",accountID,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
-         DSAccount* account;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             account = [[DSAccount alloc] initWithDictionary:responseObject];
-         }
-         
          if (success) {
-             success(account);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -221,10 +211,10 @@
 }
 
 
-- (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id success)) success
+- (void) deleteAccount:(NSInteger) accountID onSuccess:(void(^)(id object)) success
              onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"accounts/%ld" ,ac_id]
+     DELETE:[NSString stringWithFormat:@"accounts/%ld" ,accountID]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);

@@ -41,10 +41,10 @@
 - (void) deleteAccount:(DSAccount*) account onSuccess:(void(^)(id object)) success
              onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
 
 

@@ -27,22 +27,19 @@
           onFailure:(void(^)(NSError* error)) failure;
 
 
-- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
                   onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* response)) success
+- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
                  onFailure:(void(^)(NSError* error)) failure;
 
 
-- (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
-           onFailure:(void(^)(NSError* error)) failure;
+- (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success onFailure:(void(^)(NSError* error)) failure;
 
-- (void) putAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
-          onFailure:(void(^)(NSError* error)) failure;
+- (void) putAccount:(NSInteger) accountID  withParams:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success onFailure:(void(^)(NSError* error)) failure;
 
-- (void) deleteAccount:(NSInteger) ac_id onSuccess:(void(^)(id success)) success
+- (void) deleteAccount:(NSInteger) accountID onSuccess:(void(^)(id object)) success
              onFailure:(void(^)(NSError* error)) failure;
-
 
 - (void) getCategoriesOnSuccess:(void(^)(NSArray* categories)) success
                       onFailure:(void(^)(NSError* error)) failure;
@@ -58,10 +55,6 @@
 
 - (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id success)) success
               onFailure:(void(^)(NSError* error)) failure;
-
-
-
-
 
 - (void) getContractorsOnSuccess:(void(^)(NSArray* contractors)) success
                        onFailure:(void(^)(NSError* error)) failure;
