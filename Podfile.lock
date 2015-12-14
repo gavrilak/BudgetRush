@@ -21,16 +21,19 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - Bohr (3.0.0)
+  - MGSwipeTableCell (1.5.3)
   - TAPageControl (0.2.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - Bohr
+  - MGSwipeTableCell
   - TAPageControl
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   Bohr: 17b150766e54e1fb8ff417d85b830c7caafa8b4a
+  MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
   TAPageControl: fd11d779bbb5c2464ca2f55dde9e288213ea8a9b
 
 COCOAPODS: 0.39.0

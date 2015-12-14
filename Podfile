@@ -6,6 +6,7 @@ target 'BudgetRush' do
 pod 'AFNetworking', '~> 2.5'
 pod 'TAPageControl'
 pod 'Bohr'
+pod 'MGSwipeTableCell'
 
 end
 

@@ -35,6 +35,12 @@
 - (void) createAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
              onFailure:(void(^)(NSError* error)) failure;
 
+- (void) updateAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
+             onFailure:(void(^)(NSError* error)) failure;
+
+- (void) deleteAccount:(DSAccount*) account onSuccess:(void(^)(id object)) success
+             onFailure:(void(^)(NSError* error)) failure;
+
 - (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSDictionary* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
 

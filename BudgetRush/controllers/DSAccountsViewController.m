@@ -9,9 +9,16 @@
 #import "DSAccountsViewController.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
+#import "MGSwipeButton.h"
+#import "MGSwipeTableCell.h"
+#import "Settings.h"
 
-@interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate> {
-    
+@interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate> {
+
+    __weak IBOutlet UILabel *_todayLabel;
+    __weak IBOutlet UITableView *_tableView;
+    __weak IBOutlet UISegmentedControl * _segmentControl;
+
     NSMutableArray* _accounts ;
     NSInteger _selectedSegment;
 }
@@ -24,10 +31,11 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"dd MMMM"];
+    _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
     [self loadData];
-    CGRect headerFrame = self.tableView.tableHeaderView.frame;
-    headerFrame.size.height =  65;
-    self.tableView.tableHeaderView.frame = headerFrame;
+  
   
     
 }
@@ -54,15 +62,15 @@
 - (void) loadData {
     [[DSDataManager sharedManager] getAccountsOnSuccess:^(NSArray *accounts) {
         _accounts = [accounts mutableCopy];
-        [self.tableView reloadData];
+        [_tableView reloadData];
     } onFailure:^(NSError *error) {
         NSLog(@"Error");
     }];
 }
 
 - (IBAction)changeSegment:(id)sender{
-    _selectedSegment = self.segmentControl.selectedSegmentIndex;
-    [self.tableView reloadData];
+    _selectedSegment = _segmentControl.selectedSegmentIndex;
+    [_tableView reloadData];
 }
 #pragma mark - UITableViewDataSource
 
@@ -78,12 +86,14 @@
     
     DSAccount* account = [_accounts objectAtIndex:indexPath.row];
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ident];
+    MGSwipeTableCell *cell = [_tableView dequeueReusableCellWithIdentifier:ident];
     
     if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
+        cell = [[MGSwipeTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
     }
     cell.textLabel.text = account.name;
+    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%ld",(indexPath.row % 4 )+1]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (_selectedSegment) {
         case 0:
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.balance];
@@ -95,10 +105,60 @@
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.income];
             break;
     }
+    
+    
+    cell.rightSwipeSettings.transition =  MGSwipeTransitionStatic;
+    cell.rightExpansion.buttonIndex = 0;
+    cell.rightExpansion.fillOnTrigger = YES;
+    cell.rightButtons = [self createRightButtons:2];
+    cell.delegate = self;
+    
     return cell;
 }
 
+
+-(NSArray *) createRightButtons: (int) number
+{
+    NSMutableArray * result = [NSMutableArray array];
+    NSString* titles[2] = {@"Delete", @"Edit"};
+    NSString* imageNames[2] = {@"ic_delete", @"ic_edit"};
+    UIColor * colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
+    for (int i = 0; i < number; ++i)
+    {
+        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] icon:[UIImage imageNamed:imageNames[i]] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
+            NSLog(@"Convenience callback received (right).");
+            BOOL autoHide = i != 0;
+            return autoHide;
+        }];
+        [result addObject:button];
+    }
+    return result;
+}
+
+
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion
+{
+    NSLog(@"Delegate: button tapped, %@ position, index %d, from Expansion: %@",
+          direction == MGSwipeDirectionLeftToRight ? @"left" : @"right", (int)index, fromExpansion ? @"YES" : @"NO");
+    
+    if (direction == MGSwipeDirectionRightToLeft && index == 0) {
+        //delete button
+        NSIndexPath * path = [_tableView indexPathForCell:cell];
+        [_accounts removeObjectAtIndex:path.row];
+        [_tableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationLeft];
+        return NO; //Don't autohide to improve delete expansion animation
+    }
+    
+    return YES;
+
+}
+
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
 /*
 #pragma mark - Navigation
 
