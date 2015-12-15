@@ -235,7 +235,7 @@
 
 #pragma mark - categories
 
-- (void) getCategoriesOnSuccess:(void(^)(NSArray* categories)) success
+- (void) getCategoriesOnSuccess:(void(^)(NSDictionary* responseObject)) success
                       onFailure:(void(^)(NSError* error)) failure {
     
     
@@ -245,15 +245,8 @@
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-         NSMutableArray* objectsArray = [NSMutableArray array];
-         
-         for (NSDictionary* dict in responseObject) {
-             DSCategory* cat = [[DSCategory alloc] initWithDictionary:dict];
-             [objectsArray addObject:cat];
-         }
-         
-         if (success) {
-             success(objectsArray);
+        if (success) {
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -532,7 +525,7 @@
 
 #pragma mark - currencies
 
-- (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
+- (void) getCurrenciesOnSuccess:(void(^)(NSDictionary* responseObject)) success
                       onFailure:(void(^)(NSError* error)) failure {
     
     
@@ -541,16 +534,8 @@
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
-         
-         NSMutableArray* objectsArray = [NSMutableArray array];
-         
-         for (NSDictionary* dict in responseObject) {
-             DSCurrency* curr = [[DSCurrency alloc] initWithDictionary:dict];
-             [objectsArray addObject:curr];
-         }
-         
          if (success) {
-             success(objectsArray);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {

@@ -41,7 +41,7 @@
 - (void) deleteAccount:(NSInteger) accountID onSuccess:(void(^)(id object)) success
              onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getCategoriesOnSuccess:(void(^)(NSArray* categories)) success
+- (void) getCategoriesOnSuccess:(void(^)(NSDictionary* responseObject)) success
                       onFailure:(void(^)(NSError* error)) failure;
 
 - (void) getCategory:(NSInteger) cat_id onSuccess:(void(^)(DSCategory* category)) success
@@ -73,7 +73,7 @@
 
 
 
-- (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
+- (void) getCurrenciesOnSuccess:(void(^)(NSDictionary* responseObject)) success
                       onFailure:(void(^)(NSError* error)) failure;
 
 - (void) getCurrency:(NSInteger) cur_id onSuccess:(void(^)(DSCurrency* currency)) success

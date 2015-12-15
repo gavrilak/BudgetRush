@@ -7,6 +7,8 @@
 //
 
 #import "DSCategoryViewController.h"
+#import "DSCategory.h"
+#import "DSDataManager.h"
 
 @interface DSCategoryViewController ()
 
@@ -19,22 +21,20 @@
     self.title = @"Categories";
     
     [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"Profit default Category" handler:^(BOTableViewSection *section) {
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Profit" key:@"category" handler:^(BOOptionTableViewCell *cell) {
-            cell.imageView.image = [UIImage imageNamed:@"ic_categories1"];
-        }]];
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Salary" key:@"category" handler:^(BOOptionTableViewCell *cell) {
-            cell.imageView.image = [UIImage imageNamed:@"ic_categories2"];
-        }]];
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Credit Card" key:@"category" handler:^(BOOptionTableViewCell *cell) {
-           cell.imageView.image = [UIImage imageNamed:@"ic_categories3"];
-        }]];
+        for (DSCategory* cat in [DSDataManager sharedManager].categories) {
+            int r = (rand() % 4)+1;
+            
+            [section addCell:[BOOptionTableViewCell cellWithTitle:cat.name key:@"category" handler:^(BOOptionTableViewCell *cell) {
+                cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",r]];
+            }]];
+            
+            
+            
+        }
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Savings" key:@"category" handler:^(BOOptionTableViewCell *cell) {
-          cell.imageView.image = [UIImage imageNamed:@"ic_categories4"];
-        }]];
-    }]];
+     }]];
 }
 
 

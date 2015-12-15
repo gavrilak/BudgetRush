@@ -34,12 +34,26 @@
 {
     self = [super init];
     if (self) {
+   
         
-  
     }
     
     return self;
 }
+
+-(void) getCategoryAndCurrency {
+   [self getCurrenciesOnSuccess:^(NSArray *currencies) {
+        self.currencies = [currencies mutableCopy];
+    } onFailure:^(NSError *error) {
+        NSLog(@"Error");
+    }];
+    [self getCateroriesOnSuccess:^(NSArray *categories) {
+        self.categories = [categories mutableCopy];
+    } onFailure:^(NSError *error) {
+        NSLog(@"Error");
+    }];
+}
+
 
 - (NSString*) getTOS {
     NSString *filePath = [[NSBundle mainBundle] pathForResource: NSLocalizedString(@"TOS&PP",nil) ofType:@"json"];
@@ -232,6 +246,52 @@
 }
 
 
+- (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
+                      onFailure:(void(^)(NSError* error)) failure {
+    
+    [[DSApiManager sharedManager] getCurrenciesOnSuccess:^(NSDictionary *response) {
+        
+        NSMutableArray *currencies = [NSMutableArray new];
+        for (NSDictionary* dict in response ) {
+            DSCurrency* cur = [[DSCurrency alloc] initWithDictionary:dict];
+            
+            [currencies addObject:cur];
+        }
+        if (success)
+            success(currencies);
+        
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+
+    
+    
+}
+
+- (void) getCateroriesOnSuccess:(void(^)(NSArray* categories)) success
+                      onFailure:(void(^)(NSError* error)) failure {
+    [[DSApiManager sharedManager] getCategoriesOnSuccess:^(NSDictionary *response) {
+        
+        NSMutableArray *categories = [NSMutableArray new];
+        for (NSDictionary* dict in response ) {
+            DSCategory* cur = [[DSCategory alloc] initWithDictionary:dict];
+            
+            [categories addObject:cur];
+        }
+        if (success)
+            success(categories);
+        
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+
+}
+
+
 - (void) signUpUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
                onFailure:(void(^)(NSError* error)) failure {
 
@@ -267,6 +327,7 @@
     
     
    [[DSApiManager sharedManager] getTokenForUser:email andPassword:password onSuccess:^(DSAccessToken *token) {
+       [self getCategoryAndCurrency];
        if (success) {
            success(@"");
        }

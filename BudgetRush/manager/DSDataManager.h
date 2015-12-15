@@ -19,6 +19,8 @@
 
 
 @property (strong, nonatomic) DSUser* currentUser;
+@property (strong, nonatomic) NSMutableArray* categories;
+@property (strong, nonatomic) NSMutableArray* currencies;
 
 + (DSDataManager *)sharedManager;
 
@@ -46,6 +48,12 @@
 
 - (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
+                    onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getCateroriesOnSuccess:(void(^)(NSArray* categories)) success
+                    onFailure:(void(^)(NSError* error)) failure;
 
 
 
