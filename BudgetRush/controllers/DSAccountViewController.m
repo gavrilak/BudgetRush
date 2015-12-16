@@ -11,6 +11,8 @@
 #import "DSCurrencyViewController.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
+#import "DSCurrency.h"
+#import "DSCategory.h"
 
 @interface DSAccountViewController ()
 
@@ -61,16 +63,31 @@
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOChoiceTableViewCell *cell) {
      
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.options = @[@"Not selected",@"Option 1", @"Option 2", @"Option 3", @"Option 4"];
-            //cell.detailTextLabel.text = @"not selected";
+            NSMutableArray  *catNames = [[NSMutableArray alloc] init];
+            for (DSCategory *cat in [DSDataManager sharedManager].categories) {
+                
+                [catNames addObject:cat.name];
+                
+            }
+            cell.options = catNames;
+            
             cell.destinationViewController = [DSCategoryViewController new];
+            cell.detailTextLabel.text = @"not selected";
         }]];
         
-        [section addCell:[BOTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOTableViewCell *cell) {
+        [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOChoiceTableViewCell *cell) {
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.detailTextLabel.text = @"USD";
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            NSMutableArray  *curNames = [[NSMutableArray alloc] init];
+            for (DSCurrency *cur in [DSDataManager sharedManager].currencies) {
+            
+                [curNames addObject:cur.name];
+            
+            }
+            cell.options = curNames;
+            //cell.detailTextLabel.text = @"USD";
+            cell.destinationViewController = [DSCurrencyViewController new];
+            
         }]];
 
         

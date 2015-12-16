@@ -7,6 +7,8 @@
 //
 
 #import "DSCurrencyViewController.h"
+#import "DSCurrency.h"
+#import "DSDataManager.h"
 
 @interface DSCurrencyViewController ()
 
@@ -16,24 +18,20 @@
 
 - (void)setup {
     
-    self.title = @"Choice options";
+    self.title = @"Choice currency";
     
-    [self addSection:[BOTableViewSection sectionWithHeaderTitle:nil handler:^(BOTableViewSection *section) {
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Some description for option 1" key:@"choice_2" handler:^(BOOptionTableViewCell *cell) {
-            cell.footerTitle = @"Some footer for option 1";
-        }]];
+    [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"USD default cureency" handler:^(BOTableViewSection *section) {
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Some description for option 2" key:@"choice_2" handler:^(BOOptionTableViewCell *cell) {
-            cell.footerTitle = @"Some footer for option 2";
-        }]];
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Some description for option 3" key:@"choice_2" handler:^(BOOptionTableViewCell *cell) {
-            cell.footerTitle = @"Some footer for option 3";
-        }]];
+            for (DSCurrency* cur in [DSDataManager sharedManager].currencies) {
+            
+            [section addCell:[BOOptionTableViewCell cellWithTitle:cur.name key:@"currency" handler:^(BOOptionTableViewCell *cell) {
+            
+            }]];
+            
+        }
+
         
-        [section addCell:[BOOptionTableViewCell cellWithTitle:@"Some description for option 4" key:@"choice_2" handler:^(BOOptionTableViewCell *cell) {
-            cell.footerTitle = @"Some footer for option 4";
-        }]];
     }]];
 }
 /*

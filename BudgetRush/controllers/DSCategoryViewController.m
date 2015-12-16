@@ -18,7 +18,7 @@
 
 - (void)setup {
     
-    self.title = @"Categories";
+    self.title = @"Choise category";
     
     [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"Profit default Category" handler:^(BOTableViewSection *section) {
         
@@ -29,8 +29,6 @@
             [section addCell:[BOOptionTableViewCell cellWithTitle:cat.name key:@"category" handler:^(BOOptionTableViewCell *cell) {
                 cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",r]];
             }]];
-            
-            
             
         }
         

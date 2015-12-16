@@ -8,7 +8,7 @@
 
 #import "BOChoiceTableViewCell.h"
 
-#import "BOTableViewCell+Subclass.h"
+
 
 @implementation BOChoiceTableViewCell
 
@@ -39,6 +39,7 @@
 }
 
 - (void)settingValueDidChange {
+    
 	self.detailTextLabel.text = self.options[[self.setting.value integerValue]];
 }
 

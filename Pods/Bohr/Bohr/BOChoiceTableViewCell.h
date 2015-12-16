@@ -7,6 +7,7 @@
 //
 
 #import "BOTableViewCell.h"
+#import "BOTableViewCell+Subclass.h"
 
 @interface BOChoiceTableViewCell : BOTableViewCell
 
