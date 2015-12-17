@@ -21,7 +21,7 @@
     
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    
+    [[UITableViewHeaderFooterView appearance] setTintColor:colorBackgroundWhite];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000, -1000) forBarMetrics:UIBarMetricsDefault];
     // Override point for customization after application launch.
@@ -31,17 +31,23 @@
     NSString* user = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     NSString* pass = [[NSUserDefaults standardUserDefaults] objectForKey:kUserPass];
     
+    
+    
+
+ 
+    
     if(user!=nil) {
     [[DSDataManager sharedManager] loginUserEmail:user password:pass OnSuccess:^(id object) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         
        UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
-        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"tabBarVC"];
-        [navigationController setViewControllers:@[viewController] animated:YES];
-         UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
 
-        window.rootViewController = navigationController;
-        [window makeKeyAndVisible];
+        UIViewController *tabViewController = [storyboard instantiateViewControllerWithIdentifier:@"tabBarVC"];
+        [navigationController setViewControllers:@[viewController,tabViewController] animated:YES];
+
+        _window.rootViewController = navigationController;
+        [_window makeKeyAndVisible];
 
     } onFailure:^(NSError *error) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -49,11 +55,10 @@
         UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
         
         UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
-        navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+         [navigationController setViewControllers:@[viewController] animated:YES];
         
-        window.rootViewController = navigationController;
-        [window makeKeyAndVisible];
+        _window.rootViewController = navigationController;
+        [_window makeKeyAndVisible];
 
     }];
     } else {
@@ -61,11 +66,10 @@
         
         UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"navigationController"];
         UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
-          navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+         [navigationController setViewControllers:@[viewController] animated:YES];
         
-        window.rootViewController = navigationController;
-        [window makeKeyAndVisible];
+        _window.rootViewController = navigationController;
+        [_window makeKeyAndVisible];
 
     }
     return YES;

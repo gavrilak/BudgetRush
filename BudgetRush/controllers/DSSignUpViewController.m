@@ -52,9 +52,11 @@
 
 
 - (IBAction) signUpTouch:(id)sender {
-    self.view.userInteractionEnabled = NO;
+     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[DSDataManager sharedManager] signUpUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
-        
+        _passwordTextField.text = @"";
+        _emailTextField.text = @"";
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [[DSDataManager sharedManager] loginUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
             [[NSUserDefaults standardUserDefaults] setObject:_emailTextField.text forKey:kUserName];
             [[NSUserDefaults standardUserDefaults] setObject:_passwordTextField.text forKey:kUserPass];
@@ -65,7 +67,7 @@
         }];
        
     } onFailure:^(NSError *error) {
-         self.view.userInteractionEnabled = YES;
+         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"The email has been used",nil)
                                                         message:NSLocalizedString(@"Try again or register using another email",nil)
                                                        delegate:self

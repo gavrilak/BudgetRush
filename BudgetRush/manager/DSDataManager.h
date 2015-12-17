@@ -49,6 +49,9 @@
 - (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
 
+- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
+                 onFailure:(void(^)(NSError* error)) failure;
+
 - (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
                     onFailure:(void(^)(NSError* error)) failure;
 

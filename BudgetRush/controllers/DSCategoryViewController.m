@@ -9,6 +9,7 @@
 #import "DSCategoryViewController.h"
 #import "DSCategory.h"
 #import "DSDataManager.h"
+#import "Settings.h"
 
 @interface DSCategoryViewController ()
 
@@ -18,9 +19,13 @@
 
 - (void)setup {
     
-    self.title = @"Choise category";
+    self.title = @"Category";
+    self.tableView.separatorColor = colorBackgroundBlue;
     
-    [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"Profit default Category" handler:^(BOTableViewSection *section) {
+    DSCategory *defaultCategoty = [[DSDataManager sharedManager].categories objectAtIndex:0];
+   
+    
+    [self addSection:[BOTableViewSection sectionWithHeaderTitle:[NSString stringWithFormat: @"%@ default Category", defaultCategoty.name ] handler:^(BOTableViewSection *section) {
         
         
         for (DSCategory* cat in [DSDataManager sharedManager].categories) {
@@ -28,6 +33,7 @@
             
             [section addCell:[BOOptionTableViewCell cellWithTitle:cat.name key:@"category" handler:^(BOOptionTableViewCell *cell) {
                 cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",r]];
+                cell.selectedColor = colorBlue;
             }]];
             
         }

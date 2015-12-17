@@ -7,8 +7,11 @@
 //
 
 #import <Bohr/Bohr.h>
+@class DSAccount;
 
 @interface DSAccountViewController : BOTableViewController
+
+@property (nonatomic, strong) DSAccount* account;
 
 
 @end

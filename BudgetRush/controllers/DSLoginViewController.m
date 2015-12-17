@@ -59,16 +59,18 @@
 
 - (IBAction)loginTouch:(id)sender {
     
-    [self.view setUserInteractionEnabled :NO];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[DSDataManager sharedManager] loginUserEmail: _emailTextField.text  password: _passwordTextField.text  OnSuccess:^(id object) {
         
         [[NSUserDefaults standardUserDefaults] setObject:_emailTextField.text forKey:kUserName];
         [[NSUserDefaults standardUserDefaults] setObject:_passwordTextField.text  forKey:kUserPass];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        _passwordTextField.text = @"";
+        _emailTextField.text = @"";
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [self performSegueWithIdentifier:@"showTabBar" sender:self];
     } onFailure:^(NSError *error) {
-        self.view.userInteractionEnabled = YES;
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                                         message:NSLocalizedString(@"Invalid email or password",nil)
                                                        delegate:self

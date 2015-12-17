@@ -33,6 +33,8 @@
 - (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
                  onFailure:(void(^)(NSError* error)) failure;
 
+- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
+                 onFailure:(void(^)(NSError* error)) failure;
 
 - (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success onFailure:(void(^)(NSError* error)) failure;
 

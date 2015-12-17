@@ -33,11 +33,12 @@
 
 - (IBAction)recoveryTouch:(id)sender {
     
-    [self.view setUserInteractionEnabled :NO];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[DSDataManager sharedManager] recoveryPassForEmail:_emailTextField.text OnSuccess:^(id object) {
         [self.navigationController popViewControllerAnimated:YES];
+         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     } onFailure:^(NSError *error) {
-        self.view.userInteractionEnabled = YES;
+         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil)
                                                         message:NSLocalizedString(@"Invalid email",nil)
                                                        delegate:self

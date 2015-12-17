@@ -7,6 +7,7 @@
 //
 
 #import "DSAccount.h"
+#import "DSCurrency.h"
 
 @implementation DSAccount
 
@@ -16,9 +17,9 @@
     if (self) {
         self.name = [responseObject objectForKey:@"name"];
         self.userIdent = [[[responseObject objectForKey:@"user"] objectForKey:@"id"]integerValue];
-        self.currencyIdent = [[[responseObject objectForKey:@"currency"] objectForKey:@"id"] integerValue];
-        self.balance = [[responseObject objectForKey:@"balance"] integerValue];
-        
+        self.currency =  [[DSCurrency  alloc] initWithDictionary:[responseObject objectForKey:@"currency"]];
+        self.balance = [[responseObject objectForKey:@"balance"] doubleValue];
+        self.initBalance = [[responseObject objectForKey:@"initBalance"] doubleValue];
         
     }
     return self;

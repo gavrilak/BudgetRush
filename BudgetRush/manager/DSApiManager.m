@@ -88,7 +88,7 @@
 - (void) getAccount:(NSInteger) acID onSuccess:(void(^)(NSDictionary* account)) success
           onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"accounts/%ld" ,acID]
+     GET:[NSString stringWithFormat:@"accounts/%ld" ,(long)acID]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -161,6 +161,34 @@
          }
      }];
 }
+
+- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
+                 onFailure:(void(^)(NSError* error)) failure {
+    [_sessionManager
+     GET:@"accounts/statistics/turnover"
+     parameters:@{@"access_token":_accessToken.token,
+                  @"period":@"LAST_YEAR",
+                  @"startDate":@"0000000000000",
+                  @"endDate":@"1935964800000",
+                  @"accountId":[NSNumber numberWithInteger:acID]}
+     success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         
+         if (success) {
+             success(responseObject);
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
+         }
+     }];
+}
+
+
     
 #warning  для токена    _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer]
 #warning для post запросов _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer] по другому пока не работает
@@ -192,7 +220,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"accounts/%ld?access_token=%@",accountID,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"accounts/%ld?access_token=%@",(long)accountID,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -214,7 +242,7 @@
 - (void) deleteAccount:(NSInteger) accountID onSuccess:(void(^)(id object)) success
              onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"accounts/%ld" ,accountID]
+     DELETE:[NSString stringWithFormat:@"accounts/%ld" ,(long)accountID]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -262,7 +290,7 @@
 - (void) getCategory:(NSInteger) cat_id onSuccess:(void(^)(DSCategory* category)) success
            onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"categories/%ld",cat_id]
+     GET:[NSString stringWithFormat:@"categories/%ld",(long)cat_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -330,7 +358,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"categories/%ld?access_token=%@",category.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"categories/%ld?access_token=%@",(long)category.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -357,7 +385,7 @@
 - (void) deleteCategory:(NSInteger) cat_id onSuccess:(void(^)(id success)) success
               onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat: @"categories/%ld",cat_id]
+     DELETE:[NSString stringWithFormat: @"categories/%ld",(long)cat_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -410,7 +438,7 @@
 - (void) getContractor:(NSInteger) con_id onSuccess:(void(^)(DSContractor* category)) success
              onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"contractors/%ld" ,con_id]
+     GET:[NSString stringWithFormat:@"contractors/%ld" ,(long)con_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -477,7 +505,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"contractors/%ld?access_token=%@",contractor.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"contractors/%ld?access_token=%@",(long)contractor.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -505,7 +533,7 @@
 - (void) deleteContractor:(NSInteger) con_id onSuccess:(void(^)(id success)) success
                 onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"contractors/%ld",con_id]
+     DELETE:[NSString stringWithFormat:@"contractors/%ld",(long)con_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -551,7 +579,7 @@
 - (void) getCurrency:(NSInteger) cur_id onSuccess:(void(^)(DSCurrency* currency)) success
            onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"currencies/%ld", cur_id]
+     GET:[NSString stringWithFormat:@"currencies/%ld", (long)cur_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -622,7 +650,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"currencies/%ld?access_token=%@",currency.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"currencies/%ld?access_token=%@",(long)currency.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -649,7 +677,7 @@
 - (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id success)) success
               onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"currencies/%ld" ,cur_id]
+     DELETE:[NSString stringWithFormat:@"currencies/%ld" ,(long)cur_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -702,7 +730,7 @@
 - (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
         onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"orders/%ld", ord_id]
+     GET:[NSString stringWithFormat:@"orders/%ld", (long)ord_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -780,7 +808,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"orders/%ld?access_token=%@",order.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"orders/%ld?access_token=%@",(long)order.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -810,7 +838,7 @@
 - (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id success)) success
            onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"orders/%ld", ord_id]
+     DELETE:[NSString stringWithFormat:@"orders/%ld", (long)ord_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -865,7 +893,7 @@
 - (void) getUser:(NSInteger) usr_id onSuccess:(void(^)(DSUser* user)) success
        onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:[NSString stringWithFormat:@"users/%ld", usr_id]
+     GET:[NSString stringWithFormat:@"users/%ld", (long)usr_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -924,7 +952,7 @@
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"users/%ld?access_token=%@",user.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"users/%ld?access_token=%@",(long)user.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
@@ -954,7 +982,7 @@
 - (void) deleteUser:(NSInteger) usr_id onSuccess:(void(^)(id success)) success
           onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString  stringWithFormat:@"users/%ld" , usr_id]
+     DELETE:[NSString  stringWithFormat:@"users/%ld" , (long)usr_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);

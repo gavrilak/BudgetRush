@@ -7,19 +7,24 @@
 //
 
 #import "DSAccountsViewController.h"
+#import "DSAccountViewController.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
+#import "DSCurrency.h"
 #import "MGSwipeButton.h"
 #import "MGSwipeTableCell.h"
 #import "Settings.h"
+#import "DSAccountTableViewCell.h"
 
 @interface DSAccountsViewController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate> {
 
-    __weak IBOutlet UIView  *infoView;
+    __weak IBOutlet UIView  *_infoView;
     __weak IBOutlet UILabel *_todayLabel;
     __weak IBOutlet UITableView *_tableView;
     __weak IBOutlet UISegmentedControl * _segmentControl;
+    __weak IBOutlet UIView  *_segmentView;
 
+    DSAccount *_selectedAccount;
     NSMutableArray* _accounts ;
     NSInteger _selectedSegment;
 }
@@ -33,12 +38,15 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setDateFormat:@"dd MMMM"];
+    [format setDateFormat:@"dd MMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
     CGRect headerFrame = _tableView.tableHeaderView.frame;
     headerFrame.size.height = 80;
     _tableView.tableHeaderView.frame = headerFrame;
-  
+    _tableView.alpha = 0;
+    _segmentView.alpha = 0;
+    _infoView.alpha = 0;
+
   
     
 }
@@ -59,6 +67,7 @@
 
 
 - (void) addAccount{
+    _selectedAccount = nil;
     [self performSegueWithIdentifier:@"showAccount" sender:self];
     
 }
@@ -69,9 +78,13 @@
         if ([accounts count] == 0) {
             [UIView animateWithDuration:1.0 animations:^(void) {
                 _tableView.alpha = 0;
+                _segmentView.alpha = 0;
+                _infoView.alpha = 1;
             }];
         } else {
             _tableView.alpha = 1;
+            _segmentView.alpha = 1;
+            _infoView.alpha = 0;
             [_tableView reloadData];
         }
     } onFailure:^(NSError *error) {
@@ -97,26 +110,26 @@
     
     DSAccount* account = [_accounts objectAtIndex:indexPath.row];
     
-    MGSwipeTableCell *cell = [_tableView dequeueReusableCellWithIdentifier:ident];
+    DSAccountTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:ident];
     
     if(!cell){
-        cell = [[MGSwipeTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
+        cell = [[DSAccountTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
     }
-    cell.textLabel.text = account.name;
-    cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%ld",(indexPath.row % 4 )+1]];
+    cell.nameLabel.text = account.name;
+    cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.categoryLabel.text = @"Profit";
     switch (_selectedSegment) {
         case 0:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.balance];
+            cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.balance, account.currency.shortName];
             break;
         case 1:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.expense];
+            cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.expense, account.currency.shortName];
             break;
         case 2:
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", account.income];
+            cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.income, account.currency.shortName];
             break;
     }
-    
     
     cell.rightSwipeSettings.transition =  MGSwipeTransitionStatic;
     cell.rightExpansion.buttonIndex = 0;
@@ -159,10 +172,12 @@
         [_accounts removeObjectAtIndex:path.row];
         [_tableView deleteRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationLeft];
         return NO; //Don't autohide to improve delete expansion animation
+    } else {
+         NSIndexPath * path = [_tableView indexPathForCell:cell];
+        _selectedAccount = [_accounts objectAtIndex:path.row];
+        [self performSegueWithIdentifier:@"showAccount" sender:self];
+        return YES;
     }
-    
-    return YES;
-
 }
 
 #pragma mark - UITableViewDelegate
@@ -171,14 +186,15 @@
     return 0.001f;
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"showAccount"]) {
+        DSAccountViewController *accountViewController = segue.destinationViewController;
+        accountViewController.account = _selectedAccount;
+        [accountViewController viewDidLoad];
+    }
 }
-*/
+
 
 @end

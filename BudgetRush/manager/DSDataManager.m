@@ -113,7 +113,8 @@
     
     NSDictionary* params = @{@"name"        : account.name,
                              @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
-                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency.ident]},
+                             @"initBalance" :[NSNumber numberWithDouble:account.initBalance] };
     
     [[DSApiManager sharedManager] postAccount:params onSuccess:^(NSDictionary *response) {
         DSAccount* account;
@@ -135,7 +136,8 @@
              onFailure:(void(^)(NSError* error)) failure {
     NSDictionary* params = @{@"name"        : account.name,
                              @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
-                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currencyIdent]}};
+                             @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency.ident]},
+                             @"initBalance" :[NSNumber numberWithDouble:account.initBalance] };
     
     [[DSApiManager sharedManager] putAccount:account.ident withParams:params onSuccess:^(NSDictionary *response) {
         DSAccount* account;
@@ -201,6 +203,19 @@
     
 }
 
+- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
+                   onFailure:(void(^)(NSError* error)) failure {
+    [[DSApiManager sharedManager] getTurnOverForAccID:acID onSuccess:^(NSArray *response) {
+        if (success) {
+            success(response);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+
+}
 
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
@@ -215,7 +230,7 @@
             [[DSApiManager sharedManager] getExpenseForAccID:acc.ident onSuccess:^(NSArray *response) {
                  if ([response count] > 0 ) {
                      NSDictionary *dict = [response  objectAtIndex:0];
-                     acc.expense  =  [[dict  objectForKey:@"amount"] integerValue];
+                     acc.expense  =  [[dict  objectForKey:@"amount"] doubleValue];
                  }
                 
             } onFailure:^(NSError *error) {
@@ -225,7 +240,7 @@
             [[DSApiManager sharedManager] getIncomeForAccID:acc.ident onSuccess:^(NSArray *response) {
                 if ([response count] > 0 ) {
                     NSDictionary *dict = [response  objectAtIndex:0];
-                    acc.income  =  [[dict  objectForKey:@"amount"] integerValue];
+                    acc.income  =  [[dict  objectForKey:@"amount"] doubleValue];
                 }
             } onFailure:^(NSError *error) {
                 NSLog(@"Error ");

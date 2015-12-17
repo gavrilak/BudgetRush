@@ -84,7 +84,7 @@
   
     [self.imagesData enumerateObjectsUsingBlock:^(NSString *imageName, NSUInteger idx, BOOL *stop) {
         
-        NSLog(@"%f,%ld",CGRectGetWidth(self.view.frame),idx);
+        NSLog(@"%f,%ld",CGRectGetWidth(self.view.frame),(unsigned long)idx);
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) * idx, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
         imageView.contentMode = UIViewContentModeScaleToFill;
         imageView.image = [UIImage imageNamed:imageName];

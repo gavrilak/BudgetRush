@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		320580C81BBC9247001DDEF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580C71BBC9247001DDEF6 /* main.m */; };
 		320580CB1BBC9247001DDEF6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580CA1BBC9247001DDEF6 /* AppDelegate.m */; };
-		320580D11BBC9247001DDEF6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 320580CF1BBC9247001DDEF6 /* Main.storyboard */; };
 		320580D31BBC9247001DDEF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 320580D21BBC9247001DDEF6 /* Assets.xcassets */; };
 		320580D61BBC9247001DDEF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */; };
 		320580E11BBC9248001DDEF6 /* BudgetRushTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 320580E01BBC9248001DDEF6 /* BudgetRushTests.m */; };
@@ -27,6 +26,8 @@
 		BF55F2CB1C04E8FF0050CAA1 /* DSAccountsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2CA1C04E8FF0050CAA1 /* DSAccountsViewController.m */; };
 		BF55F2CE1C04EA770050CAA1 /* DSAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2CD1C04EA770050CAA1 /* DSAccountViewController.m */; };
 		BF55F2D11C04EAB70050CAA1 /* DSSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF55F2D01C04EAB70050CAA1 /* DSSignUpViewController.m */; };
+		BF5C21FE1C2273780073AE25 /* DSAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C21FD1C2273780073AE25 /* DSAccountTableViewCell.m */; };
+		BF5C22011C227EBC0073AE25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF5C21FF1C227EBC0073AE25 /* Main.storyboard */; };
 		BF6174751C0BC82B00A52A46 /* DSViewOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6174741C0BC82B00A52A46 /* DSViewOrdersViewController.m */; };
 		BF6174781C0BC86C00A52A46 /* DSCreateOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6174771C0BC86C00A52A46 /* DSCreateOrderViewController.m */; };
 		BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA747851BE44BF900843FC5 /* DSDataManager.m */; };
@@ -63,7 +64,6 @@
 		320580C71BBC9247001DDEF6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		320580C91BBC9247001DDEF6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		320580CA1BBC9247001DDEF6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		320580D01BBC9247001DDEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		320580D21BBC9247001DDEF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		320580D51BBC9247001DDEF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		320580D71BBC9247001DDEF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,6 +100,9 @@
 		BF55F2CD1C04EA770050CAA1 /* DSAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSAccountViewController.m; path = controllers/DSAccountViewController.m; sourceTree = "<group>"; };
 		BF55F2CF1C04EAB70050CAA1 /* DSSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSSignUpViewController.h; path = controllers/DSSignUpViewController.h; sourceTree = "<group>"; };
 		BF55F2D01C04EAB70050CAA1 /* DSSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSSignUpViewController.m; path = controllers/DSSignUpViewController.m; sourceTree = "<group>"; };
+		BF5C21FC1C2273780073AE25 /* DSAccountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSAccountTableViewCell.h; sourceTree = "<group>"; };
+		BF5C21FD1C2273780073AE25 /* DSAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSAccountTableViewCell.m; sourceTree = "<group>"; };
+		BF5C22001C227EBC0073AE25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BF6174731C0BC82B00A52A46 /* DSViewOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSViewOrdersViewController.h; path = controllers/DSViewOrdersViewController.h; sourceTree = "<group>"; };
 		BF6174741C0BC82B00A52A46 /* DSViewOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DSViewOrdersViewController.m; path = controllers/DSViewOrdersViewController.m; sourceTree = "<group>"; };
 		BF6174761C0BC86C00A52A46 /* DSCreateOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DSCreateOrderViewController.h; path = controllers/DSCreateOrderViewController.h; sourceTree = "<group>"; };
@@ -177,6 +180,7 @@
 		320580C51BBC9247001DDEF6 /* BudgetRush */ = {
 			isa = PBXGroup;
 			children = (
+				BF5C21FB1C2273150073AE25 /* Cells */,
 				BF43E90A1C15C73200D26B18 /* TOS&PP.json */,
 				32B464F61BCB4C27005705D2 /* Settings.h */,
 				3228445D1BC3188B00541A05 /* AFNetworkActivityLogger */,
@@ -185,8 +189,8 @@
 				BFF135881BBD72DD0047AD90 /* controllers */,
 				320580C91BBC9247001DDEF6 /* AppDelegate.h */,
 				320580CA1BBC9247001DDEF6 /* AppDelegate.m */,
-				320580CF1BBC9247001DDEF6 /* Main.storyboard */,
 				320580D21BBC9247001DDEF6 /* Assets.xcassets */,
+				BF5C21FF1C227EBC0073AE25 /* Main.storyboard */,
 				320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */,
 				320580D71BBC9247001DDEF6 /* Info.plist */,
 				320580C61BBC9247001DDEF6 /* Supporting Files */,
@@ -244,6 +248,15 @@
 				4EA633A01B388E241E90D3D4 /* libPods-BudgetRush.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF5C21FB1C2273150073AE25 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BF5C21FC1C2273780073AE25 /* DSAccountTableViewCell.h */,
+				BF5C21FD1C2273780073AE25 /* DSAccountTableViewCell.m */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		BFF135881BBD72DD0047AD90 /* controllers */ = {
@@ -419,8 +432,8 @@
 			files = (
 				320580D61BBC9247001DDEF6 /* LaunchScreen.storyboard in Resources */,
 				320580D31BBC9247001DDEF6 /* Assets.xcassets in Resources */,
-				320580D11BBC9247001DDEF6 /* Main.storyboard in Resources */,
 				BF43E90B1C15C73200D26B18 /* TOS&PP.json in Resources */,
+				BF5C22011C227EBC0073AE25 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +526,7 @@
 				BFA747861BE44BF900843FC5 /* DSDataManager.m in Sources */,
 				9D7561751C1A3C7D0072CF14 /* DSCategoryViewController.m in Sources */,
 				BF55F2BC1C04E7600050CAA1 /* DSLoginViewController.m in Sources */,
+				BF5C21FE1C2273780073AE25 /* DSAccountTableViewCell.m in Sources */,
 				BF6174751C0BC82B00A52A46 /* DSViewOrdersViewController.m in Sources */,
 				BFF1359F1BBD81D10047AD90 /* DSUser.m in Sources */,
 				322844601BC3188B00541A05 /* AFNetworkActivityLogger.m in Sources */,
@@ -553,20 +567,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		320580CF1BBC9247001DDEF6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				320580D01BBC9247001DDEF6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		320580D41BBC9247001DDEF6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				320580D51BBC9247001DDEF6 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BF5C21FF1C227EBC0073AE25 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BF5C22001C227EBC0073AE25 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

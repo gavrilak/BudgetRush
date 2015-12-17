@@ -9,6 +9,7 @@
 #import "DSCurrencyViewController.h"
 #import "DSCurrency.h"
 #import "DSDataManager.h"
+#import "Settings.h"
 
 @interface DSCurrencyViewController ()
 
@@ -18,15 +19,16 @@
 
 - (void)setup {
     
-    self.title = @"Choice currency";
+    self.title = @"Currency";
+    self.tableView.separatorColor = colorBackgroundBlue;
     
-    [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"USD default cureency" handler:^(BOTableViewSection *section) {
+    DSCurrency *defaultCurrency = [[DSDataManager sharedManager].currencies objectAtIndex:0];
+    
+    [self addSection:[BOTableViewSection sectionWithHeaderTitle:[NSString stringWithFormat: @"%@ default Currency", defaultCurrency.name] handler:^(BOTableViewSection *section) {
         
-        
-            for (DSCurrency* cur in [DSDataManager sharedManager].currencies) {
-            
-            [section addCell:[BOOptionTableViewCell cellWithTitle:cur.name key:@"currency" handler:^(BOOptionTableViewCell *cell) {
-            
+        for (DSCurrency* cur in [DSDataManager sharedManager].currencies) {
+                [section addCell:[BOOptionTableViewCell cellWithTitle:cur.name key:@"currency" handler:^(BOOptionTableViewCell *cell) {
+                cell.selectedColor = colorBlue;
             }]];
             
         }
@@ -34,14 +36,6 @@
         
     }]];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -18,6 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.separatorColor = colorBackgroundBlue;
+    self.view.backgroundColor = colorBackgroundWhite;
     // Do any additional setup after loading the view.
 
 }
@@ -31,12 +33,6 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 - (void)setup {
     
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -45,16 +41,22 @@
             cell.detailTextLabel.text = @"USD";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.mainColor = colorBlueFont;
+            cell.selectedColor = colorBlue;
         }]];
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Change passsword" key:nil handler:^(BOTableViewCell *cell) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.mainColor = colorBlueFont;
+            cell.selectedColor = colorBlue;
         }]];
         [section addCell:[BOButtonTableViewCell cellWithTitle:@"Logout" key:nil handler:^(BOButtonTableViewCell *cell) {
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.mainColor = colorBlueFont;
+            cell.selectedColor = colorBlue;
             cell.actionBlock = ^{
                 [weakSelf presentAlertController];
 
@@ -84,15 +86,16 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+#pragma mark - UITableViewDelegate
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50.f;
+}
 
 @end

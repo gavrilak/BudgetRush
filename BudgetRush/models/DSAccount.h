@@ -8,15 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "DSBaseModel.h"
+@class  DSCurrency;
 
 @interface DSAccount : DSBaseModel
 
 @property (strong,nonatomic) NSString *name;
 @property (assign,nonatomic) NSInteger userIdent;
-@property (assign,nonatomic) NSInteger currencyIdent;
-@property (assign,nonatomic) NSInteger balance;
-@property (assign,nonatomic) NSInteger income;
-@property (assign,nonatomic) NSInteger expense;
+@property (strong,nonatomic) DSCurrency *currency;
+@property (assign,nonatomic) double balance;
+@property (assign,nonatomic) double initBalance;
+@property (assign,nonatomic) double income;
+@property (assign,nonatomic) double expense;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;
