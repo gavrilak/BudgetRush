@@ -37,6 +37,7 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
+    _tableView.bounces = NO;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
@@ -47,7 +48,6 @@
     _segmentView.alpha = 0;
     _infoView.alpha = 0;
 
-  
     
 }
 
@@ -56,7 +56,9 @@
     [super viewWillAppear:animated];
     [self navigationController].topViewController.title = @"My Accounts";
     [self navigationController].topViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount)];
-     [self loadData];
+    [_segmentControl setSelectedSegmentIndex:0];
+    _selectedSegment = 0;
+    [self loadData];
 
 }
 
@@ -82,9 +84,11 @@
                 _infoView.alpha = 1;
             }];
         } else {
-            _tableView.alpha = 1;
-            _segmentView.alpha = 1;
-            _infoView.alpha = 0;
+            [UIView animateWithDuration:1.0 animations:^(void) {
+                _tableView.alpha = 1;
+                _segmentView.alpha = 1;
+                _infoView.alpha = 0;
+            }];
             [_tableView reloadData];
         }
     } onFailure:^(NSError *error) {
@@ -118,7 +122,7 @@
     cell.nameLabel.text = account.name;
     cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.categoryLabel.text = @"Profit";
+    cell.categoryLabel.text = @"#Category";
     switch (_selectedSegment) {
         case 0:
             cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.balance, account.currency.shortName];

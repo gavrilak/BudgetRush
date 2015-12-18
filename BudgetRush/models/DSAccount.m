@@ -18,7 +18,7 @@
         self.name = [responseObject objectForKey:@"name"];
         self.userIdent = [[[responseObject objectForKey:@"user"] objectForKey:@"id"]integerValue];
         self.currency =  [[DSCurrency  alloc] initWithDictionary:[responseObject objectForKey:@"currency"]];
-        self.balance = [[responseObject objectForKey:@"balance"] doubleValue];
+        self.balance = [[responseObject objectForKey:@"currentBalance"] doubleValue];
         self.initBalance = [[responseObject objectForKey:@"initBalance"] doubleValue];
         
     }

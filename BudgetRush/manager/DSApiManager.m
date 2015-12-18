@@ -108,17 +108,16 @@
 }
 
 
-- (void) getExpenseForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
+- (void) getStatisticsForAccID:(NSInteger) acID withFilter:(NSString*) filter onSuccess:(void(^)(NSArray* response)) success
                  onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     GET:@"accounts/statistics/expense"
+     GET:@"accounts/statistics"
      parameters:@{@"access_token":_accessToken.token,
                   @"period":@"LAST_YEAR",
-                  @"startDate":@"0000000000000",
-                  @"endDate":@"1935964800000",
+                  @"filter":filter,
                   @"accountId":[NSNumber numberWithInteger:acID]}
      success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+       //  NSLog(@"JSON: %@", responseObject);
          
          
          if (success) {
@@ -136,57 +135,7 @@
 
 
 
-- (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
-                 onFailure:(void(^)(NSError* error)) failure {
-    [_sessionManager
-     GET:@"accounts/statistics/income"
-     parameters:@{@"access_token":_accessToken.token,
-                  @"period":@"LAST_YEAR",
-                  @"startDate":@"0000000000000",
-                  @"endDate":@"1935964800000",
-                  @"accountId":[NSNumber numberWithInteger:acID]}
-     success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         
-         
-         if (success) {
-             success(responseObject);
-         }
-         
-     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-         NSLog(@"Error: %@", error);
-         
-         if (failure) {
-             failure(error);
-         }
-     }];
-}
 
-- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* response)) success
-                 onFailure:(void(^)(NSError* error)) failure {
-    [_sessionManager
-     GET:@"accounts/statistics/turnover"
-     parameters:@{@"access_token":_accessToken.token,
-                  @"period":@"LAST_YEAR",
-                  @"startDate":@"0000000000000",
-                  @"endDate":@"1935964800000",
-                  @"accountId":[NSNumber numberWithInteger:acID]}
-     success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         
-         
-         if (success) {
-             success(responseObject);
-         }
-         
-     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-         NSLog(@"Error: %@", error);
-         
-         if (failure) {
-             failure(error);
-         }
-     }];
-}
 
 
     

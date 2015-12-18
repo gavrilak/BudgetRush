@@ -27,6 +27,7 @@
     self.view.backgroundColor = colorBackgroundWhite;
     self.navigationController.navigationBar.topItem.title = @"My Accounts";
     self.tableView.separatorColor = colorBackgroundBlue;
+    self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [[NSUserDefaults standardUserDefaults] setObject: [NSDate new] forKey:@"date"];
     [[NSUserDefaults standardUserDefaults] setObject: _account == nil ? @"" : _account.name forKey:@"name"];

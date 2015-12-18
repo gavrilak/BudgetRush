@@ -20,6 +20,7 @@
 - (void)setup {
     
     self.title = @"Category";
+    self.tableView.bounces = NO;
     self.tableView.separatorColor = colorBackgroundBlue;
     
     DSCategory *defaultCategoty = [[DSDataManager sharedManager].categories objectAtIndex:0];

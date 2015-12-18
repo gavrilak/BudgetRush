@@ -19,8 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.separatorColor = colorBackgroundBlue;
+    self.tableView.bounces = NO;
     self.view.backgroundColor = colorBackgroundWhite;
-    // Do any additional setup after loading the view.
 
 }
 

@@ -175,7 +175,7 @@
                   onFailure:(void(^)(NSError* error)) failure {
     
     
-    [[DSApiManager sharedManager] getExpenseForAccID:acID onSuccess:^(NSArray*response) {
+    [[DSApiManager sharedManager] getStatisticsForAccID:acID withFilter:@"EXPENSE" onSuccess:^(NSArray*response) {
         if (success) {
             success(response);
         }
@@ -191,7 +191,7 @@
                   onFailure:(void(^)(NSError* error)) failure {
     
     
-    [[DSApiManager sharedManager] getIncomeForAccID:acID onSuccess:^(NSArray *response) {
+     [[DSApiManager sharedManager] getStatisticsForAccID:acID withFilter:@"INCOME" onSuccess:^(NSArray*response) {
         if (success) {
             success(response);
         }
@@ -203,19 +203,6 @@
     
 }
 
-- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
-                   onFailure:(void(^)(NSError* error)) failure {
-    [[DSApiManager sharedManager] getTurnOverForAccID:acID onSuccess:^(NSArray *response) {
-        if (success) {
-            success(response);
-        }
-    } onFailure:^(NSError *error) {
-        if (failure) {
-            failure(error);
-        }
-    }];
-
-}
 
 
 - (void) getAccountsOnSuccess:(void(^)(NSArray* accounts)) success
@@ -227,7 +214,8 @@
         NSMutableArray *accounts = [NSMutableArray new];
         for (NSDictionary* dict in response ) {
             DSAccount* acc = [[DSAccount alloc] initWithDictionary:dict];
-            [[DSApiManager sharedManager] getExpenseForAccID:acc.ident onSuccess:^(NSArray *response) {
+            [[DSApiManager sharedManager] getStatisticsForAccID:acc.ident withFilter:@"EXPENSE" onSuccess:^(NSArray*response) {
+
                  if ([response count] > 0 ) {
                      NSDictionary *dict = [response  objectAtIndex:0];
                      acc.expense  =  [[dict  objectForKey:@"amount"] doubleValue];
@@ -237,7 +225,7 @@
                 NSLog(@"Error ");
             }];
             
-            [[DSApiManager sharedManager] getIncomeForAccID:acc.ident onSuccess:^(NSArray *response) {
+           [[DSApiManager sharedManager] getStatisticsForAccID:acc.ident withFilter:@"INCOME" onSuccess:^(NSArray*response) {
                 if ([response count] > 0 ) {
                     NSDictionary *dict = [response  objectAtIndex:0];
                     acc.income  =  [[dict  objectForKey:@"amount"] doubleValue];
