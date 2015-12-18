@@ -11,7 +11,7 @@
 #import "DSDataManager.h"
 #import "Settings.h"
 
-@interface DSLoginViewController ()
+@interface DSLoginViewController () <UITextFieldDelegate>
 {
     __weak IBOutlet UITextField *_emailTextField;
     __weak IBOutlet UITextField *_passwordTextField;
@@ -85,6 +85,12 @@
     _passwordTextField.text = @"";
     _emailTextField.text = @"";
     
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end

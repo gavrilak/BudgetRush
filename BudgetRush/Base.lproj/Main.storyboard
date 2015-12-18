@@ -208,6 +208,9 @@
                                         <include reference="psu-Ue-tDr"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="3Ej-aL-2qH" id="it9-2V-KCM"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="15" background="email-field" translatesAutoresizingMaskIntoConstraints="NO" id="Ktg-Cr-IYV">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -229,6 +232,9 @@
                                         <include reference="sy5-SF-nld"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="3Ej-aL-2qH" id="fFn-iA-pxU"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5E1-JP-Xtl">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -527,6 +533,9 @@
                                         <include reference="PNg-4n-Dgm"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="l28-AI-8VO" id="XOe-WI-Gaz"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email and we'll send you a new password" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2E-Dn-Kbx">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -622,9 +631,16 @@
                                     <action selector="recoveryTouch:" destination="l28-AI-8VO" eventType="touchUpInside" id="Zvg-1G-muM"/>
                                 </connections>
                             </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qwq-YS-ECm">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="46" y="14" width="294" height="514"/>
+                                </variation>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.26274509800000001" green="0.78823529410000004" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qwq-YS-ECm" secondAttribute="trailing" id="07q-Kc-ubq"/>
                             <constraint firstItem="mBm-fx-yvd" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" constant="32" id="2FU-IB-1Jh"/>
                             <constraint firstItem="UAZ-EL-D3g" firstAttribute="top" secondItem="EoP-9B-V7g" secondAttribute="bottom" constant="15" id="3gw-1e-7Uw"/>
                             <constraint firstItem="Pay-ZM-v7d" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" constant="37" id="9Es-Fp-NsR">
@@ -637,6 +653,7 @@
                             <constraint firstItem="9mw-lV-xhM" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" constant="-33" id="JQE-rn-tzN">
                                 <variation key="widthClass=compact" constant="92"/>
                             </constraint>
+                            <constraint firstItem="UAZ-EL-D3g" firstAttribute="top" secondItem="qwq-YS-ECm" secondAttribute="bottom" id="Ju4-ER-y70"/>
                             <constraint firstItem="htC-KM-evc" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" constant="60" id="L0w-ei-VnT">
                                 <variation key="widthClass=compact" constant="-60"/>
                             </constraint>
@@ -647,8 +664,10 @@
                             <constraint firstItem="7KT-D6-7iU" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" id="QR9-ng-Xru"/>
                             <constraint firstItem="Pay-ZM-v7d" firstAttribute="leading" secondItem="8ro-mZ-DRQ" secondAttribute="trailing" constant="5" id="Qbl-RN-FkN"/>
                             <constraint firstItem="Omu-B8-VTy" firstAttribute="top" secondItem="Q2E-Dn-Kbx" secondAttribute="bottom" constant="15" id="ULe-P8-B77"/>
+                            <constraint firstItem="qwq-YS-ECm" firstAttribute="top" secondItem="FZ9-d6-Dx3" secondAttribute="bottom" id="VD3-5O-Wpd"/>
                             <constraint firstItem="jL2-tf-A0E" firstAttribute="top" secondItem="FZ9-d6-Dx3" secondAttribute="bottom" constant="30" id="Vwg-Xb-Iwl"/>
                             <constraint firstItem="Q2E-Dn-Kbx" firstAttribute="top" secondItem="Pay-ZM-v7d" secondAttribute="bottom" constant="20" id="XMp-kT-RHT"/>
+                            <constraint firstItem="qwq-YS-ECm" firstAttribute="leading" secondItem="HgL-ni-1jR" secondAttribute="leading" id="XRA-mc-xTQ"/>
                             <constraint firstItem="Pay-ZM-v7d" firstAttribute="top" secondItem="jL2-tf-A0E" secondAttribute="bottom" constant="15" id="ent-0r-MPo"/>
                             <constraint firstItem="jL2-tf-A0E" firstAttribute="centerX" secondItem="HgL-ni-1jR" secondAttribute="centerX" id="flb-8o-1ko"/>
                             <constraint firstItem="Omu-B8-VTy" firstAttribute="centerY" secondItem="HgL-ni-1jR" secondAttribute="centerY" constant="-50" id="hiL-ty-MQ7"/>
@@ -672,34 +691,39 @@
                                 <exclude reference="8ro-mZ-DRQ"/>
                                 <exclude reference="Pay-ZM-v7d"/>
                                 <exclude reference="7KT-D6-7iU"/>
+                                <exclude reference="qwq-YS-ECm"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="3gw-1e-7Uw"/>
-                                <exclude reference="Mvc-7F-aUW"/>
+                                <exclude reference="07q-Kc-ubq"/>
+                                <exclude reference="VD3-5O-Wpd"/>
+                                <exclude reference="XRA-mc-xTQ"/>
+                                <exclude reference="Vwg-Xb-Iwl"/>
+                                <exclude reference="flb-8o-1ko"/>
+                                <exclude reference="D8n-3x-yNz"/>
+                                <exclude reference="Ge9-PO-A6O"/>
+                                <exclude reference="Nvr-ZX-vE0"/>
+                                <exclude reference="XMp-kT-RHT"/>
+                                <exclude reference="m9R-w2-k2X"/>
+                                <exclude reference="vj9-Kz-8HL"/>
+                                <exclude reference="9Es-Fp-NsR"/>
+                                <exclude reference="Qbl-RN-FkN"/>
+                                <exclude reference="ent-0r-MPo"/>
                                 <exclude reference="CSU-JH-YmH"/>
                                 <exclude reference="ULe-P8-B77"/>
                                 <exclude reference="hiL-ty-MQ7"/>
                                 <exclude reference="O6N-dS-u3f"/>
                                 <exclude reference="QR9-ng-Xru"/>
                                 <exclude reference="j9J-T5-lC4"/>
+                                <exclude reference="L0w-ei-VnT"/>
+                                <exclude reference="OoW-j5-G9s"/>
                                 <exclude reference="JQE-rn-tzN"/>
                                 <exclude reference="is2-vk-eXE"/>
                                 <exclude reference="2FU-IB-1Jh"/>
                                 <exclude reference="Dj9-aR-bJd"/>
                                 <exclude reference="lQG-VB-H8o"/>
-                                <exclude reference="OoW-j5-G9s"/>
-                                <exclude reference="Nvr-ZX-vE0"/>
-                                <exclude reference="XMp-kT-RHT"/>
-                                <exclude reference="m9R-w2-k2X"/>
-                                <exclude reference="vj9-Kz-8HL"/>
-                                <exclude reference="L0w-ei-VnT"/>
-                                <exclude reference="Vwg-Xb-Iwl"/>
-                                <exclude reference="flb-8o-1ko"/>
-                                <exclude reference="D8n-3x-yNz"/>
-                                <exclude reference="Ge9-PO-A6O"/>
-                                <exclude reference="9Es-Fp-NsR"/>
-                                <exclude reference="Qbl-RN-FkN"/>
-                                <exclude reference="ent-0r-MPo"/>
+                                <exclude reference="3gw-1e-7Uw"/>
+                                <exclude reference="Ju4-ER-y70"/>
+                                <exclude reference="Mvc-7F-aUW"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -714,34 +738,39 @@
                                 <include reference="8ro-mZ-DRQ"/>
                                 <include reference="Pay-ZM-v7d"/>
                                 <include reference="7KT-D6-7iU"/>
+                                <include reference="qwq-YS-ECm"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="3gw-1e-7Uw"/>
-                                <include reference="Mvc-7F-aUW"/>
+                                <include reference="07q-Kc-ubq"/>
+                                <include reference="VD3-5O-Wpd"/>
+                                <include reference="XRA-mc-xTQ"/>
+                                <include reference="Vwg-Xb-Iwl"/>
+                                <include reference="flb-8o-1ko"/>
+                                <include reference="D8n-3x-yNz"/>
+                                <exclude reference="Ge9-PO-A6O"/>
+                                <include reference="Nvr-ZX-vE0"/>
+                                <include reference="XMp-kT-RHT"/>
+                                <exclude reference="m9R-w2-k2X"/>
+                                <exclude reference="vj9-Kz-8HL"/>
+                                <include reference="9Es-Fp-NsR"/>
+                                <include reference="Qbl-RN-FkN"/>
+                                <include reference="ent-0r-MPo"/>
                                 <include reference="CSU-JH-YmH"/>
                                 <include reference="ULe-P8-B77"/>
                                 <exclude reference="hiL-ty-MQ7"/>
                                 <include reference="O6N-dS-u3f"/>
                                 <include reference="QR9-ng-Xru"/>
                                 <exclude reference="j9J-T5-lC4"/>
+                                <include reference="L0w-ei-VnT"/>
+                                <include reference="OoW-j5-G9s"/>
                                 <include reference="JQE-rn-tzN"/>
                                 <include reference="is2-vk-eXE"/>
                                 <include reference="2FU-IB-1Jh"/>
                                 <include reference="Dj9-aR-bJd"/>
                                 <exclude reference="lQG-VB-H8o"/>
-                                <include reference="OoW-j5-G9s"/>
-                                <include reference="Nvr-ZX-vE0"/>
-                                <include reference="XMp-kT-RHT"/>
-                                <exclude reference="m9R-w2-k2X"/>
-                                <exclude reference="vj9-Kz-8HL"/>
-                                <include reference="L0w-ei-VnT"/>
-                                <include reference="Vwg-Xb-Iwl"/>
-                                <include reference="flb-8o-1ko"/>
-                                <include reference="D8n-3x-yNz"/>
-                                <exclude reference="Ge9-PO-A6O"/>
-                                <include reference="9Es-Fp-NsR"/>
-                                <include reference="Qbl-RN-FkN"/>
-                                <include reference="ent-0r-MPo"/>
+                                <include reference="3gw-1e-7Uw"/>
+                                <include reference="Ju4-ER-y70"/>
+                                <include reference="Mvc-7F-aUW"/>
                             </mask>
                         </variation>
                     </view>
@@ -902,6 +931,9 @@
                                         <include reference="Eca-6k-Jp0"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="Y3x-MY-O30" id="G1V-SO-rYR"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" background="email-field" translatesAutoresizingMaskIntoConstraints="NO" id="347-AL-6mv">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -923,6 +955,9 @@
                                         <include reference="mmW-Xu-RcV"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="Y3x-MY-O30" id="7A4-MW-reB"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="and" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKs-YH-FnP">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -1599,6 +1634,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6Nh-n2-HQS"/>
-        <segue reference="Ofe-B1-P9D"/>
+        <segue reference="bcb-M3-9at"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,7 +10,8 @@
 #import "DSDataManager.h"
 #import "DSTOSViewController.h"
 
-@interface DSRecoveryViewController () {
+@interface DSRecoveryViewController () <UITextFieldDelegate>
+{
    __weak IBOutlet UITextField *_emailTextField;
 }
 
@@ -64,7 +65,11 @@
     
 }
 
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
 
 
 @end

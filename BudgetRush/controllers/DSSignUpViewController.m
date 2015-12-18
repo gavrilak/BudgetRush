@@ -11,7 +11,7 @@
 #import "DSDataManager.h"
 #import "Settings.h"
 
-@interface DSSignUpViewController ()  <UIAlertViewDelegate> {
+@interface DSSignUpViewController ()  <UIAlertViewDelegate, UITextFieldDelegate> {
     __weak IBOutlet UITextField *_emailTextField;
     __weak IBOutlet UITextField *_passwordTextField;
     
@@ -54,13 +54,14 @@
 - (IBAction) signUpTouch:(id)sender {
      [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [[DSDataManager sharedManager] signUpUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
-        _passwordTextField.text = @"";
-        _emailTextField.text = @"";
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        
         [[DSDataManager sharedManager] loginUserEmail:_emailTextField.text password:_passwordTextField.text OnSuccess:^(id object) {
             [[NSUserDefaults standardUserDefaults] setObject:_emailTextField.text forKey:kUserName];
             [[NSUserDefaults standardUserDefaults] setObject:_passwordTextField.text forKey:kUserPass];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            _passwordTextField.text = @"";
+            _emailTextField.text = @"";
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             [self performSegueWithIdentifier:@"showTabBar" sender:self];
         } onFailure:^(NSError *error) {
             [self.navigationController popViewControllerAnimated:YES];
@@ -82,6 +83,12 @@
     _passwordTextField.text = @"";
    _emailTextField.text = @"";
 
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end
