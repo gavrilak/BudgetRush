@@ -7,6 +7,10 @@
 //
 
 #import "DSOrder.h"
+#import "DSAccount.h"
+#import "DSCategory.h"
+#import "DSCurrency.h"
+#import "DSContractor.h"
 
 @implementation DSOrder
 
@@ -21,10 +25,9 @@
         } else {
             self.type = typeTransfer;
         }
-        self.accountIdent = [[[responseObject objectForKey:@"account"] objectForKey:@"id"]integerValue];
-        self.currencyIdent = [[[[responseObject objectForKey:@"account"] objectForKey:@"currency"] objectForKey:@"id"]integerValue];
-        self.contractorIdent = [[[responseObject objectForKey:@"contractor"] objectForKey:@"id"]integerValue];
-        self.categoryIdent = [[[responseObject objectForKey:@"category"] objectForKey:@"id"]integerValue];
+        self.account = [[DSAccount alloc] initWithDictionary:[responseObject objectForKey:@"account"]];
+        self.category = [[DSCategory alloc] initWithDictionary:[responseObject objectForKey:@"category"] ];
+        self.contractor = [[DSContractor alloc] initWithDictionary:[responseObject objectForKey:@"contractor"]];
         
     }
     return self;

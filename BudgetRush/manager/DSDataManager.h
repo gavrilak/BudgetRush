@@ -59,6 +59,8 @@
                     onFailure:(void(^)(NSError* error)) failure;
 
 
+- (void) getOrdersForAcc:(NSInteger) accID withFilter:(NSString*) filter  OnSuccess:(void(^)(NSArray* orders)) success onFailure:(void(^)(NSError* error)) failure;
+
 
 - (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;
 

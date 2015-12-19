@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "DSBaseModel.h"
+@class  DSCategory;
+@class  DSAccount;
+@class  DSCurrency;
+@class  DSContractor;
 
 enum orderType : NSUInteger {
     typeOrder ,typeTransfer
@@ -18,10 +22,9 @@ enum orderType : NSUInteger {
 @property (assign,nonatomic) NSDecimal amount;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;
-@property (assign,nonatomic) NSInteger accountIdent;
-@property (assign,nonatomic) NSInteger currencyIdent;
-@property (assign,nonatomic) NSInteger categoryIdent;
-@property (assign,nonatomic) NSInteger contractorIdent;
+@property (strong,nonatomic) DSAccount  *account;
+@property (strong,nonatomic) DSCategory *category;
+@property (strong,nonatomic) DSContractor *contractor;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;

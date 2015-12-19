@@ -84,11 +84,7 @@
 - (void) deleteCurrency:(NSInteger) cur_id onSuccess:(void(^)(id success)) success
               onFailure:(void(^)(NSError* error)) failure;
 
-
-
-
-- (void) getOrdersOnSuccess:(void(^)(NSArray* orders)) success
-                  onFailure:(void(^)(NSError* error)) failure;
+- (void) getOrdersForAccId:(NSInteger) acID withFilter:(NSString*) filter onSuccess:(void(^)(NSDictionary *responseObject)) success onFailure:(void(^)(NSError* error)) failure ;
 
 - (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
         onFailure:(void(^)(NSError* error)) failure;

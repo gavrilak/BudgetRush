@@ -117,9 +117,7 @@
                   @"filter":filter,
                   @"accountId":[NSNumber numberWithInteger:acID]}
      success:^(NSURLSessionDataTask *task, NSArray* responseObject) {
-       //  NSLog(@"JSON: %@", responseObject);
-         
-         
+ 
          if (success) {
              success(responseObject);
          }
@@ -134,13 +132,6 @@
 }
 
 
-
-
-
-
-    
-#warning  для токена    _sessionManager.requestSerializer =  [AFHTTPRequestSerializer serializer]
-#warning для post запросов _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer] по другому пока не работает
 
 - (void) postAccount:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
            onFailure:(void(^)(NSError* error)) failure {
@@ -645,25 +636,20 @@
 }
 #pragma mark - orders
 
-- (void) getOrdersOnSuccess:(void(^)(NSArray* orders)) success
-                  onFailure:(void(^)(NSError* error)) failure {
-    
+- (void) getOrdersForAccId:(NSInteger) acID withFilter:(NSString*) filter onSuccess:(void(^)(NSDictionary *responseObject)) success onFailure:(void(^)(NSError* error)) failure {
     
     [_sessionManager
      GET:@"orders"
-     parameters:@{@"access_token":_accessToken.token}
+     parameters:@{@"access_token":_accessToken.token,
+                  @"period":@"TODAY",
+                  @"filter":filter,
+                  @"accountId":[NSNumber numberWithInteger:acID]}
+     
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);
          
-         NSMutableArray* objectsArray = [NSMutableArray array];
-         
-         for (NSDictionary* dict in responseObject) {
-             DSOrder* order = [[DSOrder alloc] initWithDictionary:dict];
-             [objectsArray addObject:order];
-         }
-         
          if (success) {
-             success(objectsArray);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -713,9 +699,9 @@
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractorIdent]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.accountIdent]},
-                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.categoryIdent]}};
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
@@ -750,9 +736,9 @@
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractorIdent]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.accountIdent]},
-                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.categoryIdent]}};
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];

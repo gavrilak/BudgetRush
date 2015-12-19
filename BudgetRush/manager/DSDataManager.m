@@ -325,6 +325,26 @@
 }
 
 
+- (void) getOrdersForAcc:(NSInteger) accID withFilter:(NSString*) filter  OnSuccess:(void(^)(NSArray* orders)) success onFailure:(void(^)(NSError* error)) failure {
+    
+    [[DSApiManager sharedManager] getOrdersForAccId:accID withFilter:filter onSuccess:^(NSDictionary *responseObject) {
+        NSMutableArray *orders = [NSMutableArray new];
+        for (NSDictionary* dict in responseObject ) {
+            DSOrder* order = [[DSOrder alloc] initWithDictionary:dict];
+            [orders addObject:order];
+        }
+        if (success)
+            success(orders);
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+
 - (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
                onFailure:(void(^)(NSError* error)) failure {
     
