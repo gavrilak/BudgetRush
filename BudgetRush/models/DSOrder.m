@@ -18,7 +18,7 @@
     
     self = [super initWithDictionary:responseObject];
     if (self) {
-        self.amount = [[responseObject objectForKey:@"amount"]decimalValue];
+        self.sum = [[responseObject objectForKey:@"amount"]doubleValue];
         self.date= [NSDate dateWithTimeIntervalSince1970:[[responseObject objectForKey:@"date"] integerValue ]];
         if ([[responseObject objectForKey:@"type"] isEqualToString:@"ORDER"]) {
             self.type = typeOrder;

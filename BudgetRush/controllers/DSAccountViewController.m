@@ -165,7 +165,7 @@
         DSAccount *account = [DSAccount new];
         account.name =  [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
         account.currency = currency;
-        account.initBalance = [[NSUserDefaults standardUserDefaults] integerForKey:@"balance"];
+        account.initBalance = [[NSUserDefaults standardUserDefaults] doubleForKey:@"balance"];
         [[DSDataManager sharedManager] createAccount:account onSuccess:^(DSAccount *account) {
         
             [self.navigationController popViewControllerAnimated:YES];
@@ -176,7 +176,7 @@
     } else {
         _account.name =  [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
         _account.currency = currency;
-        _account.initBalance = [[NSUserDefaults standardUserDefaults] integerForKey:@"balance"];
+        _account.initBalance = [[NSUserDefaults standardUserDefaults] doubleForKey:@"balance"];
         [[DSDataManager sharedManager] updateAccount:_account onSuccess:^(DSAccount *account) {
             
             [self.navigationController popViewControllerAnimated:YES];

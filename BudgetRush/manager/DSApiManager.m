@@ -696,7 +696,7 @@
          onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
@@ -733,7 +733,7 @@
         onFailure:(void(^)(NSError* error)) failure {
     
     
-    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:[[NSDecimalNumber decimalNumberWithDecimal:order.amount] doubleValue]],
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
                              @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
                              @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},

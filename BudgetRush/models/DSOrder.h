@@ -19,12 +19,13 @@ enum orderType : NSUInteger {
 
 @interface DSOrder : DSBaseModel
 
-@property (assign,nonatomic) NSDecimal amount;
+@property (assign,nonatomic) double sum;
 @property (assign,nonatomic) enum orderType type;
 @property (strong,nonatomic) NSDate *date;
 @property (strong,nonatomic) DSAccount  *account;
 @property (strong,nonatomic) DSCategory *category;
 @property (strong,nonatomic) DSContractor *contractor;
+@property (strong,nonatomic) NSString *descr;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *) responseObject;

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DSOrder.h"
+#import <Bohr/Bohr.h>
+@class DSOrder;
 
-@interface DSOrderViewController : UIViewController
+@interface DSOrderViewController  : BOTableViewController
 
 @property (nonatomic, strong) DSOrder* order;
+@property (nonatomic, assign) NSInteger isIncome;
+@property (nonatomic, strong) NSString* accName;
 
 @end

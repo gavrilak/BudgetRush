@@ -108,7 +108,7 @@
     cell.nameLabel.text = order.category.name;
     cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", order.amount, order.account.currency.shortName];
+    cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", order.sum, order.account.currency.shortName];
     return cell;
 }
 
