@@ -21,19 +21,17 @@
     [super viewDidLoad];
     [self.navigationItem setHidesBackButton:YES];
     self.view.backgroundColor = colorBackgroundWhite;
-    self.navigationController.navigationBar.topItem.title = @"My Accounts";
+    self.navigationController.navigationBar.topItem.title = @"New transaction";
     self.tableView.separatorColor = colorBackgroundBlue;
     self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-     [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _order.sum  forKey:@"sum"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject: _order != nil ? _order.date : [NSDate new] forKey:@"date"];
-    [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @"" : _order.descr forKey:@"descr"];
-    [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
+    [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _order.sum  forKey:@"sum"];
+    [[NSUserDefaults standardUserDefaults] setObject: _isIncome ? @"Income":  @"Expenses"  forKey:@"sumName"];
     [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @"" : _order.category.name forKey:@"category"];
-
-   
-    
+    [[NSUserDefaults standardUserDefaults] setObject: _order != nil ? _order.date : [NSDate new] forKey:@"date"];
+    [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
+    [[NSUserDefaults standardUserDefaults] setObject: _accName forKey:@"account"];
+    [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @"" : _order.descr forKey:@"descr"];
     
 }
 
@@ -55,27 +53,15 @@
         }]];
         
         
-        [section addCell:[BOTextTableViewCell cellWithTitle:@"Name" key:@"name" handler:^(BOTextTableViewCell *cell) {
-            cell.textField.placeholder = @"Enter name";
-            cell.mainColor = colorBlueFont;
-            cell.selectedColor = colorBlue;
-            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
-            cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
-                [weakSelf showInputErrorAlert:error];
-            };
-        }]];
-        
-        
-        [section addCell:[BOTableViewCell cellWithTitle:@"Icon" key:@"icon" handler:^(BOTableViewCell *cell) {
+        [section addCell:[BOTableViewCell cellWithTitle:@"Sum" key:@"sumName" handler:^(BOTableViewCell *cell) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.detailTextLabel.text = @"not selected";
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }]];
-        
+
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOChoiceTableViewCell *cell) {
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -91,17 +77,24 @@
             cell.detailTextLabel.text = @"not selected";
         }]];
         
-        
-        
         [section addCell:[BODateTableViewCell cellWithTitle:@"Date" key:@"date" handler:^(BODateTableViewCell *cell) {
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
-            
+        }]];
+        
+        
+        [section addCell:[BOTableViewCell cellWithTitle:@"Icon" key:@"icon" handler:^(BOTableViewCell *cell) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.text = @"not selected";
+            cell.mainColor = colorBlueFont;
+            cell.selectedColor = colorBlue;
+            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         }]];
         
-       
+      
         
     }]];
 }
@@ -150,7 +143,7 @@
         order.descr =  [[NSUserDefaults standardUserDefaults] stringForKey:@"descr"];
         order.category = category;
         order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
-        [[DSDataManager sharedManager] createAccount:order onSuccess:^(DSAccount *account) {
+        [[DSDataManager sharedManager] createOrder:order onSuccess:^(DSOrder *order) {
             
             [self.navigationController popViewControllerAnimated:YES];
             
@@ -161,7 +154,7 @@
         _order.descr =  [[NSUserDefaults standardUserDefaults] stringForKey:@"descr"];
         _order.category = category;
         _order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
-        [[DSDataManager sharedManager] updateAccount:_order onSuccess:^(DSAccount *account) {
+        [[DSDataManager sharedManager] updateOrder:_order onSuccess:^(DSOrder *order) {
             
             [self.navigationController popViewControllerAnimated:YES];
             

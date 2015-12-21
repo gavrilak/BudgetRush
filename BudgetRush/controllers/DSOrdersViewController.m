@@ -35,17 +35,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
     _tableView.bounces = NO;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
-    CGRect headerFrame = _tableView.tableHeaderView.frame;
-    headerFrame.size.height = 80;
-    _tableView.tableHeaderView.frame = headerFrame;
-    _tableView.alpha = 0;
-    _segmentView.alpha = 0;
-    _infoView.alpha = 0;
+    
+  
     
     
 }

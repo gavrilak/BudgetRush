@@ -49,9 +49,6 @@
 - (void) getIncomeForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
                   onFailure:(void(^)(NSError* error)) failure;
 
-- (void) getTurnOverForAccID:(NSInteger) acID onSuccess:(void(^)(NSArray* result)) success
-                 onFailure:(void(^)(NSError* error)) failure;
-
 - (void) getCurrenciesOnSuccess:(void(^)(NSArray* currencies)) success
                     onFailure:(void(^)(NSError* error)) failure;
 
@@ -60,6 +57,15 @@
 
 
 - (void) getOrdersForAcc:(NSInteger) accID withFilter:(NSString*) filter  OnSuccess:(void(^)(NSArray* orders)) success onFailure:(void(^)(NSError* error)) failure;
+
+- (void) createOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+           onFailure:(void(^)(NSError* error)) failure;
+
+- (void) updateOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+           onFailure:(void(^)(NSError* error)) failure;
+
+- (void) deleteOrder:(DSOrder*) order onSuccess:(void(^)(id object)) success
+           onFailure:(void(^)(NSError* error)) failure;
 
 
 - (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success onFailure:(void(^)(NSError* error)) failure;

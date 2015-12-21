@@ -641,7 +641,7 @@
     [_sessionManager
      GET:@"orders"
      parameters:@{@"access_token":_accessToken.token,
-                  @"period":@"TODAY",
+                  @"period":@"LAST_YEAR",
                   @"filter":filter,
                   @"accountId":[NSNumber numberWithInteger:acID]}
      
@@ -692,31 +692,17 @@
 
 
 
-- (void) postOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+- (void) postOrder:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
          onFailure:(void(^)(NSError* error)) failure {
-    
-    
-    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
-                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
-                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
      POST:[NSString stringWithFormat:@"orders?access_token=%@",_accessToken.token ]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         DSOrder* order;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             order = [[DSOrder alloc] initWithDictionary:responseObject];
-         }
          
          if (success) {
-             success(order);
+             success(responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -729,33 +715,16 @@
     
 }
 
-- (void) putOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+- (void) putOrder:(NSInteger) orderID  withParams:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
         onFailure:(void(^)(NSError* error)) failure {
-    
-    
-    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
-                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
-                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
-                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
-    
     
     _sessionManager.requestSerializer =  [AFJSONRequestSerializer serializer];
     [_sessionManager
-     PUT:[NSString stringWithFormat:@"orders/%ld?access_token=%@",(long)order.ident,_accessToken.token]
+     PUT:[NSString stringWithFormat:@"orders/%ld?access_token=%@",(long)orderID,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
-         
-         DSOrder* order;
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-             order = [[DSOrder alloc] initWithDictionary:responseObject];
-         }
-         
          if (success) {
-             success(order);
+             success( responseObject);
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -770,10 +739,10 @@
 
 
 
-- (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id success)) success
+- (void) deleteOrder:(NSInteger) orderId onSuccess:(void(^)(id success)) success
            onFailure:(void(^)(NSError* error)) failure {
     [_sessionManager
-     DELETE:[NSString stringWithFormat:@"orders/%ld", (long)ord_id]
+     DELETE:[NSString stringWithFormat:@"orders/%ld", (long)orderId]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
          NSLog(@"JSON: %@", responseObject);

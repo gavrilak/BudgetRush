@@ -8,6 +8,7 @@
 
 #import "DSAccountsViewController.h"
 #import "DSAccountViewController.h"
+#import "DSOrdersViewController.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
 #import "DSCurrency.h"
@@ -121,7 +122,6 @@
     }
     cell.nameLabel.text = account.name;
     cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.categoryLabel.text = @"#Category";
     switch (_selectedSegment) {
         case 0:
@@ -190,6 +190,10 @@
     return 0.001f;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    _selectedAccount = [_accounts objectAtIndex:indexPath.row];
+     [self performSegueWithIdentifier:@"showOrders" sender:self];
+}
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -197,6 +201,9 @@
         DSAccountViewController *accountViewController = segue.destinationViewController;
         accountViewController.account = _selectedAccount;
         [accountViewController viewDidLoad];
+    } if ([segue.identifier isEqualToString:@"showOrders"]) {
+        DSOrdersViewController *ordersViewController = segue.destinationViewController;
+        ordersViewController.account = _selectedAccount;
     }
 }
 

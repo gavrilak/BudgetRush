@@ -343,7 +343,73 @@
     
 }
 
+- (void) createOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+             onFailure:(void(^)(NSError* error)) failure {
+    
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
+                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
+    
+    [[DSApiManager sharedManager] postOrder:params onSuccess:^(NSDictionary *response) {
+        DSOrder* order;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            order = [[DSOrder alloc] initWithDictionary:response];
+        }
+        if (success) {
+            success(order);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
 
+- (void) updateOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+             onFailure:(void(^)(NSError* error)) failure {
+    
+    NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
+                             @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
+                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
+                             @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
+    
+    [[DSApiManager sharedManager] putOrder:order.ident withParams:params onSuccess:^(NSDictionary *response) {
+        DSOrder* order;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            order = [[DSOrder alloc] initWithDictionary:response];
+        }
+        if (success) {
+            success(order);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+- (void) deleteOrder:(DSOrder*) order onSuccess:(void(^)(id object)) success
+             onFailure:(void(^)(NSError* error)) failure {
+    
+    [[DSApiManager sharedManager] deleteOrder:order.ident onSuccess:^(id object) {
+        if (success) {
+            success(object);
+        }
+    } onFailure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+        
+    }];
+    
+}
 
 - (void) loginUserEmail:(NSString*) email password:(NSString*) password OnSuccess:(void(^)(id object)) success
                onFailure:(void(^)(NSError* error)) failure {

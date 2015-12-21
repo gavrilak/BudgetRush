@@ -26,7 +26,9 @@
             self.type = typeTransfer;
         }
         self.account = [[DSAccount alloc] initWithDictionary:[responseObject objectForKey:@"account"]];
-        self.category = [[DSCategory alloc] initWithDictionary:[responseObject objectForKey:@"category"] ];
+        if ( [responseObject objectForKey:@"category"] != [NSNull null]) {
+            self.category = [[DSCategory alloc] initWithDictionary:[responseObject objectForKey:@"category"] ];
+        }
         self.contractor = [[DSContractor alloc] initWithDictionary:[responseObject objectForKey:@"contractor"]];
         
     }

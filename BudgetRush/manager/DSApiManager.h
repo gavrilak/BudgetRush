@@ -89,17 +89,14 @@
 - (void) getOrder:(NSInteger) ord_id onSuccess:(void(^)(DSOrder* order)) success
         onFailure:(void(^)(NSError* error)) failure;
 
-- (void) postOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
-            onFailure:(void(^)(NSError* error)) failure;
+- (void) postOrder:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
+         onFailure:(void(^)(NSError* error)) failure ;
 
-- (void) putOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
+- (void) putOrder:(NSInteger) orderID  withParams:(NSDictionary*) params onSuccess:(void(^)(NSDictionary* response)) success
+        onFailure:(void(^)(NSError* error)) failure ;
+
+- (void) deleteOrder:(NSInteger) orderID onSuccess:(void(^)(id success)) success
            onFailure:(void(^)(NSError* error)) failure;
-
-- (void) deleteOrder:(NSInteger) ord_id onSuccess:(void(^)(id success)) success
-           onFailure:(void(^)(NSError* error)) failure;
-
-
-
 
 
 - (void) getUsersOnSuccess:(void(^)(NSArray* users)) success
