@@ -29,8 +29,9 @@
         if ( [responseObject objectForKey:@"category"] != [NSNull null]) {
             self.category = [[DSCategory alloc] initWithDictionary:[responseObject objectForKey:@"category"] ];
         }
+        if ( [responseObject objectForKey:@"contractor"] != [NSNull null]) {
         self.contractor = [[DSContractor alloc] initWithDictionary:[responseObject objectForKey:@"contractor"]];
-        
+        }
     }
     return self;
 }

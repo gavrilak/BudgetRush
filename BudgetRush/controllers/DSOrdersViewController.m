@@ -91,7 +91,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString* ident = @"accountCell";
+    static NSString* ident = @"orderCell";
     
     DSOrder* order = _selectedSegment == 0 ? [_expenseOrders objectAtIndex:indexPath.row] : [_incomeOrders objectAtIndex:indexPath.row];
     
