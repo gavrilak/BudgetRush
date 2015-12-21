@@ -134,7 +134,9 @@
             cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.income, account.currency.shortName];
             break;
     }
-    
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = colorBlue;
+    [cell setSelectedBackgroundView:bgColorView];
     cell.rightSwipeSettings.transition =  MGSwipeTransitionStatic;
     cell.rightExpansion.buttonIndex = 0;
     cell.rightExpansion.fillOnTrigger = YES;

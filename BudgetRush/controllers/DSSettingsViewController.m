@@ -45,12 +45,12 @@
             cell.selectedColor = colorBlue;
         }]];
         
-        [section addCell:[BOTableViewCell cellWithTitle:@"Change passsword" key:nil handler:^(BOTableViewCell *cell) {
+     /*   [section addCell:[BOTableViewCell cellWithTitle:@"Change passsword" key:nil handler:^(BOTableViewCell *cell) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
-        }]];
+        }]];*/
         [section addCell:[BOButtonTableViewCell cellWithTitle:@"Logout" key:nil handler:^(BOButtonTableViewCell *cell) {
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
