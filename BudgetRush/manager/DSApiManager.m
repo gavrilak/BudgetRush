@@ -1002,6 +1002,29 @@
     
 }
 
-
+- (void) getGroupsOnSuccess:(void(^)(NSDictionary* response)) success
+                    onFailure:(void(^)(NSError* error)) failure {
+    
+    
+    [_sessionManager
+     GET:@"groups"
+     parameters:@{@"access_token":_accessToken.token}
+     success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
+         NSLog(@"JSON: %@", responseObject);
+         
+         
+         if (success) {
+             success(responseObject);
+         }
+         
+     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+         NSLog(@"Error: %@", error);
+         
+         if (failure) {
+             failure(error);
+         }
+     }];
+    
+}
 
 @end

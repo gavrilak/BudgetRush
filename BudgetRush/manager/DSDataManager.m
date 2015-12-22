@@ -5,7 +5,7 @@
 //  Created by Dima on 31.10.15.
 //  Copyright © 2015 Dima Soldatenko. All rights reserved.
 //
-
+#import "Settings.h"
 #import "DSDataManager.h"
 #import "DSAccount.h"
 #import "DSCategory.h"
@@ -52,6 +52,18 @@
     } onFailure:^(NSError *error) {
         NSLog(@"Error");
     }];
+    [[DSApiManager sharedManager] getGroupsOnSuccess:^(NSDictionary *response) {
+        for (NSDictionary* dict in response ) {
+            for (NSDictionary* user in [dict objectForKey:@"users"]) {
+                if ([[user objectForKey:@"name"] isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUserName]]) {
+                    self.groupIdent = [[dict objectForKey:@"id"] integerValue];
+                }
+            }
+        }
+    } onFailure:^(NSError *error) {
+        NSLog(@"Error");
+    }];
+    
 }
 
 
@@ -112,7 +124,7 @@
           onFailure:(void(^)(NSError* error)) failure {
     
     NSDictionary* params = @{@"name"        : account.name,
-                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
+                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:self.groupIdent]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency.ident]},
                              @"initBalance" :[NSNumber numberWithDouble:account.initBalance] };
     
@@ -135,7 +147,7 @@
 - (void) updateAccount:(DSAccount*) account onSuccess:(void(^)(DSAccount* account)) success
              onFailure:(void(^)(NSError* error)) failure {
     NSDictionary* params = @{@"name"        : account.name,
-                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:1]},
+                             @"group"       :@{@"id"  :[NSNumber numberWithInteger:self.groupIdent]},
                              @"currency"    :@{@"id" :[NSNumber numberWithInteger:account.currency.ident]},
                              @"initBalance" :[NSNumber numberWithDouble:account.initBalance] };
     
