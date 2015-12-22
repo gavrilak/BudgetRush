@@ -43,6 +43,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
+            cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
         }]];
         
      /*   [section addCell:[BOTableViewCell cellWithTitle:@"Change passsword" key:nil handler:^(BOTableViewCell *cell) {

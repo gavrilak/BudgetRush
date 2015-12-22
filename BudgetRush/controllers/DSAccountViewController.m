@@ -65,6 +65,7 @@
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
             
         }]];
 
@@ -81,6 +82,7 @@
             cell.options = catNames;
             cell.destinationViewController = [DSCategoryViewController new];
             cell.detailTextLabel.text = @"not selected";
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
         }]];
         
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOChoiceTableViewCell *cell) {

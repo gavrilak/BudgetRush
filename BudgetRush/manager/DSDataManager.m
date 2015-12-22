@@ -348,8 +348,7 @@
     
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970] *1000],
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
@@ -374,8 +373,7 @@
     
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]],
-                             @"contractor"  :@{@"id"  :[NSNumber numberWithInteger:order.contractor.ident]},
+                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]*1000],
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     

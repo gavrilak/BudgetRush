@@ -641,12 +641,12 @@
     [_sessionManager
      GET:@"orders"
      parameters:@{@"access_token":_accessToken.token,
-                  @"period":@"LAST_YEAR",
+                  @"period":@"TODAY",
                   @"filter":filter,
                   @"accountId":[NSNumber numberWithInteger:acID]}
      
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+       //  NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(responseObject);

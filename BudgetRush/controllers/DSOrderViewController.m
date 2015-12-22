@@ -26,14 +26,14 @@
     self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _order.sum  forKey:@"sum"];
-    [[NSUserDefaults standardUserDefaults] setObject: _isIncome ? @"Income":  @"Expenses"  forKey:@"sumName"];
     [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @"" : _order.category.name forKey:@"category"];
     [[NSUserDefaults standardUserDefaults] setObject: _order != nil ? _order.date : [NSDate new] forKey:@"date"];
     [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
-    [[NSUserDefaults standardUserDefaults] setObject: _accName forKey:@"account"];
     [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @"" : _order.descr forKey:@"descr"];
     
 }
+
+
 
 - (void)setup {
     
@@ -42,6 +42,7 @@
         
         
         [section addCell:[BONumberTableViewCell cellWithTitle:@"" key:@"sum" handler:^(BONumberTableViewCell *cell) {
+         
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
@@ -54,11 +55,13 @@
         
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Sum" key:@"sumName" handler:^(BOTableViewCell *cell) {
+            cell.detailTextLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"sumName"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             
         }]];
 
@@ -74,7 +77,7 @@
             }
             cell.options = catNames;
             cell.destinationViewController = [DSCategoryViewController new];
-            cell.detailTextLabel.text = @"not selected";
+            
         }]];
         
         [section addCell:[BODateTableViewCell cellWithTitle:@"Date" key:@"date" handler:^(BODateTableViewCell *cell) {
@@ -94,6 +97,16 @@
             
         }]];
         
+        [section addCell:[BOTableViewCell cellWithTitle:@"Account" key:@"account" handler:^(BOTableViewCell *cell) {
+            cell.detailTextLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"account"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.mainColor = colorBlueFont;
+            cell.selectedColor = colorBlue;
+            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        }]];
+
       
         
     }]];
@@ -131,18 +144,24 @@
 
 - (IBAction) actionSave:(id)sender {
     
-    BOChoiceTableViewCell *currencyCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+    BOChoiceTableViewCell *currencyCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
     NSInteger selectedCategory =  [currencyCell.setting.value integerValue];
     
     DSCategory* category = [[DSDataManager sharedManager].categories objectAtIndex:selectedCategory];
     
-    
+   
     if (_order == nil) {
         
         DSOrder *order = [DSOrder new];
+        
+        order.account = _account;
         order.descr =  [[NSUserDefaults standardUserDefaults] stringForKey:@"descr"];
         order.category = category;
+        order.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
         order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
+        if (!_isIncome) {
+            order.sum = -order.sum;
+        }
         [[DSDataManager sharedManager] createOrder:order onSuccess:^(DSOrder *order) {
             
             [self.navigationController popViewControllerAnimated:YES];
@@ -153,6 +172,11 @@
     } else {
         _order.descr =  [[NSUserDefaults standardUserDefaults] stringForKey:@"descr"];
         _order.category = category;
+        _order.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
+        if (!_isIncome) {
+            _order.sum = -_order.sum;
+        }
+        NSLog(@"%f",[[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"]);
         _order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
         [[DSDataManager sharedManager] updateOrder:_order onSuccess:^(DSOrder *order) {
             
@@ -183,7 +207,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 50.f;
+    return 0.001f;
 }
 
 

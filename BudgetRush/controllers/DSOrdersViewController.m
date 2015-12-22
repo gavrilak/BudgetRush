@@ -6,6 +6,7 @@
 //  Copyright © 2015 Dima Soldatenko. All rights reserved.
 //
 
+#import "Settings.h"
 #import "DSOrdersViewController.h"
 #import "DsOrderViewController.h"
 #import "DSDataManager.h"
@@ -16,11 +17,14 @@
 
 @interface DSOrdersViewController () <UITableViewDataSource, UITableViewDelegate> {
     
-    __weak IBOutlet UIView  *_infoView;
     __weak IBOutlet UILabel *_todayLabel;
     __weak IBOutlet UITableView *_tableView;
     __weak IBOutlet UISegmentedControl * _segmentControl;
     __weak IBOutlet UIView  *_segmentView;
+    __weak IBOutlet UIImageView *_accountImage;
+    __weak IBOutlet UILabel *_nameLabel;
+    __weak IBOutlet UILabel *_categoryLabel;
+    __weak IBOutlet UILabel *_sumLabel;
     
     DSOrder* _selectedOrder;
     NSMutableArray* _expenseOrders;
@@ -35,14 +39,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    _tableView.bounces = NO;
+   _tableView.separatorColor = colorBackgroundBlue;
+   _tableView.bounces = NO;
+
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
+    [self buildHeader];
+}
+
+- (void) buildHeader {
     
-  
-    
-    
+    _nameLabel.text = _account.name;
+    _categoryLabel.text = @"#Category";
+    _sumLabel.text = [NSString stringWithFormat:@"%.2f %@", _account.balance, _account.currency.shortName];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -50,14 +60,22 @@
     [super viewWillAppear:animated];
     [self navigationController].topViewController.title = @"Expenses/Income";
     [self navigationController].topViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount)];
-    [_segmentControl setSelectedSegmentIndex:0];
-    _selectedSegment = 0;
+   
+    [[DSDataManager sharedManager] getAccount:_account.ident onSuccess:^(DSAccount *account) {
+        _account = account;
+        [self buildHeader];
+    } onFailure:^(NSError *error) {
+         NSLog(@"Error");
+    }];
     [self loadData];
     
 }
 
 - (void) addAccount{
-    _account = nil;
+    _selectedOrder = nil;
+    [[NSUserDefaults standardUserDefaults] setObject: _selectedSegment? @"Income":  @"Expenses"  forKey:@"sumName"];
+    [[NSUserDefaults standardUserDefaults] setObject: _account.name == nil ? @"" : _account.name forKey:@"account"];
+
     [self performSegueWithIdentifier:@"showOrder" sender:self];
     
 }
@@ -102,23 +120,36 @@
     }
     cell.nameLabel.text = order.category.name;
     cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", order.sum, order.account.currency.shortName];
+    UIView *bgColorView = [[UIView alloc] init];
+    bgColorView.backgroundColor = colorBlue;
+    [cell setSelectedBackgroundView:bgColorView];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.001f;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    _selectedOrder = _selectedSegment == 0 ? [_expenseOrders objectAtIndex:indexPath.row] : [_incomeOrders objectAtIndex:indexPath.row];
+    [[NSUserDefaults standardUserDefaults] setObject: _selectedSegment? @"Income":  @"Expenses"  forKey:@"sumName"];
+    [[NSUserDefaults standardUserDefaults] setObject: _account.name == nil ? @"" : _account.name forKey:@"account"];
+    [self performSegueWithIdentifier:@"showOrder" sender:self];
+}
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showOrder"]) {
         DSOrderViewController *orderViewController = segue.destinationViewController;
         orderViewController.order = _selectedOrder;
+        orderViewController.isIncome = _selectedSegment;
+        orderViewController.account = _account;
         [orderViewController viewDidLoad];
     }
 }
