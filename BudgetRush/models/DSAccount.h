@@ -14,6 +14,7 @@
 
 @property (strong,nonatomic) NSString *name;
 @property (assign,nonatomic) NSInteger userIdent;
+@property (assign,nonatomic) NSInteger groupIdent;
 @property (strong,nonatomic) DSCurrency *currency;
 @property (assign,nonatomic) double balance;
 @property (assign,nonatomic) double initBalance;
