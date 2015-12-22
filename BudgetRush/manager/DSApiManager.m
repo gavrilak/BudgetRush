@@ -641,7 +641,7 @@
     [_sessionManager
      GET:@"orders"
      parameters:@{@"access_token":_accessToken.token,
-                  @"period":@"TODAY",
+                  @"period":@"LAST_YEAR",
                   @"filter":filter,
                   @"accountId":[NSNumber numberWithInteger:acID]}
      

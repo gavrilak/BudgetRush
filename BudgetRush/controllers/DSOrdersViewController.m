@@ -72,12 +72,12 @@
 }
 
 - (void) addAccount{
-    _selectedOrder = nil;
+   /* _selectedOrder = nil;
     [[NSUserDefaults standardUserDefaults] setObject: _selectedSegment? @"Income":  @"Expenses"  forKey:@"sumName"];
     [[NSUserDefaults standardUserDefaults] setObject: _account.name == nil ? @"" : _account.name forKey:@"account"];
 
     [self performSegueWithIdentifier:@"showOrder" sender:self];
-    
+    */
 }
 
 - (void) loadData {
@@ -121,6 +121,7 @@
     cell.nameLabel.text = order.category.name;
     cell.iconImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"ic_categories%d",(int)(indexPath.row % 4 )+1]];
     cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", order.sum, order.account.currency.shortName];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UIView *bgColorView = [[UIView alloc] init];
     bgColorView.backgroundColor = colorBlue;
     [cell setSelectedBackgroundView:bgColorView];
@@ -136,12 +137,12 @@
 {
     return 0.001f;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+/*- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     _selectedOrder = _selectedSegment == 0 ? [_expenseOrders objectAtIndex:indexPath.row] : [_incomeOrders objectAtIndex:indexPath.row];
     [[NSUserDefaults standardUserDefaults] setObject: _selectedSegment? @"Income":  @"Expenses"  forKey:@"sumName"];
     [[NSUserDefaults standardUserDefaults] setObject: _account.name == nil ? @"" : _account.name forKey:@"account"];
     [self performSegueWithIdentifier:@"showOrder" sender:self];
-}
+}*/
 
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

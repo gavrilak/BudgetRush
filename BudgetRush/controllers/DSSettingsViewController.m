@@ -39,11 +39,12 @@
     [self addSection:[BOTableViewSection sectionWithHeaderTitle:nil handler:^(BOTableViewSection *section) {
         [section addCell:[BOTableViewCell cellWithTitle:@"Currency" key:nil handler:^(BOTableViewCell *cell) {
             cell.detailTextLabel.text = @"USD";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
-            cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
+            cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.2];
         }]];
         
      /*   [section addCell:[BOTableViewCell cellWithTitle:@"Change passsword" key:nil handler:^(BOTableViewCell *cell) {
@@ -54,7 +55,8 @@
         }]];*/
         [section addCell:[BOButtonTableViewCell cellWithTitle:@"Logout" key:nil handler:^(BOButtonTableViewCell *cell) {
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
@@ -96,7 +98,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 50.f;
+    return 34.f;
 }
+
+
 
 @end

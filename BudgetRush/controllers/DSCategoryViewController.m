@@ -42,5 +42,11 @@
      }]];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 34.f;
+}
+
+
 
 @end

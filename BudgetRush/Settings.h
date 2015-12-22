@@ -15,7 +15,7 @@
 #define colorRed [UIColor colorWithRed:228/255.0f green:58/255.0f blue:84/255.f alpha:1.0f]
 
 #define colorBlueFont [UIColor colorWithRed:8/255.0f green:78/255.0f blue:127/255.f alpha:1.0f]
-
+#define colorGreyFont [UIColor colorWithRed:79/255.0f green:79/255.0f blue:79/255.f alpha:1.0f]
 
 
 static NSString *const rest_id = @"ios_id";

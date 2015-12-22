@@ -7,11 +7,11 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "tab_active-accounts@2x.png"
+      "filename" : "tab_active_accounts@2x.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "tab_active-accounts@3x.png",
+      "filename" : "tab_active_accounts@3x.png",
       "scale" : "3x"
     }
   ],

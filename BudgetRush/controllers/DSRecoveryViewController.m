@@ -5,7 +5,7 @@
 //  Created by Lena on 24.11.15.
 //  Copyright © 2015 Dima Soldatenko. All rights reserved.
 //
-
+#import "Settings.h"
 #import "DSRecoveryViewController.h"
 #import "DSDataManager.h"
 #import "DSTOSViewController.h"
@@ -24,7 +24,7 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = NSLocalizedString(@"Password Recovery",nil);
     if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        UIColor *color = [UIColor blackColor];
+        UIColor *color = colorGreyFont;
         _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
     }
 

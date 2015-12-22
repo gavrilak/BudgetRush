@@ -27,11 +27,11 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     self.navigationItem.title = NSLocalizedString( @"Sign Up", nil);
     if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        UIColor *color = [UIColor blackColor];
+        UIColor *color = colorGreyFont;
         _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
     }
     if ([_passwordTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
-        UIColor *color = [UIColor blackColor];
+        UIColor *color =colorGreyFont;
         _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Password",nil) attributes:@{NSForegroundColorAttributeName: color}];
     }
 

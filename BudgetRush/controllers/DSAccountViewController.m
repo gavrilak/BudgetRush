@@ -49,9 +49,11 @@
         
         [section addCell:[BOTextTableViewCell cellWithTitle:@"Name" key:@"name" handler:^(BOTextTableViewCell *cell) {
             cell.textField.placeholder = @"Enter name";
+             cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = colorGreyFont;
             cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
                 [weakSelf showInputErrorAlert:error];
             };
@@ -59,22 +61,26 @@
         
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Icon" key:@"icon" handler:^(BOTableViewCell *cell) {
-             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.detailTextLabel.text = @"not selected";
             cell.mainColor = colorBlueFont;
+            cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = colorGreyFont;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.2];
             
         }]];
 
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOChoiceTableViewCell *cell) {
      
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.mainColor = colorBlueFont;
+             cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = colorGreyFont;
             NSMutableArray  *catNames = [[NSMutableArray alloc] init];
             for (DSCategory *cat in [DSDataManager sharedManager].categories) {
                 [catNames addObject:cat.name];
@@ -82,15 +88,17 @@
             cell.options = catNames;
             cell.destinationViewController = [DSCategoryViewController new];
             cell.detailTextLabel.text = @"not selected";
-             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.3];
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.2];
         }]];
         
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOChoiceTableViewCell *cell) {
             
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.mainColor = colorBlueFont;
+            cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = colorGreyFont;
             NSMutableArray  *curNames = [[NSMutableArray alloc] init];
             for (DSCurrency *cur in [DSDataManager sharedManager].currencies) {
                 [curNames addObject:cur.name];
@@ -103,17 +111,23 @@
 
         
         [section addCell:[BODateTableViewCell cellWithTitle:@"Date" key:@"date" handler:^(BODateTableViewCell *cell) {
+       
+            cell.dateFormat = @"dd MMM yyyy"; 
             cell.mainColor = colorBlueFont;
+            cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = colorGreyFont;
             
             
         }]];
         
        [section addCell:[BONumberTableViewCell cellWithTitle:@"Balance" key:@"balance" handler:^(BONumberTableViewCell *cell) {
            cell.mainColor = colorBlueFont;
+        cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
            cell.selectedColor = colorBlue;
            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+           cell.secondaryColor = colorGreyFont;
             cell.textField.placeholder = @"$0.0";
             cell.numberOfDecimals = 2;
             cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
@@ -208,7 +222,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 50.f;
+    return 34.f;
 }
+
+
 
 @end
