@@ -120,4 +120,8 @@
 - (void) getTokenForUser:(NSString *) userName andPassword:(NSString*) password onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error)) failure;
 
 - (void) refreshToken:(NSString*) token onSuccess:(void(^)(DSAccessToken* token)) success   onFailure:(void(^)(NSError* error)) failure;
+
+- (void) getGroupsOnSuccess:(void(^)(NSDictionary* response)) success
+                  onFailure:(void(^)(NSError* error)) failure;
+
 @end

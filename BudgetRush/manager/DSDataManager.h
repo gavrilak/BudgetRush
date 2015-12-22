@@ -17,7 +17,7 @@
 
 @interface DSDataManager : NSObject
 
-
+@property (assign, nonatomic) NSInteger groupIdent;
 @property (strong, nonatomic) DSUser* currentUser;
 @property (strong, nonatomic) NSMutableArray* categories;
 @property (strong, nonatomic) NSMutableArray* currencies;
