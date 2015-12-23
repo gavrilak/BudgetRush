@@ -39,6 +39,7 @@
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
     _tableView.bounces = NO;
+    _tableView.separatorColor = colorBackgroundBlue;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMM"];
     _todayLabel.text = [NSString stringWithFormat:@"Today %@", [format stringFromDate:[[NSDate alloc] init]]];
