@@ -36,7 +36,7 @@
 - (void)setup {
     
     __unsafe_unretained typeof(self) weakSelf = self;
-    [self addSection:[BOTableViewSection sectionWithHeaderTitle:nil handler:^(BOTableViewSection *section) {
+    [self addSection:[BOTableViewSection sectionWithHeaderTitle:@"" handler:^(BOTableViewSection *section) {
         [section addCell:[BOTableViewCell cellWithTitle:@"Currency" key:nil handler:^(BOTableViewCell *cell) {
             cell.detailTextLabel.text = @"USD";
             cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
