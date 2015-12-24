@@ -23,10 +23,9 @@
     self.view.backgroundColor = colorBackgroundWhite;
     self.navigationController.navigationBar.topItem.title = @"New transaction";
     self.tableView.separatorColor = colorBackgroundBlue;
-    self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _order.sum  forKey:@"sum"];
-    [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @"" : _order.category.name forKey:@"category"];
+    [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _isIncome ? _order.sum : -_order.sum  forKey:@"sum"];
+     [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @0 : @(_order.category.ident-1) forKey:@"category"];
     [[NSUserDefaults standardUserDefaults] setObject: _order != nil ? _order.date : [NSDate new] forKey:@"date"];
     [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
     [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @"" : _order.descr forKey:@"descr"];
@@ -43,9 +42,10 @@
         
         [section addCell:[BONumberTableViewCell cellWithTitle:@"" key:@"sum" handler:^(BONumberTableViewCell *cell) {
          
-            cell.mainColor = colorBlueFont;
+            cell.backgroundColor = colorBlue;
             cell.selectedColor = colorBlue;
-            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
+            cell.secondaryColor = [UIColor whiteColor];
+            cell.secondaryFont = [UIFont systemFontOfSize:18 weight:UIFontWeightLight];
             cell.textField.placeholder = @"$0.0";
             cell.numberOfDecimals = 2;
             cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
@@ -76,6 +76,11 @@
                 [catNames addObject:cat.name];
             }
             cell.options = catNames;
+           
+           // cell.setting.value = [[NSUserDefaults standardUserDefaults] objectForKey:@"category"];
+           //  NSLog(@"%@",cell.setting.value );
+           // [cell settingValueDidChange];
+             [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @0 : @(_order.category.ident) forKey:@"category"];
             cell.destinationViewController = [DSCategoryViewController new];
             
         }]];
@@ -210,5 +215,13 @@
     return 0.001f;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    if (indexPath.row == 1) {
+        return 70;
+    } else {
+        return  [super tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+}
 
 @end

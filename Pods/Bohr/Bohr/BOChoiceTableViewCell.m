@@ -39,7 +39,6 @@
 }
 
 - (void)settingValueDidChange {
-    
 	self.detailTextLabel.text = self.options[[self.setting.value integerValue]];
 }
 

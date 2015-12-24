@@ -20,7 +20,6 @@
 - (void)setup {
     
     self.title = @"Currency";
-    self.tableView.bounces = NO;
     self.tableView.separatorColor = colorBackgroundBlue;
     
     DSCurrency *defaultCurrency = [[DSDataManager sharedManager].currencies objectAtIndex:0];

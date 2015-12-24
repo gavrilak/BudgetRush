@@ -38,7 +38,6 @@
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     [self navigationController].topViewController.navigationItem.hidesBackButton = YES;
-    _tableView.bounces = NO;
     _tableView.separatorColor = colorBackgroundBlue;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"dd MMM"];
@@ -129,7 +128,7 @@
             cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.balance, account.currency.shortName];
             break;
         case 1:
-            cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.expense, account.currency.shortName];
+            cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", -account.expense, account.currency.shortName];
             break;
         case 2:
             cell.sumLabel.text = [NSString stringWithFormat:@"%.2f %@", account.income, account.currency.shortName];

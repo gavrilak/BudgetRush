@@ -358,9 +358,10 @@
 - (void) createOrder:(DSOrder*) order onSuccess:(void(^)(DSOrder* order)) success
              onFailure:(void(^)(NSError* error)) failure {
     
+    NSLog (@"%f", [order.date timeIntervalSince1970]);
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970] *1000],
+                             @"date"        : [NSNumber numberWithLongLong:([order.date timeIntervalSince1970] *1000)],
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
@@ -385,7 +386,7 @@
     
     NSDictionary* params = @{@"amount"     : [NSNumber numberWithDouble:order.sum],
                              @"type"        : order.type == typeOrder ? @"ORDER" : @"TRANSFER_ORDER",
-                             @"date"        : [NSNumber numberWithInteger:[order.date timeIntervalSince1970]*1000],
+                             @"date"        : [NSNumber numberWithLongLong:([order.date timeIntervalSince1970]*1000)],
                              @"account"     :@{@"id"  :[NSNumber numberWithInteger:order.account.ident]},
                              @"category"    :@{@"id"  :[NSNumber numberWithInteger:order.category.ident]}};
     
