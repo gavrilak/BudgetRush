@@ -21,12 +21,11 @@
     
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    [[UITableViewHeaderFooterView appearance] setTintColor:colorBackgroundWhite];
-    
+  
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000, -1000) forBarMetrics:UIBarMetricsDefault];
     // Override point for customization after application launch.
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    //[[AFNetworkActivityLogger sharedLogger] startLogging];
+    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
 
     NSString* user = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     NSString* pass = [[NSUserDefaults standardUserDefaults] objectForKey:kUserPass];

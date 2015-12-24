@@ -25,10 +25,23 @@
     self.navigationItem.title = NSLocalizedString(@"Password Recovery",nil);
     if ([_emailTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
         UIColor *color = colorGreyFont;
-        _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@" Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
+        _emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Email",nil) attributes:@{NSForegroundColorAttributeName: color}];
     }
-
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [_emailTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [_emailTextField setLeftView:spacerView];
+   
 }
+
+-(void)dismissKeyboard {
+    [_emailTextField resignFirstResponder];
+}
+
 
 
 

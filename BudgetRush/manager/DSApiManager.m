@@ -522,7 +522,7 @@
      GET:[NSString stringWithFormat:@"currencies/%ld", (long)cur_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          
          DSCurrency* currency;
          
@@ -535,7 +535,7 @@
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
-         NSLog(@"Error: %@", error);
+        // NSLog(@"Error: %@", error);
          
          if (failure) {
              failure(error);
@@ -557,7 +557,7 @@
      POST:[NSString stringWithFormat:@"currencies?access_token=%@",_accessToken.token ]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+       //  NSLog(@"JSON: %@", responseObject);
          DSCurrency* currency;
          
          if ([responseObject isKindOfClass:[NSDictionary class]]) {
@@ -569,7 +569,7 @@
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
-         NSLog(@"Error: %@", error);
+         //NSLog(@"Error: %@", error);
          
          if (failure) {
              failure(error);
@@ -593,7 +593,7 @@
      PUT:[NSString stringWithFormat:@"currencies/%ld?access_token=%@",(long)currency.ident,_accessToken.token]
      parameters:params
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          DSCurrency* currency;
          
          if ([responseObject isKindOfClass:[NSDictionary class]]) {
@@ -620,14 +620,14 @@
      DELETE:[NSString stringWithFormat:@"currencies/%ld" ,(long)cur_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
          }
          
      } failure:^(NSURLSessionDataTask *task, NSError *error) {
-         NSLog(@"Error: %@", error);
+         //NSLog(@"Error: %@", error);
          
          if (failure) {
              failure(error);
@@ -668,7 +668,7 @@
      GET:[NSString stringWithFormat:@"orders/%ld", (long)ord_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          
          DSOrder* order;
          
@@ -745,7 +745,7 @@
      DELETE:[NSString stringWithFormat:@"orders/%ld", (long)orderId]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          
          if (success) {
              success(@"success");
@@ -771,7 +771,7 @@
      GET:@"users"
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+         //NSLog(@"JSON: %@", responseObject);
          
          NSMutableArray* objectsArray = [NSMutableArray array];
          
@@ -800,7 +800,7 @@
      GET:[NSString stringWithFormat:@"users/%ld", (long)usr_id]
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+        // NSLog(@"JSON: %@", responseObject);
          
          DSUser* user;
          
@@ -1010,7 +1010,7 @@
      GET:@"groups"
      parameters:@{@"access_token":_accessToken.token}
      success:^(NSURLSessionDataTask *task, NSDictionary* responseObject) {
-         NSLog(@"JSON: %@", responseObject);
+       //  NSLog(@"JSON: %@", responseObject);
          
          
          if (success) {

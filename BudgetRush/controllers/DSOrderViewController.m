@@ -24,8 +24,12 @@
     self.navigationController.navigationBar.topItem.title = @"New transaction";
     self.tableView.separatorColor = colorBackgroundBlue;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    [[NSUserDefaults standardUserDefaults] setDouble: _order == nil ? 0 : _isIncome ? _order.sum : -_order.sum  forKey:@"sum"];
-     [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @0 : @(_order.category.ident-1) forKey:@"category"];
+    if (_order!= nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:  @(_isIncome ? _order.sum : -_order.sum ) forKey:@"sum"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:  @(0 ) forKey:@"sum"];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @0 : @(_order.category.ident-1) forKey:@"category"];
     [[NSUserDefaults standardUserDefaults] setObject: _order != nil ? _order.date : [NSDate new] forKey:@"date"];
     [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
     [[NSUserDefaults standardUserDefaults] setObject: _order == nil ? @"" : _order.descr forKey:@"descr"];
@@ -43,10 +47,10 @@
         [section addCell:[BONumberTableViewCell cellWithTitle:@"" key:@"sum" handler:^(BONumberTableViewCell *cell) {
          
             cell.backgroundColor = colorBlue;
-            cell.selectedColor = colorBlue;
+            cell.selectedColor = [UIColor whiteColor];
             cell.secondaryColor = [UIColor whiteColor];
-            cell.secondaryFont = [UIFont systemFontOfSize:18 weight:UIFontWeightLight];
-            cell.textField.placeholder = @"$0.0";
+            cell.secondaryFont = [UIFont systemFontOfSize:20 weight:UIFontWeightLight];
+            cell.textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"$0.0" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
             cell.numberOfDecimals = 2;
             cell.inputErrorBlock = ^(BOTextTableViewCell *cell, BOTextFieldInputError error) {
                 [weakSelf showInputErrorAlert:error];
@@ -56,7 +60,8 @@
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Sum" key:@"sumName" handler:^(BOTableViewCell *cell) {
             cell.detailTextLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"sumName"];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
+
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
@@ -67,7 +72,8 @@
 
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Category" key:@"category" handler:^(BOChoiceTableViewCell *cell) {
             
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
+
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
@@ -77,9 +83,6 @@
             }
             cell.options = catNames;
            
-           // cell.setting.value = [[NSUserDefaults standardUserDefaults] objectForKey:@"category"];
-           //  NSLog(@"%@",cell.setting.value );
-           // [cell settingValueDidChange];
              [[NSUserDefaults standardUserDefaults] setObject:_order == nil ? @0 : @(_order.category.ident) forKey:@"category"];
             cell.destinationViewController = [DSCategoryViewController new];
             
@@ -93,16 +96,18 @@
         
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Icon" key:@"icon" handler:^(BOTableViewCell *cell) {
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.detailTextLabel.text = @"not selected";
             cell.mainColor = colorBlueFont;
             cell.selectedColor = colorBlue;
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.1];
         }]];
         
         [section addCell:[BOTableViewCell cellWithTitle:@"Account" key:@"account" handler:^(BOTableViewCell *cell) {
+            cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"indicator"]];
             cell.detailTextLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"account"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.mainColor = colorBlueFont;
@@ -181,7 +186,6 @@
         if (!_isIncome) {
             _order.sum = -_order.sum;
         }
-        NSLog(@"%f",[[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"]);
         _order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
         [[DSDataManager sharedManager] updateOrder:_order onSuccess:^(DSOrder *order) {
             
@@ -217,8 +221,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    
-    if (indexPath.row == 1) {
-        return 70;
+    if (indexPath.row == 0 && indexPath.section == 0) {
+        return 75;
     } else {
         return  [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }

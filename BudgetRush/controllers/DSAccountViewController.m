@@ -32,9 +32,12 @@
     [[NSUserDefaults standardUserDefaults] setObject: _account == nil ? @"" : _account.name forKey:@"name"];
     [[NSUserDefaults standardUserDefaults] setObject: @"not selected" forKey:@"icon"];
     [[NSUserDefaults standardUserDefaults] setObject: @"" forKey:@"category"];
-    [[NSUserDefaults standardUserDefaults] setObject: _account == nil ? @"" : _account.currency.name forKey:@"currency"];
-    [[NSUserDefaults standardUserDefaults] setDouble: _account == nil ? 0 : _account.initBalance  forKey:@"balance"];
-
+    [[NSUserDefaults standardUserDefaults] setObject: _account == nil ? @0 : @(_account.currency.ident - 1) forKey:@"currency"];
+    if (_account != nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:  @(_account.initBalance)  forKey:@"balance"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:  @(0) forKey:@"balance"];
+    }
     
 }
 
@@ -68,7 +71,7 @@
             cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
             cell.secondaryColor = colorGreyFont;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.2];
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.1];
             
         }]];
 
@@ -87,7 +90,7 @@
             cell.options = catNames;
             cell.destinationViewController = [DSCategoryViewController new];
             cell.detailTextLabel.text = @"not selected";
-             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.2];
+             cell.backgroundColor = [UIColor colorWithWhite:0 alpha: 0.1];
         }]];
         
         [section addCell:[BOChoiceTableViewCell cellWithTitle:@"Currency" key:@"currency" handler:^(BOChoiceTableViewCell *cell) {
@@ -123,7 +126,7 @@
         
        [section addCell:[BONumberTableViewCell cellWithTitle:@"Balance" key:@"balance" handler:^(BONumberTableViewCell *cell) {
            cell.mainColor = colorBlueFont;
-        cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+           cell.mainFont = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
            cell.selectedColor = colorBlue;
            cell.secondaryFont = [UIFont systemFontOfSize:16 weight:UIFontWeightLight];
            cell.secondaryColor = colorGreyFont;
@@ -224,6 +227,9 @@
     return 34.f;
 }
 
-
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.backgroundView.backgroundColor = colorBackgroundWhite;
+}
 
 @end

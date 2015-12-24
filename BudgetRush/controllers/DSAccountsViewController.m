@@ -194,6 +194,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     _selectedAccount = [_accounts objectAtIndex:indexPath.row];
+    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
      [self performSegueWithIdentifier:@"showOrders" sender:self];
 }
 
