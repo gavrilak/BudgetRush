@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell.h>
 
-@interface DSOrderTableViewCell : UITableViewCell
+@interface DSOrderTableViewCell : MGSwipeTableCell
 
 @property (weak, nonatomic) IBOutlet UILabel *sumLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
