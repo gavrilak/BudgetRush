@@ -497,5 +497,177 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetRush/controllers/DSOrderViewController.m"
+            timestampString = "473027664.790495"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "-actionSave:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetRush/controllers/DSOrderViewController.m"
+            timestampString = "473027726.210573"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "-actionSave:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DSOrderViewController actionSave:]"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.215325"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "2216">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__36-[DSOrderViewController actionSave:]_block_invoke273"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.215487"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "143">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__copy_helper_block_274"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.215607"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_275"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.215877"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__36-[DSOrderViewController actionSave:]_block_invoke277"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.216115"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "194"
+                  endingLineNumber = "194"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BudgetRush/controllers/DSOrderViewController.m"
+            timestampString = "473027726.962608"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "-actionSave:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__36-[DSOrderViewController actionSave:]_block_invoke277"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.966409"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "196"
+                  endingLineNumber = "196"
+                  offsetFromSymbolStart = "143">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__copy_helper_block_278"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.966559"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_279"
+                  moduleName = "BudgetRush"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimasoldatenko/Desktop/BudgetRush/BudgetRush/controllers/DSOrderViewController.m"
+                  timestampString = "473027726.966675"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -183,10 +183,11 @@
         _order.descr =  [[NSUserDefaults standardUserDefaults] stringForKey:@"descr"];
         _order.category = category;
         _order.date = [[NSUserDefaults standardUserDefaults] objectForKey:@"date"];
+        _order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
         if (!_isIncome) {
             _order.sum = -_order.sum;
         }
-        _order.sum = [[NSUserDefaults standardUserDefaults] doubleForKey:@"sum"];
+      
         [[DSDataManager sharedManager] updateOrder:_order onSuccess:^(DSOrder *order) {
             
             [self.navigationController popViewControllerAnimated:YES];
